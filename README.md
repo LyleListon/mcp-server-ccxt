@@ -1,4 +1,4 @@
-# 💐 MayArbi - Multi-Chain DEX Arbitrage Bot
+# 🚀 MayArbi - Multi-Chain DEX Arbitrage Bot
 
 > **Starting small, thinking big!** Every green trade matters, even pennies! 💰
 
@@ -110,14 +110,14 @@ DexMind is our custom MCP memory server that tracks:
 
 ## 📚 Documentation
 
-- [📖 **Project Architecture**](docs/ARCHITECTURE.md)
-- [🧠 **DexMind Documentation**](docs/DEXMIND.md)
-- [⚙️ **Setup Guide**](docs/SETUP.md)
-- [💧 **MCP Integration**](docs/MCP_INTEGRATION.md)
-- [📊 **Trading Strategies**](docs/STRATEGIES.md)
-- [🚡️ **Security Considerations**](docs/SECURITY-md)
+- [📖 **Project Overview**](docs/01-PROJECT-OVERVIEW.md) - What is MayArbi and why it works
+- [🏗️ **System Architecture**](docs/02-SYSTEM-ARCHITECTURE.md) - How all the pieces fit together
+- [🦠 **DexMind Overview**](docs/03-DEXMIND-OVERVIEW.md) - The brain of the operation
+- [💀 - **DexMind Tools**](docs/04-DEXMIND-TOOLS.md) - Complete tool reference
+- [’️ **Setup Guide**](docs/05-SETUP-GUIDE.md) - Installation and configuration
+- [🎯 **Trading Strategy**](docs/06-TRADING-STRATEGY.md) - Four-phase evolution plan
 
-## 🎯 Current Status
+## 🎿 Current Status
 
 - ✅ **DexMind MCP Server**: Core memory system implemented
 - ✅ **Multi-MCP Ecosystem**: Filesystem, Serena, Compass integrated
