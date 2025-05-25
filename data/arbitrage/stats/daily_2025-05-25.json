@@ -1,0 +1,15 @@
+{
+  "date": "2025-05-25",
+  "total_patterns": 161,
+  "successful_patterns": 142,
+  "total_profit": 8134384.727947374,
+  "total_gas_cost": 0,
+  "tokens_traded": [
+    "DAI",
+    "WETH",
+    "WBTC",
+    "USDT",
+    "USDC"
+  ],
+  "dexs_used": []
+}

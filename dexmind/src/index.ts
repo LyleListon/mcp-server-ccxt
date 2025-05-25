@@ -9,8 +9,8 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import { DexMindMemory } from './memory';
-import { PennyTrade, GasTracker, PerformanceStats } from './types';
+import { DexMindMemory } from './memory.js';
+import { PennyTrade, GasTracker, PerformanceStats } from './types.js';
 
 class DexMindServer {
   private server: Server;
@@ -107,19 +107,19 @@ class DexMindServer {
         switch (name) {
           case 'store_penny_trade':
             return await this.storePennyTrade(args);
-          
+
           case 'get_green_trades':
             return await this.getGreenTrades(args);
-          
+
           case 'get_performance_stats':
             return await this.getPerformanceStats();
-          
+
           case 'find_best_pairs':
             return await this.findBestPairs(args);
-          
+
           case 'analyze_gas_efficiency':
             return await this.analyzeGasEfficiency(args);
-          
+
           default:
             throw new Error(`Unknown tool: ${name}`);
         }
@@ -159,7 +159,7 @@ class DexMindServer {
 
     const emoji = trade.wasGreen ? '🟢' : '🔴';
     const status = trade.wasGreen ? 'PROFIT' : 'LOSS';
-    
+
     return {
       content: [
         {
@@ -177,7 +177,7 @@ class DexMindServer {
   private async getGreenTrades(args: any) {
     const limit = args.limit || 50;
     const trades = await this.memory.getGreenTrades(limit);
-    
+
     if (trades.length === 0) {
       return {
         content: [
@@ -189,7 +189,7 @@ class DexMindServer {
       };
     }
 
-    const tradeList = trades.map(trade => 
+    const tradeList = trades.map(trade =>
       `🟢 $${trade.netProfitUSD.toFixed(4)} | ${trade.tokenA}/${trade.tokenB} | ${trade.dexA}→${trade.dexB} | ${trade.chain}`
     ).join('\n');
 
@@ -205,7 +205,7 @@ class DexMindServer {
 
   private async getPerformanceStats() {
     const stats = await this.memory.getPerformanceStats();
-    
+
     return {
       content: [
         {

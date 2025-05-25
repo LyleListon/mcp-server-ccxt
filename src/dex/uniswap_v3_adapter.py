@@ -9,7 +9,12 @@ import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Tuple
 from datetime import datetime
-import aiohttp
+try:
+    import aiohttp
+except ImportError:
+    # Use mock for testing
+    from mock_aiohttp import ClientSession
+    aiohttp = type('MockAiohttp', (), {'ClientSession': ClientSession})()
 import json
 from decimal import Decimal
 

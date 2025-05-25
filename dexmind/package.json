@@ -1,6 +1,7 @@
 {
   "name": "dexmind",
   "version": "1.0.0",
+  "type": "module",
   "description": "Custom MCP Memory Server for DEX Arbitrage - Penny Hunter Edition",
   "main": "dist/index.js",
   "scripts": {

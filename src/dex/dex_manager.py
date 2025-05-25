@@ -12,10 +12,14 @@ from datetime import datetime
 
 from .uniswap_v3_adapter import UniswapV3Adapter
 from .sushiswap_adapter import SushiSwapAdapter
-from .real_price_adapter import CoinbaseAdapter, CoinGeckoAdapter
+from .real_price_adapter import CoinGeckoAdapter
 from .oneinch_adapter import OneInchAdapter
 from .paraswap_adapter import ParaswapAdapter
 from .stablecoin_adapter import StablecoinAdapter
+from .camelot_adapter import CamelotAdapter
+from .traderjoe_adapter import TraderJoeAdapter
+from .aerodrome_adapter import AerodromeAdapter
+from .kyberswap_adapter import KyberSwapAdapter
 
 logger = logging.getLogger(__name__)
 
@@ -54,10 +58,7 @@ class DEXManager:
         if dex_configs.get('sushiswap', {}).get('enabled', True):
             self.dexs['sushiswap'] = SushiSwapAdapter(dex_configs.get('sushiswap', {}))
 
-        # Real price adapters
-        if dex_configs.get('coinbase', {}).get('enabled', True):
-            self.dexs['coinbase'] = CoinbaseAdapter(dex_configs.get('coinbase', {}))
-
+        # CoinGecko for price reference only (not for trading)
         if dex_configs.get('coingecko', {}).get('enabled', True):
             self.dexs['coingecko'] = CoinGeckoAdapter(dex_configs.get('coingecko', {}))
 
@@ -71,6 +72,20 @@ class DEXManager:
         # Stablecoin specialist
         if dex_configs.get('stablecoin_specialist', {}).get('enabled', True):
             self.dexs['stablecoin_specialist'] = StablecoinAdapter(dex_configs.get('stablecoin_specialist', {}))
+
+        # Smaller DEXs for better arbitrage opportunities
+        if dex_configs.get('camelot', {}).get('enabled', False):
+            self.dexs['camelot'] = CamelotAdapter(dex_configs.get('camelot', {}))
+
+        if dex_configs.get('traderjoe', {}).get('enabled', False):
+            self.dexs['traderjoe'] = TraderJoeAdapter(dex_configs.get('traderjoe', {}))
+
+        if dex_configs.get('aerodrome', {}).get('enabled', False):
+            self.dexs['aerodrome'] = AerodromeAdapter(dex_configs.get('aerodrome', {}))
+
+        # Working smaller DEXs discovered by DEX discovery tool
+        if dex_configs.get('kyberswap', {}).get('enabled', False):
+            self.dexs['kyberswap'] = KyberSwapAdapter(dex_configs.get('kyberswap', {}))
 
         logger.info(f"Initialized {len(self.dexs)} DEX adapters: {list(self.dexs.keys())}")
 

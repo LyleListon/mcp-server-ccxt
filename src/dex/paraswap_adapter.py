@@ -27,12 +27,12 @@ class ParaswapAdapter(BaseDEX):
         """
         super().__init__("paraswap", config)
 
-        # Paraswap API endpoints
+        # Paraswap API endpoints (v5 API - v1 docs are outdated)
         self.base_url = "https://apiv5.paraswap.io"
         self.network = config.get('network', 1)  # Ethereum mainnet
 
-        # Rate limiting
-        self.rate_limit_delay = 0.3  # 300ms between requests
+        # Rate limiting (increased due to rate limits)
+        self.rate_limit_delay = 2.0  # 2 seconds between requests
         self.last_request_time = 0
 
         # Cache
@@ -155,13 +155,14 @@ class ParaswapAdapter(BaseDEX):
 
             self.last_request_time = now
 
-            # Get price from Paraswap with correct decimals
+            # Get price from Paraswap using v5 API format
             src_decimals = self.token_decimals.get(base_token, 18)
             dest_decimals = self.token_decimals.get(quote_token, 18)
 
             # 1 token in correct decimal format
             amount = str(10 ** src_decimals)
 
+            # Use the v5 API format with parameters
             url = f"{self.base_url}/prices"
             params = {
                 'srcToken': base_address,
@@ -230,7 +231,7 @@ class ParaswapAdapter(BaseDEX):
 
             self.last_request_time = now
 
-            # Get quote from Paraswap
+            # Get quote from Paraswap using v5 API format
             url = f"{self.base_url}/prices"
             params = {
                 'srcToken': base_address,

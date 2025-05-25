@@ -1,0 +1,78 @@
+{
+  "id": "pattern_20250525_051327_842885",
+  "timestamp": "2025-05-25T05:13:27.842885",
+  "opportunity": {
+    "base_token": "WETH",
+    "quote_token": "USDT",
+    "buy_dex": "stablecoin_specialist",
+    "sell_dex": "coingecko",
+    "buy_price": 1239.5317806041965,
+    "sell_price": 2479.62,
+    "spread_percentage": 100.04489104678993,
+    "profit_percentage": 100.04489104678993,
+    "estimated_profit": 950.4489104678993,
+    "gross_profit": 1000.4489104678993,
+    "estimated_gas_cost": 50,
+    "gas_estimate": 150000,
+    "confidence": 1.0,
+    "trade_amount": 1000,
+    "timestamp": "2025-05-25T05:13:24.131880",
+    "all_prices": {
+      "coingecko": 2479.62,
+      "stablecoin_specialist": 1239.5317806041965
+    },
+    "tokens": [
+      "WETH",
+      "USDT"
+    ],
+    "profit_analysis": {
+      "gross_profit_usd": 950.4489104678993,
+      "gas_cost_usd": 9.0,
+      "net_profit_usd": 941.4489104678993,
+      "profit_percentage": 100.04489104678993,
+      "net_profit_percentage": 99.09754499851276,
+      "profit_amount": 941.4489104678993,
+      "gas_cost": 9.0,
+      "is_profitable": true,
+      "profit_margin": 99.09754499851276
+    },
+    "risk_analysis": {
+      "risk_score": 40.625,
+      "risk_level": "medium",
+      "liquidity_risk": 90,
+      "slippage_risk": 17.5,
+      "gas_risk": 25,
+      "market_risk": 30,
+      "risk_factors": {
+        "liquidity": "high",
+        "slippage": "low",
+        "gas": "low",
+        "market": "medium"
+      },
+      "is_acceptable": true
+    },
+    "mcp_intelligence": {
+      "market_data_available": true,
+      "historical_patterns": [],
+      "confidence_score": 0.5
+    },
+    "enhanced_profit_score": 88.25875101430043,
+    "analysis_timestamp": "2025-05-25T05:13:27.742475"
+  },
+  "result": {
+    "success": true,
+    "simulated": true,
+    "profit": 941.4489104678993,
+    "gas_used": 154083,
+    "execution_time": 4.809183359512296,
+    "timestamp": "2025-05-25T05:13:27.842793"
+  },
+  "tokens": [
+    "WETH",
+    "USDT"
+  ],
+  "dexs": [],
+  "profit": 941.4489104678993,
+  "success": true,
+  "gas_cost": 0
+}

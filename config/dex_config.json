@@ -1,0 +1,47 @@
+{
+  "dexs": {
+    "uniswap_v3": {
+      "enabled": true,
+      "ethereum_rpc_url": "http://localhost:8545",
+      "backup_rpc_url": null,
+      "max_slippage": 0.5,
+      "gas_limit": 300000
+    },
+    "sushiswap": {
+      "enabled": true,
+      "max_slippage": 0.5,
+      "gas_limit": 250000
+    },
+    "coinbase": {
+      "enabled": false,
+      "api_key": null,
+      "api_secret": null,
+      "sandbox": true,
+      "note": "Disabled - focusing on DEX-only arbitrage"
+    },
+    "coingecko": {
+      "enabled": true,
+      "api_key": null,
+      "rate_limit_delay": 1.0
+    },
+    "oneinch": {
+      "enabled": false,
+      "api_key": null
+    },
+    "paraswap": {
+      "enabled": false,
+      "api_key": null
+    }
+  },
+  "trading": {
+    "min_profit_threshold": 0.5,
+    "max_slippage": 1.0,
+    "max_trade_size_usd": 1000,
+    "gas_price_gwei": 20
+  },
+  "monitoring": {
+    "check_interval_seconds": 5,
+    "max_opportunities_per_scan": 10,
+    "log_level": "INFO"
+  }
+}
