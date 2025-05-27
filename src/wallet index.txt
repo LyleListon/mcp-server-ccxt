@@ -1,0 +1,49 @@
+WALLET DIRECTORY INDEX
+======================
+
+Created: 2025-01-24
+Purpose: Wallet management and transaction handling
+
+FILES:
+------
+wallet_manager.py - Created: 2025-01-24 - Wallet management and transaction coordination
+
+DESCRIPTION:
+-----------
+This directory contains wallet management functionality for the
+MayArbi arbitrage bot, handling all aspects of wallet operations
+and transaction management.
+
+Key functionality:
+
+1. Wallet Management (wallet_manager.py):
+   - Multi-wallet support and coordination
+   - Private key management and security
+   - Balance tracking and monitoring
+   - Transaction signing and broadcasting
+   - Nonce management and synchronization
+
+Core features:
+- Secure private key handling with encryption
+- Support for multiple blockchain networks
+- Automatic balance monitoring and alerts
+- Transaction queue management
+- Gas estimation and optimization
+- Error handling and retry mechanisms
+- Integration with hardware wallets (future)
+
+Security considerations:
+- Private keys are never stored in plain text
+- Secure memory handling for sensitive data
+- Transaction validation before signing
+- Multi-signature support (planned)
+- Audit logging for all operations
+
+The wallet manager is designed to be:
+- Secure: Following best practices for key management
+- Reliable: Robust error handling and recovery
+- Efficient: Optimized for high-frequency trading
+- Extensible: Support for new wallet types and networks
+
+This component is critical for the safe and efficient execution
+of arbitrage trades across multiple blockchain networks.

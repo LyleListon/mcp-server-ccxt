@@ -1,0 +1,57 @@
+MONITORING DIRECTORY INDEX
+==========================
+
+Created: 2025-01-24
+Purpose: System monitoring and alerting components
+
+DESCRIPTION:
+-----------
+This directory contains monitoring and alerting components that
+ensure the MayArbi arbitrage bot operates reliably and efficiently.
+
+Key monitoring areas:
+
+1. System Health Monitoring:
+   - Bot performance metrics
+   - Resource utilization tracking
+   - Error rate monitoring
+   - Response time analysis
+
+2. Trading Performance Monitoring:
+   - Profit/loss tracking
+   - Trade execution success rates
+   - Arbitrage opportunity detection rates
+   - Slippage and gas cost analysis
+
+3. Market Condition Monitoring:
+   - DEX availability and health
+   - Network congestion monitoring
+   - Price feed reliability
+   - Liquidity level tracking
+
+4. Security Monitoring:
+   - Wallet security status
+   - Transaction validation
+   - Anomaly detection
+   - Fraud prevention
+
+Alerting capabilities:
+- Real-time notifications for critical events
+- Configurable alert thresholds
+- Multiple notification channels (email, SMS, Discord, etc.)
+- Alert escalation and acknowledgment
+- Historical alert tracking
+
+Monitoring features:
+- Dashboard and visualization tools
+- Automated health checks
+- Performance benchmarking
+- Trend analysis and reporting
+- Integration with external monitoring services
+
+The monitoring system ensures:
+- Early detection of issues
+- Proactive maintenance and optimization
+- Compliance with operational requirements
+- Continuous improvement of bot performance
+- Risk mitigation through early warning systems

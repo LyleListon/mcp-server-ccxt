@@ -1,0 +1,274 @@
+2025-05-26 13:40:32,797 - core.master_arbitrage_system - INFO - Master arbitrage system initialized
+2025-05-26 13:40:32,797 - core.master_arbitrage_system - INFO - 🚀 Initializing Master Arbitrage System...
+2025-05-26 13:40:32,877 - core.master_arbitrage_system - INFO -    📡 Initializing price feeds...
+2025-05-26 13:40:32,877 - feeds.real_price_feeds - INFO - Real price feeds initialized
+2025-05-26 13:40:33,045 - feeds.real_price_feeds - INFO - ✅ Connected to CoinGecko API
+2025-05-26 13:40:33,045 - core.master_arbitrage_system - INFO -    🌉 Initializing bridge monitor...
+2025-05-26 13:40:33,045 - bridges.bridge_cost_monitor - INFO - Bridge cost monitor initialized
+2025-05-26 13:40:33,461 - bridges.bridge_cost_monitor - INFO - ✅ Synapse Protocol API accessible
+2025-05-26 13:40:33,857 - bridges.bridge_cost_monitor - INFO - ✅ Across Protocol API accessible
+2025-05-26 13:40:34,198 - bridges.bridge_cost_monitor - INFO - ✅ Hop Protocol API accessible
+2025-05-26 13:40:34,420 - bridges.bridge_cost_monitor - WARNING - ⚠️  Stargate Finance API returned 403
+2025-05-26 13:40:34,856 - bridges.bridge_cost_monitor - INFO - ✅ Celer cBridge API accessible
+2025-05-26 13:40:34,857 - bridges.bridge_cost_monitor - INFO - 🔗 Connected to 4 bridge APIs
+2025-05-26 13:40:34,857 - core.master_arbitrage_system - INFO -    ⚡ Initializing executor...
+2025-05-26 13:40:34,857 - core.master_arbitrage_system - INFO - ✅ Master Arbitrage System Ready!
+2025-05-26 13:40:34,857 - core.master_arbitrage_system - INFO - 🎯 Starting Master Arbitrage System
+2025-05-26 13:40:34,857 - core.master_arbitrage_system - INFO - ============================================================
+2025-05-26 13:40:34,857 - core.master_arbitrage_system - INFO - 💰 Mode: LIVE
+2025-05-26 13:40:34,857 - core.master_arbitrage_system - INFO - 🎯 Min Profit: $0.05
+2025-05-26 13:40:34,857 - core.master_arbitrage_system - INFO - 📊 Scan Interval: 5s
+2025-05-26 13:40:34,857 - core.master_arbitrage_system - INFO - 🌉 Bridges: across, stargate, synapse, hop
+2025-05-26 13:40:34,857 - core.master_arbitrage_system - INFO - ============================================================
+2025-05-26 13:40:34,857 - core.master_arbitrage_system - INFO - 🔄 Starting main arbitrage loop...
+2025-05-26 13:40:34,857 - core.master_arbitrage_system - INFO - ⏰ Scan #1 - 13:40:34
+2025-05-26 13:40:34,857 - core.master_arbitrage_system - INFO - 🌉 Starting bridge monitoring loop...
+2025-05-26 13:40:34,857 - core.master_arbitrage_system - INFO - 📊 Starting performance reporting loop...
+2025-05-26 13:40:35,002 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 13:40:39,552 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:40:39,553 - core.master_arbitrage_system - INFO -    🎯 Found 35 opportunities
+2025-05-26 13:40:39,553 - core.master_arbitrage_system - INFO -    ⛽ Gas: 41.1 gwei (high)
+2025-05-26 13:40:39,553 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 13:40:39,857 - core.master_arbitrage_system - INFO - ⏰ Scan #2 - 13:40:39
+2025-05-26 13:40:39,910 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 13:40:43,511 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:40:43,511 - core.master_arbitrage_system - INFO -    🎯 Found 35 opportunities
+2025-05-26 13:40:43,511 - core.master_arbitrage_system - INFO -    ⛽ Gas: 41.6 gwei (high)
+2025-05-26 13:40:43,511 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 13:40:44,859 - core.master_arbitrage_system - INFO - ⏰ Scan #3 - 13:40:44
+2025-05-26 13:40:44,915 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 13:40:48,474 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:40:48,474 - core.master_arbitrage_system - INFO -    🎯 Found 35 opportunities
+2025-05-26 13:40:48,474 - core.master_arbitrage_system - INFO -    ⛽ Gas: 17.6 gwei (low)
+2025-05-26 13:40:48,474 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 13:40:49,860 - core.master_arbitrage_system - INFO - ⏰ Scan #4 - 13:40:49
+2025-05-26 13:40:49,903 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 13:40:53,517 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:40:53,518 - core.master_arbitrage_system - INFO -    🎯 Found 35 opportunities
+2025-05-26 13:40:53,518 - core.master_arbitrage_system - INFO -    ⛽ Gas: 37.2 gwei (medium)
+2025-05-26 13:40:53,518 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 13:40:54,862 - core.master_arbitrage_system - INFO - ⏰ Scan #5 - 13:40:54
+2025-05-26 13:40:54,906 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:40:58,949 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:40:58,950 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:40:59,864 - core.master_arbitrage_system - INFO - ⏰ Scan #6 - 13:40:59
+2025-05-26 13:40:59,892 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:41:03,498 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:41:03,498 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:41:04,865 - core.master_arbitrage_system - INFO - ⏰ Scan #7 - 13:41:04
+2025-05-26 13:41:04,901 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:41:08,544 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:41:08,545 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:41:09,867 - core.master_arbitrage_system - INFO - ⏰ Scan #8 - 13:41:09
+2025-05-26 13:41:09,905 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:41:13,899 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:41:13,899 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:41:14,868 - core.master_arbitrage_system - INFO - ⏰ Scan #9 - 13:41:14
+2025-05-26 13:41:14,910 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:41:18,504 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:41:18,504 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:41:19,870 - core.master_arbitrage_system - INFO - ⏰ Scan #10 - 13:41:19
+2025-05-26 13:41:19,914 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:41:23,527 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:41:23,527 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:41:24,872 - core.master_arbitrage_system - INFO - ⏰ Scan #11 - 13:41:24
+2025-05-26 13:41:24,904 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:41:28,513 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:41:28,513 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:41:30,377 - core.master_arbitrage_system - INFO - ⏰ Scan #12 - 13:41:30
+2025-05-26 13:41:30,424 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:41:34,054 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:41:34,054 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:41:35,379 - core.master_arbitrage_system - INFO - ⏰ Scan #13 - 13:41:35
+2025-05-26 13:41:35,409 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:41:39,034 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:41:39,034 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:41:40,381 - core.master_arbitrage_system - INFO - ⏰ Scan #14 - 13:41:40
+2025-05-26 13:41:40,414 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:41:47,419 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:41:47,419 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:41:47,419 - core.master_arbitrage_system - INFO - ⏰ Scan #15 - 13:41:47
+2025-05-26 13:41:47,453 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:41:52,234 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:41:52,235 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:41:52,420 - core.master_arbitrage_system - INFO - ⏰ Scan #16 - 13:41:52
+2025-05-26 13:41:52,454 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:41:56,032 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:41:56,032 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:41:57,422 - core.master_arbitrage_system - INFO - ⏰ Scan #17 - 13:41:57
+2025-05-26 13:41:57,500 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 13:42:01,107 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:42:01,107 - core.master_arbitrage_system - INFO -    🎯 Found 31 opportunities
+2025-05-26 13:42:01,108 - core.master_arbitrage_system - INFO -    ⛽ Gas: 15.7 gwei (low)
+2025-05-26 13:42:01,108 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 13:42:02,920 - core.master_arbitrage_system - INFO - ⏰ Scan #18 - 13:42:02
+2025-05-26 13:42:02,968 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 13:42:06,589 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:42:06,590 - core.master_arbitrage_system - INFO -    🎯 Found 31 opportunities
+2025-05-26 13:42:06,590 - core.master_arbitrage_system - INFO -    ⛽ Gas: 24.3 gwei (low)
+2025-05-26 13:42:06,590 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 13:42:07,922 - core.master_arbitrage_system - INFO - ⏰ Scan #19 - 13:42:07
+2025-05-26 13:42:07,964 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 13:42:11,531 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:42:11,531 - core.master_arbitrage_system - INFO -    🎯 Found 31 opportunities
+2025-05-26 13:42:11,531 - core.master_arbitrage_system - INFO -    ⛽ Gas: 42.0 gwei (high)
+2025-05-26 13:42:11,531 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 13:42:12,924 - core.master_arbitrage_system - INFO - ⏰ Scan #20 - 13:42:12
+2025-05-26 13:42:12,966 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 13:42:16,860 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:42:16,861 - core.master_arbitrage_system - INFO -    🎯 Found 31 opportunities
+2025-05-26 13:42:16,861 - core.master_arbitrage_system - INFO -    ⛽ Gas: 24.1 gwei (low)
+2025-05-26 13:42:16,861 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 13:42:17,925 - core.master_arbitrage_system - INFO - ⏰ Scan #21 - 13:42:17
+2025-05-26 13:42:17,975 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 13:42:21,857 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:42:21,857 - core.master_arbitrage_system - INFO -    🎯 Found 31 opportunities
+2025-05-26 13:42:21,857 - core.master_arbitrage_system - INFO -    ⛽ Gas: 38.5 gwei (medium)
+2025-05-26 13:42:21,857 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 13:42:22,928 - core.master_arbitrage_system - INFO - ⏰ Scan #22 - 13:42:22
+2025-05-26 13:42:22,971 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 13:42:26,609 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:42:26,610 - core.master_arbitrage_system - INFO -    🎯 Found 31 opportunities
+2025-05-26 13:42:26,610 - core.master_arbitrage_system - INFO -    ⛽ Gas: 42.4 gwei (high)
+2025-05-26 13:42:26,610 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 13:42:27,928 - core.master_arbitrage_system - INFO - ⏰ Scan #23 - 13:42:27
+2025-05-26 13:42:27,960 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:42:31,583 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:42:31,583 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:42:32,931 - core.master_arbitrage_system - INFO - ⏰ Scan #24 - 13:42:32
+2025-05-26 13:42:32,959 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:42:37,288 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:42:37,289 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:42:37,932 - core.master_arbitrage_system - INFO - ⏰ Scan #25 - 13:42:37
+2025-05-26 13:42:37,960 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:42:41,528 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:42:41,528 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:42:42,935 - core.master_arbitrage_system - INFO - ⏰ Scan #26 - 13:42:42
+2025-05-26 13:42:42,967 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:42:46,582 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:42:46,583 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:42:47,937 - core.master_arbitrage_system - INFO - ⏰ Scan #27 - 13:42:47
+2025-05-26 13:42:47,971 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:42:51,631 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:42:51,631 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:42:52,938 - core.master_arbitrage_system - INFO - ⏰ Scan #28 - 13:42:52
+2025-05-26 13:42:52,978 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:42:58,342 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:42:58,342 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:42:58,342 - core.master_arbitrage_system - INFO - ⏰ Scan #29 - 13:42:58
+2025-05-26 13:42:58,375 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:43:01,925 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:43:01,925 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:43:03,342 - core.master_arbitrage_system - INFO - ⏰ Scan #30 - 13:43:03
+2025-05-26 13:43:03,371 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:43:07,544 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:43:07,544 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:43:08,344 - core.master_arbitrage_system - INFO - ⏰ Scan #31 - 13:43:08
+2025-05-26 13:43:08,384 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:43:11,982 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:43:11,982 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:43:13,346 - core.master_arbitrage_system - INFO - ⏰ Scan #32 - 13:43:13
+2025-05-26 13:43:13,383 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:43:16,969 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:43:16,969 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:43:18,346 - core.master_arbitrage_system - INFO - ⏰ Scan #33 - 13:43:18
+2025-05-26 13:43:18,376 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:43:22,070 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:43:22,070 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:43:23,349 - core.master_arbitrage_system - INFO - ⏰ Scan #34 - 13:43:23
+2025-05-26 13:43:23,387 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:43:27,009 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:43:27,009 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:43:28,351 - core.master_arbitrage_system - INFO - ⏰ Scan #35 - 13:43:28
+2025-05-26 13:43:28,430 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 13:43:32,276 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:43:32,276 - core.master_arbitrage_system - INFO -    🎯 Found 31 opportunities
+2025-05-26 13:43:32,276 - core.master_arbitrage_system - INFO -    ⛽ Gas: 31.9 gwei (medium)
+2025-05-26 13:43:32,277 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 13:43:33,354 - core.master_arbitrage_system - INFO - ⏰ Scan #36 - 13:43:33
+2025-05-26 13:43:33,406 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 13:43:36,967 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:43:36,968 - core.master_arbitrage_system - INFO -    🎯 Found 31 opportunities
+2025-05-26 13:43:36,968 - core.master_arbitrage_system - INFO -    ⛽ Gas: 34.7 gwei (medium)
+2025-05-26 13:43:36,968 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 13:43:38,356 - core.master_arbitrage_system - INFO - ⏰ Scan #37 - 13:43:38
+2025-05-26 13:43:38,400 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 13:43:42,635 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:43:42,636 - core.master_arbitrage_system - INFO -    🎯 Found 31 opportunities
+2025-05-26 13:43:42,636 - core.master_arbitrage_system - INFO -    ⛽ Gas: 42.7 gwei (high)
+2025-05-26 13:43:42,636 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 13:43:43,358 - core.master_arbitrage_system - INFO - ⏰ Scan #38 - 13:43:43
+2025-05-26 13:43:43,409 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 13:43:46,969 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:43:46,970 - core.master_arbitrage_system - INFO -    🎯 Found 31 opportunities
+2025-05-26 13:43:46,970 - core.master_arbitrage_system - INFO -    ⛽ Gas: 21.2 gwei (low)
+2025-05-26 13:43:46,970 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 13:43:48,360 - core.master_arbitrage_system - INFO - ⏰ Scan #39 - 13:43:48
+2025-05-26 13:43:48,403 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 13:43:52,068 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:43:52,069 - core.master_arbitrage_system - INFO -    🎯 Found 31 opportunities
+2025-05-26 13:43:52,069 - core.master_arbitrage_system - INFO -    ⛽ Gas: 30.1 gwei (medium)
+2025-05-26 13:43:52,069 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 13:43:53,361 - core.master_arbitrage_system - INFO - ⏰ Scan #40 - 13:43:53
+2025-05-26 13:43:53,403 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:43:59,329 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:43:59,329 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:43:59,329 - core.master_arbitrage_system - INFO - ⏰ Scan #41 - 13:43:59
+2025-05-26 13:43:59,375 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:44:03,242 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:44:03,243 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:44:04,330 - core.master_arbitrage_system - INFO - ⏰ Scan #42 - 13:44:04
+2025-05-26 13:44:04,360 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:44:07,928 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:44:07,928 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:44:09,332 - core.master_arbitrage_system - INFO - ⏰ Scan #43 - 13:44:09
+2025-05-26 13:44:09,363 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:44:13,628 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:44:13,629 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:44:14,333 - core.master_arbitrage_system - INFO - ⏰ Scan #44 - 13:44:14
+2025-05-26 13:44:14,370 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:44:17,956 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:44:17,956 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:44:19,334 - core.master_arbitrage_system - INFO - ⏰ Scan #45 - 13:44:19
+2025-05-26 13:44:19,371 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:44:23,077 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:44:23,077 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:44:24,336 - core.master_arbitrage_system - INFO - ⏰ Scan #46 - 13:44:24
+2025-05-26 13:44:24,365 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:44:28,037 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:44:28,037 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:44:29,337 - core.master_arbitrage_system - INFO - ⏰ Scan #47 - 13:44:29
+2025-05-26 13:44:29,435 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:44:33,184 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:44:33,184 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:44:34,338 - core.master_arbitrage_system - INFO - ⏰ Scan #48 - 13:44:34
+2025-05-26 13:44:34,370 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:44:38,261 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:44:38,261 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:44:39,340 - core.master_arbitrage_system - INFO - ⏰ Scan #49 - 13:44:39
+2025-05-26 13:44:39,373 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:44:43,099 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:44:43,099 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:44:44,342 - core.master_arbitrage_system - INFO - ⏰ Scan #50 - 13:44:44
+2025-05-26 13:44:44,375 - feeds.real_price_feeds - WARNING - CoinGecko API error: 429
+2025-05-26 13:44:46,458 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 13:44:48,635 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 13:44:48,635 - core.master_arbitrage_system - INFO -    📊 No opportunities found
+2025-05-26 13:44:49,343 - core.master_arbitrage_system - INFO - 🔄 Main arbitrage loop stopped
+2025-05-26 13:44:52,681 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 13:45:39,562 - core.master_arbitrage_system - INFO - 🌉 Bridge monitoring loop stopped
+2025-05-26 13:46:41,926 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 13:46:42,927 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 13:47:41,488 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 13:47:47,075 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 13:47:48,079 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 13:47:58,557 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 13:50:44,792 - core.master_arbitrage_system - INFO - 📊 Performance reporting loop stopped
+2025-05-26 13:50:44,793 - core.master_arbitrage_system - INFO - 🧹 Cleaning up system resources...
+2025-05-26 13:50:44,793 - feeds.real_price_feeds - INFO - Disconnected from price feeds
+2025-05-26 13:50:44,793 - bridges.bridge_cost_monitor - INFO - Bridge cost monitor cleanup complete
+2025-05-26 13:50:44,793 - core.master_arbitrage_system - INFO - ✅ Cleanup complete
+2025-05-26 13:50:44,794 - core.master_arbitrage_system - INFO - 🧹 Cleaning up system resources...
+2025-05-26 13:50:44,794 - feeds.real_price_feeds - INFO - Disconnected from price feeds
+2025-05-26 13:50:44,794 - bridges.bridge_cost_monitor - INFO - Bridge cost monitor cleanup complete
+2025-05-26 13:50:44,794 - core.master_arbitrage_system - INFO - ✅ Cleanup complete

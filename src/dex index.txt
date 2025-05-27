@@ -1,0 +1,50 @@
+DEX DIRECTORY INDEX
+===================
+
+Created: 2025-01-24
+Purpose: DEX (Decentralized Exchange) adapters and integrations
+
+FILES:
+------
+__init__.py - Created: 2025-01-24 - Python package initialization
+aerodrome_adapter.py - Created: 2025-01-24 - Aerodrome DEX adapter
+base_dex.py - Created: 2025-01-24 - Base DEX adapter class
+camelot_adapter.py - Created: 2025-01-24 - Camelot DEX adapter
+dex_manager.py - Created: 2025-01-24 - DEX manager for coordinating adapters
+kyberswap_adapter.py - Created: 2025-01-24 - KyberSwap DEX adapter
+oneinch_adapter.py - Created: 2025-01-24 - 1inch DEX adapter
+paraswap_adapter.py - Created: 2025-01-24 - ParaSwap DEX adapter
+real_price_adapter.py - Created: 2025-01-24 - Real-time price adapter
+stablecoin_adapter.py - Created: 2025-01-24 - Stablecoin-specific adapter
+sushiswap_adapter.py - Created: 2025-01-24 - SushiSwap DEX adapter
+traderjoe_adapter.py - Created: 2025-01-24 - Trader Joe DEX adapter
+uniswap_v3_adapter.py - Created: 2025-01-24 - Uniswap V3 DEX adapter
+
+DESCRIPTION:
+-----------
+This directory contains adapters for various decentralized exchanges (DEXs)
+that the MayArbi arbitrage bot can interact with. Each adapter implements
+a standardized interface defined in base_dex.py to ensure consistent
+behavior across different exchanges.
+
+Supported DEXs:
+- Aerodrome: Base network DEX
+- Camelot: Arbitrum-based DEX with unique features
+- KyberSwap: Dynamic market maker protocol
+- 1inch: DEX aggregator for optimal routing
+- ParaSwap: Multi-DEX aggregator
+- SushiSwap: Community-driven DEX
+- Trader Joe: Avalanche-based DEX
+- Uniswap V3: Leading Ethereum DEX with concentrated liquidity
+
+Key functionality:
+- Price fetching and comparison
+- Liquidity analysis
+- Trade execution
+- Gas estimation
+- Slippage calculation
+- Real-time market data
+
+The dex_manager.py coordinates all adapters and provides a unified
+interface for the arbitrage bot to interact with multiple DEXs
+simultaneously.

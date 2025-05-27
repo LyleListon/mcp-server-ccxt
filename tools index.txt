@@ -1,0 +1,28 @@
+TOOLS DIRECTORY INDEX
+=====================
+
+Created: 2025-01-24
+Purpose: Utility tools and scripts for the MayArbi project
+
+FILES:
+------
+dex_discovery.py - Created: 2025-01-24 - DEX discovery and analysis tool
+
+DESCRIPTION:
+-----------
+This directory contains utility tools and scripts that support
+the development, deployment, and maintenance of the MayArbi
+arbitrage bot.
+
+Current tools include:
+- DEX Discovery: Tool for discovering and analyzing available
+  decentralized exchanges, their APIs, and trading pairs
+
+These tools are designed to:
+- Assist with development and debugging
+- Automate routine maintenance tasks
+- Provide analysis and reporting capabilities
+- Support deployment and configuration activities
+
+Tools in this directory are typically standalone scripts that
+can be run independently of the main arbitrage bot application.

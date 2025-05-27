@@ -1,0 +1,48 @@
+FILESCOPEMCP DIRECTORY INDEX
+============================
+
+Created: 2025-01-24
+Purpose: FileScopeMCP server for file system operations and project analysis
+
+FILES:
+------
+README.md - Created: 2025-01-24 - Documentation for FileScopeMCP
+mcp.json - Created: 2025-01-24 - MCP server configuration
+package-lock.json - Created: 2025-01-24 - NPM package lock file
+package.json - Created: 2025-01-24 - NPM package configuration
+tsconfig.json - Created: 2025-01-24 - TypeScript configuration
+
+SUBDIRECTORIES:
+--------------
+src/ - Source code for FileScopeMCP server
+  config-utils.ts - Created: 2025-01-24 - Configuration utilities
+  file-utils.ts - Created: 2025-01-24 - File system utilities
+  file-watcher.ts - Created: 2025-01-24 - File watching functionality
+  global-state.ts - Created: 2025-01-24 - Global state management
+  grouping-rules.ts - Created: 2025-01-24 - File grouping rules
+  layout-engine.ts - Created: 2025-01-24 - Layout engine for diagrams
+  logger.ts - Created: 2025-01-24 - Logging utilities
+  mcp-server.ts - Created: 2025-01-24 - Main MCP server implementation
+  mermaid-generator.ts - Created: 2025-01-24 - Mermaid diagram generation
+  storage-utils.ts - Created: 2025-01-24 - Storage utilities
+  types.ts - Created: 2025-01-24 - TypeScript type definitions
+
+DESCRIPTION:
+-----------
+FileScopeMCP is an MCP server that provides comprehensive file system
+analysis and project structure visualization capabilities. It integrates
+with the MayArbi project to provide:
+
+- File tree analysis and visualization
+- Project structure mapping
+- File importance ranking
+- Dependency analysis
+- Mermaid diagram generation for project visualization
+- File watching and change detection
+
+This tool is particularly useful for:
+- Understanding project structure
+- Identifying important files and dependencies
+- Generating documentation and diagrams
+- Monitoring file changes during development
+- Project analysis and refactoring support

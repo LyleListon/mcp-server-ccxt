@@ -1,0 +1,47 @@
+CORE DIRECTORY INDEX
+====================
+
+Created: 2025-01-24
+Purpose: Core arbitrage logic and algorithms
+
+SUBDIRECTORIES:
+--------------
+arbitrage/ - Arbitrage detection and calculation algorithms
+detection/ - Opportunity detection and analysis
+execution/ - Trade execution and order management
+
+DESCRIPTION:
+-----------
+This directory contains the core business logic for the MayArbi
+arbitrage bot. It implements the fundamental algorithms and
+processes that drive the bot's arbitrage operations.
+
+Key components:
+
+1. Arbitrage (arbitrage/):
+   - Price difference calculation algorithms
+   - Profit estimation and validation
+   - Risk assessment and management
+   - Multi-hop arbitrage path finding
+
+2. Detection (detection/):
+   - Real-time opportunity scanning
+   - Market inefficiency identification
+   - Signal processing and filtering
+   - Threshold-based alerting
+
+3. Execution (execution/):
+   - Trade order management
+   - Transaction sequencing and timing
+   - Slippage protection
+   - Error handling and recovery
+   - Gas optimization strategies
+
+The core module is designed to be:
+- High-performance for real-time operations
+- Modular for easy testing and maintenance
+- Extensible for new arbitrage strategies
+- Robust with comprehensive error handling
+
+This is the heart of the arbitrage bot where all critical
+trading decisions are made and executed.

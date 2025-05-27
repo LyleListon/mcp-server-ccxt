@@ -1,0 +1,180 @@
+2025-05-26 15:28:50,418 - core.master_arbitrage_system - INFO - Master arbitrage system initialized
+2025-05-26 15:28:50,418 - core.master_arbitrage_system - INFO - 🚀 Initializing Master Arbitrage System...
+2025-05-26 15:28:50,650 - core.master_arbitrage_system - INFO -    🏆 Initializing Alchemy SDK price feeds...
+2025-05-26 15:28:50,650 - feeds.alchemy_sdk_feeds - WARNING - Alchemy SDK not available, using Web3 fallback
+2025-05-26 15:28:50,650 - feeds.alchemy_sdk_feeds - INFO - ✅ Web3 Fallback: Arbitrum initialized
+2025-05-26 15:28:50,651 - feeds.alchemy_sdk_feeds - INFO - ✅ Web3 Fallback: Base initialized
+2025-05-26 15:28:50,651 - feeds.alchemy_sdk_feeds - INFO - ✅ Web3 Fallback: Optimism initialized
+2025-05-26 15:28:50,651 - feeds.alchemy_sdk_feeds - INFO - ✅ Web3 Fallback: Ethereum initialized
+2025-05-26 15:28:50,651 - feeds.alchemy_sdk_feeds - INFO - Alchemy SDK Feeds initialized
+2025-05-26 15:28:50,943 - feeds.alchemy_sdk_feeds - INFO - ✅ Arbitrum: Block #340822350
+2025-05-26 15:28:51,240 - feeds.alchemy_sdk_feeds - INFO - ✅ Base: Block #30749191
+2025-05-26 15:28:51,732 - feeds.alchemy_sdk_feeds - INFO - ✅ Ethereum: Block #22569051
+2025-05-26 15:28:51,732 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK connected to 3 chains
+2025-05-26 15:28:51,732 - core.master_arbitrage_system - INFO -    🌉 Initializing bridge monitor...
+2025-05-26 15:28:51,732 - bridges.bridge_cost_monitor - INFO - Bridge cost monitor initialized
+2025-05-26 15:28:52,241 - bridges.bridge_cost_monitor - INFO - ✅ Synapse Protocol API accessible
+2025-05-26 15:28:52,570 - bridges.bridge_cost_monitor - INFO - ✅ Across Protocol API accessible
+2025-05-26 15:28:52,864 - bridges.bridge_cost_monitor - INFO - ✅ Hop Protocol API accessible
+2025-05-26 15:28:53,052 - bridges.bridge_cost_monitor - WARNING - ⚠️  Stargate Finance API returned 403
+2025-05-26 15:28:53,645 - bridges.bridge_cost_monitor - INFO - ✅ Celer cBridge API accessible
+2025-05-26 15:28:53,645 - bridges.bridge_cost_monitor - INFO - 🔗 Connected to 4 bridge APIs
+2025-05-26 15:28:53,645 - core.master_arbitrage_system - INFO -    ⚡ Initializing executor...
+2025-05-26 15:28:53,645 - core.master_arbitrage_system - INFO - ✅ Master Arbitrage System Ready!
+2025-05-26 15:28:53,645 - core.master_arbitrage_system - INFO - 🎯 Starting Master Arbitrage System
+2025-05-26 15:28:53,645 - core.master_arbitrage_system - INFO - ============================================================
+2025-05-26 15:28:53,645 - core.master_arbitrage_system - INFO - 💰 Mode: LIVE
+2025-05-26 15:28:53,645 - core.master_arbitrage_system - INFO - 🎯 Min Profit: $0.02
+2025-05-26 15:28:53,645 - core.master_arbitrage_system - INFO - 📊 Scan Interval: 3s
+2025-05-26 15:28:53,645 - core.master_arbitrage_system - INFO - 🌉 Bridges: across, stargate, synapse, hop
+2025-05-26 15:28:53,645 - core.master_arbitrage_system - INFO - ============================================================
+2025-05-26 15:28:53,645 - core.master_arbitrage_system - INFO - 🔄 Starting main arbitrage loop...
+2025-05-26 15:28:53,645 - core.master_arbitrage_system - INFO - ⏰ Scan #1 - 15:28:53
+2025-05-26 15:28:53,645 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:28:53,646 - core.master_arbitrage_system - INFO -    🎯 Found 8 opportunities
+2025-05-26 15:28:53,646 - core.master_arbitrage_system - INFO -    ⛽ Gas: 19.7 gwei (low)
+2025-05-26 15:28:53,646 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:28:53,646 - core.master_arbitrage_system - INFO - 🌉 Starting bridge monitoring loop...
+2025-05-26 15:28:53,646 - core.master_arbitrage_system - INFO - 📊 Starting performance reporting loop...
+2025-05-26 15:28:56,649 - core.master_arbitrage_system - INFO - ⏰ Scan #2 - 15:28:56
+2025-05-26 15:28:56,649 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:28:56,649 - core.master_arbitrage_system - INFO -    🎯 Found 11 opportunities
+2025-05-26 15:28:56,649 - core.master_arbitrage_system - INFO -    ⛽ Gas: 30.2 gwei (medium)
+2025-05-26 15:28:56,649 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:28:59,652 - core.master_arbitrage_system - INFO - ⏰ Scan #3 - 15:28:59
+2025-05-26 15:28:59,652 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:28:59,652 - core.master_arbitrage_system - INFO -    🎯 Found 8 opportunities
+2025-05-26 15:28:59,652 - core.master_arbitrage_system - INFO -    ⛽ Gas: 16.3 gwei (low)
+2025-05-26 15:28:59,652 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:02,654 - core.master_arbitrage_system - INFO - ⏰ Scan #4 - 15:29:02
+2025-05-26 15:29:02,654 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:02,654 - core.master_arbitrage_system - INFO -    🎯 Found 8 opportunities
+2025-05-26 15:29:02,654 - core.master_arbitrage_system - INFO -    ⛽ Gas: 35.4 gwei (medium)
+2025-05-26 15:29:02,654 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:05,656 - core.master_arbitrage_system - INFO - ⏰ Scan #5 - 15:29:05
+2025-05-26 15:29:05,657 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:05,657 - core.master_arbitrage_system - INFO -    🎯 Found 9 opportunities
+2025-05-26 15:29:05,657 - core.master_arbitrage_system - INFO -    ⛽ Gas: 18.3 gwei (low)
+2025-05-26 15:29:05,657 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:09,515 - core.master_arbitrage_system - INFO - ⏰ Scan #6 - 15:29:09
+2025-05-26 15:29:09,515 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:09,515 - core.master_arbitrage_system - INFO -    🎯 Found 8 opportunities
+2025-05-26 15:29:09,515 - core.master_arbitrage_system - INFO -    ⛽ Gas: 20.7 gwei (low)
+2025-05-26 15:29:09,515 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:12,518 - core.master_arbitrage_system - INFO - ⏰ Scan #7 - 15:29:12
+2025-05-26 15:29:12,518 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:12,518 - core.master_arbitrage_system - INFO -    🎯 Found 8 opportunities
+2025-05-26 15:29:12,518 - core.master_arbitrage_system - INFO -    ⛽ Gas: 23.5 gwei (low)
+2025-05-26 15:29:12,518 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:15,520 - core.master_arbitrage_system - INFO - ⏰ Scan #8 - 15:29:15
+2025-05-26 15:29:15,520 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:15,520 - core.master_arbitrage_system - INFO -    🎯 Found 11 opportunities
+2025-05-26 15:29:15,520 - core.master_arbitrage_system - INFO -    ⛽ Gas: 20.6 gwei (low)
+2025-05-26 15:29:15,520 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:18,522 - core.master_arbitrage_system - INFO - ⏰ Scan #9 - 15:29:18
+2025-05-26 15:29:18,522 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:18,522 - core.master_arbitrage_system - INFO -    🎯 Found 10 opportunities
+2025-05-26 15:29:18,522 - core.master_arbitrage_system - INFO -    ⛽ Gas: 32.2 gwei (medium)
+2025-05-26 15:29:18,522 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:21,525 - core.master_arbitrage_system - INFO - ⏰ Scan #10 - 15:29:21
+2025-05-26 15:29:21,525 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:21,525 - core.master_arbitrage_system - INFO -    🎯 Found 8 opportunities
+2025-05-26 15:29:21,526 - core.master_arbitrage_system - INFO -    ⛽ Gas: 36.2 gwei (medium)
+2025-05-26 15:29:21,526 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:24,528 - core.master_arbitrage_system - INFO - ⏰ Scan #11 - 15:29:24
+2025-05-26 15:29:24,528 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:24,529 - core.master_arbitrage_system - INFO -    🎯 Found 9 opportunities
+2025-05-26 15:29:24,529 - core.master_arbitrage_system - INFO -    ⛽ Gas: 22.8 gwei (low)
+2025-05-26 15:29:24,529 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:27,529 - core.master_arbitrage_system - INFO - ⏰ Scan #12 - 15:29:27
+2025-05-26 15:29:27,529 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:27,529 - core.master_arbitrage_system - INFO -    🎯 Found 9 opportunities
+2025-05-26 15:29:27,529 - core.master_arbitrage_system - INFO -    ⛽ Gas: 15.3 gwei (low)
+2025-05-26 15:29:27,529 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:30,531 - core.master_arbitrage_system - INFO - ⏰ Scan #13 - 15:29:30
+2025-05-26 15:29:30,531 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:30,531 - core.master_arbitrage_system - INFO -    🎯 Found 8 opportunities
+2025-05-26 15:29:30,531 - core.master_arbitrage_system - INFO -    ⛽ Gas: 32.1 gwei (medium)
+2025-05-26 15:29:30,531 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:33,534 - core.master_arbitrage_system - INFO - ⏰ Scan #14 - 15:29:33
+2025-05-26 15:29:33,534 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:33,534 - core.master_arbitrage_system - INFO -    🎯 Found 10 opportunities
+2025-05-26 15:29:33,534 - core.master_arbitrage_system - INFO -    ⛽ Gas: 15.6 gwei (low)
+2025-05-26 15:29:33,534 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:36,537 - core.master_arbitrage_system - INFO - ⏰ Scan #15 - 15:29:36
+2025-05-26 15:29:36,538 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:36,538 - core.master_arbitrage_system - INFO -    🎯 Found 10 opportunities
+2025-05-26 15:29:36,538 - core.master_arbitrage_system - INFO -    ⛽ Gas: 20.5 gwei (low)
+2025-05-26 15:29:36,538 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:39,539 - core.master_arbitrage_system - INFO - ⏰ Scan #16 - 15:29:39
+2025-05-26 15:29:39,539 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:39,539 - core.master_arbitrage_system - INFO -    🎯 Found 9 opportunities
+2025-05-26 15:29:39,539 - core.master_arbitrage_system - INFO -    ⛽ Gas: 16.2 gwei (low)
+2025-05-26 15:29:39,539 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:43,394 - core.master_arbitrage_system - INFO - ⏰ Scan #17 - 15:29:43
+2025-05-26 15:29:43,394 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:43,394 - core.master_arbitrage_system - INFO -    🎯 Found 9 opportunities
+2025-05-26 15:29:43,394 - core.master_arbitrage_system - INFO -    ⛽ Gas: 24.6 gwei (low)
+2025-05-26 15:29:43,394 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:46,397 - core.master_arbitrage_system - INFO - ⏰ Scan #18 - 15:29:46
+2025-05-26 15:29:46,398 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:46,398 - core.master_arbitrage_system - INFO -    🎯 Found 8 opportunities
+2025-05-26 15:29:46,398 - core.master_arbitrage_system - INFO -    ⛽ Gas: 42.8 gwei (high)
+2025-05-26 15:29:46,398 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:49,401 - core.master_arbitrage_system - INFO - ⏰ Scan #19 - 15:29:49
+2025-05-26 15:29:49,401 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:49,401 - core.master_arbitrage_system - INFO -    🎯 Found 8 opportunities
+2025-05-26 15:29:49,401 - core.master_arbitrage_system - INFO -    ⛽ Gas: 24.2 gwei (low)
+2025-05-26 15:29:49,401 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:52,404 - core.master_arbitrage_system - INFO - ⏰ Scan #20 - 15:29:52
+2025-05-26 15:29:52,404 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:52,404 - core.master_arbitrage_system - INFO -    🎯 Found 8 opportunities
+2025-05-26 15:29:52,404 - core.master_arbitrage_system - INFO -    ⛽ Gas: 19.7 gwei (low)
+2025-05-26 15:29:52,404 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:55,407 - core.master_arbitrage_system - INFO - ⏰ Scan #21 - 15:29:55
+2025-05-26 15:29:55,407 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:55,407 - core.master_arbitrage_system - INFO -    🎯 Found 10 opportunities
+2025-05-26 15:29:55,407 - core.master_arbitrage_system - INFO -    ⛽ Gas: 40.6 gwei (high)
+2025-05-26 15:29:55,408 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:29:58,410 - core.master_arbitrage_system - INFO - ⏰ Scan #22 - 15:29:58
+2025-05-26 15:29:58,410 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:29:58,411 - core.master_arbitrage_system - INFO -    🎯 Found 8 opportunities
+2025-05-26 15:29:58,411 - core.master_arbitrage_system - INFO -    ⛽ Gas: 26.9 gwei (medium)
+2025-05-26 15:29:58,411 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:30:01,414 - core.master_arbitrage_system - INFO - ⏰ Scan #23 - 15:30:01
+2025-05-26 15:30:01,414 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:30:01,414 - core.master_arbitrage_system - INFO -    🎯 Found 10 opportunities
+2025-05-26 15:30:01,414 - core.master_arbitrage_system - INFO -    ⛽ Gas: 15.1 gwei (low)
+2025-05-26 15:30:01,414 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:30:04,417 - core.master_arbitrage_system - INFO - ⏰ Scan #24 - 15:30:04
+2025-05-26 15:30:04,417 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:30:04,418 - core.master_arbitrage_system - INFO -    🎯 Found 8 opportunities
+2025-05-26 15:30:04,418 - core.master_arbitrage_system - INFO -    ⛽ Gas: 28.9 gwei (medium)
+2025-05-26 15:30:04,418 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:30:07,420 - core.master_arbitrage_system - INFO - ⏰ Scan #25 - 15:30:07
+2025-05-26 15:30:07,421 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:30:07,421 - core.master_arbitrage_system - INFO -    🎯 Found 8 opportunities
+2025-05-26 15:30:07,421 - core.master_arbitrage_system - INFO -    ⛽ Gas: 20.5 gwei (low)
+2025-05-26 15:30:07,421 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:30:10,423 - core.master_arbitrage_system - INFO - ⏰ Scan #26 - 15:30:10
+2025-05-26 15:30:10,424 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:30:10,424 - core.master_arbitrage_system - INFO -    🎯 Found 8 opportunities
+2025-05-26 15:30:10,424 - core.master_arbitrage_system - INFO -    ⛽ Gas: 33.4 gwei (medium)
+2025-05-26 15:30:10,424 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:30:13,427 - core.master_arbitrage_system - INFO - ⏰ Scan #27 - 15:30:13
+2025-05-26 15:30:13,427 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK: Fetched 8 prices across 3 L2s
+2025-05-26 15:30:13,427 - core.master_arbitrage_system - INFO -    🎯 Found 10 opportunities
+2025-05-26 15:30:13,427 - core.master_arbitrage_system - INFO -    ⛽ Gas: 41.8 gwei (high)
+2025-05-26 15:30:13,427 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 15:30:17,192 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 15:30:17,290 - core.master_arbitrage_system - INFO - 🔄 Main arbitrage loop stopped
+2025-05-26 15:34:01,600 - core.master_arbitrage_system - INFO - 🌉 Bridge monitoring loop stopped
+2025-05-26 15:39:10,349 - core.master_arbitrage_system - INFO - 📊 Performance reporting loop stopped
+2025-05-26 15:39:10,350 - core.master_arbitrage_system - INFO - 🧹 Cleaning up system resources...
+2025-05-26 15:39:10,350 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK disconnected
+2025-05-26 15:39:10,350 - bridges.bridge_cost_monitor - INFO - Bridge cost monitor cleanup complete
+2025-05-26 15:39:10,350 - core.master_arbitrage_system - INFO - ✅ Cleanup complete
+2025-05-26 15:39:10,350 - core.master_arbitrage_system - INFO - 🧹 Cleaning up system resources...
+2025-05-26 15:39:10,350 - feeds.alchemy_sdk_feeds - INFO - ✅ Alchemy SDK disconnected
+2025-05-26 15:39:10,350 - bridges.bridge_cost_monitor - INFO - Bridge cost monitor cleanup complete
+2025-05-26 15:39:10,350 - core.master_arbitrage_system - INFO - ✅ Cleanup complete

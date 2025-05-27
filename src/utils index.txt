@@ -1,0 +1,46 @@
+UTILS DIRECTORY INDEX
+=====================
+
+Created: 2025-01-24
+Purpose: Utility functions and helper modules
+
+FILES:
+------
+gas_price_oracle.py - Created: 2025-01-24 - Gas price estimation and optimization
+simple_data_storage.py - Created: 2025-01-24 - Simple data storage utilities
+token_address_fetcher.py - Created: 2025-01-24 - Token address resolution and fetching
+
+DESCRIPTION:
+-----------
+This directory contains utility functions and helper modules that
+provide common functionality used throughout the MayArbi arbitrage bot.
+
+Key utilities:
+
+1. Gas Price Oracle (gas_price_oracle.py):
+   - Real-time gas price estimation
+   - Network congestion analysis
+   - Gas optimization strategies
+   - Multi-network gas price tracking
+
+2. Simple Data Storage (simple_data_storage.py):
+   - Lightweight data persistence
+   - Configuration management
+   - Temporary data caching
+   - File-based storage utilities
+
+3. Token Address Fetcher (token_address_fetcher.py):
+   - Token contract address resolution
+   - Multi-network token mapping
+   - Address validation and verification
+   - Token metadata retrieval
+
+These utilities are designed to:
+- Reduce code duplication across modules
+- Provide consistent interfaces for common operations
+- Handle edge cases and error conditions
+- Optimize performance for frequently used functions
+
+The utils directory serves as a foundation layer that supports
+the core arbitrage functionality with reliable, well-tested
+helper functions.

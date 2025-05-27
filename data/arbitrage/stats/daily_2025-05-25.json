@@ -1,8 +1,8 @@
 {
   "date": "2025-05-25",
-  "total_patterns": 166,
-  "successful_patterns": 146,
-  "total_profit": 8138149.2882745555,
+  "total_patterns": 174,
+  "successful_patterns": 153,
+  "total_profit": 8144735.178228997,
   "total_gas_cost": 0,
   "tokens_traded": [
     "DAI",

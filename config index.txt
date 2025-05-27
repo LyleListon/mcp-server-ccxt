@@ -1,0 +1,28 @@
+CONFIG DIRECTORY INDEX
+=====================
+
+Created: 2025-01-24
+Purpose: Configuration files for the MayArbi arbitrage bot
+
+FILES:
+------
+dex_config.json - Created: 2025-01-24 - DEX configuration settings and parameters
+
+SUBDIRECTORIES:
+--------------
+configs/ - Additional configuration files and templates
+
+DESCRIPTION:
+-----------
+This directory contains configuration files that control the behavior
+of the MayArbi arbitrage bot. These files define:
+
+- DEX connection parameters and endpoints
+- Trading pair configurations
+- Risk management settings
+- Performance tuning parameters
+- Network and blockchain settings
+
+The configuration files are in JSON format for easy parsing and
+modification. They should be reviewed and customized based on
+the specific deployment environment and trading requirements.

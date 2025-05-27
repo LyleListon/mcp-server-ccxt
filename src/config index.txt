@@ -1,0 +1,57 @@
+CONFIG DIRECTORY INDEX
+======================
+
+Created: 2025-01-24
+Purpose: Configuration management and settings
+
+SUBDIRECTORIES:
+--------------
+configs/ - Configuration files and templates
+
+DESCRIPTION:
+-----------
+This directory contains configuration management functionality
+for the MayArbi arbitrage bot, providing centralized handling
+of all configuration settings and parameters.
+
+Key functionality:
+
+1. Configuration Management:
+   - Environment-specific configurations
+   - Runtime configuration loading
+   - Configuration validation and defaults
+   - Dynamic configuration updates
+
+2. Settings Categories:
+   - DEX connection parameters
+   - Trading strategy settings
+   - Risk management parameters
+   - Network and blockchain configurations
+   - API keys and authentication
+   - Monitoring and alerting settings
+
+Configuration features:
+- Environment variable support
+- Configuration file hierarchies
+- Encrypted sensitive data handling
+- Configuration schema validation
+- Hot-reloading of non-critical settings
+- Configuration versioning and migration
+
+Supported formats:
+- JSON configuration files
+- YAML configuration files
+- Environment variables
+- Command-line arguments
+- Database-stored configurations
+
+The configuration system provides:
+- Centralized configuration management
+- Environment-specific deployments
+- Secure handling of sensitive data
+- Easy configuration updates and rollbacks
+- Validation to prevent misconfigurations
+
+This module ensures that the arbitrage bot can be easily
+configured for different environments (development, testing,
+production) while maintaining security and reliability.

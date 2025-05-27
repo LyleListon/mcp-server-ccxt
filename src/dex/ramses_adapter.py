@@ -1,6 +1,6 @@
 """
-Aerodrome DEX Adapter for Base Chain
-Aerodrome is the leading DEX on Base with unique ve(3,3) tokenomics.
+Ramses DEX Adapter for Arbitrum
+Ramses is a newer ve(3,3) DEX on Arbitrum with excellent arbitrage opportunities due to lower competition.
 """
 
 import asyncio
@@ -15,17 +15,17 @@ from .base_dex import BaseDEX
 logger = logging.getLogger(__name__)
 
 
-class AerodromeAdapter(BaseDEX):
-    """Aerodrome DEX adapter for Base chain arbitrage."""
+class RamsesAdapter(BaseDEX):
+    """Ramses DEX adapter for Arbitrum arbitrage."""
 
     def __init__(self, config: Dict[str, Any]):
-        """Initialize Aerodrome adapter."""
-        super().__init__("aerodrome", config)
+        """Initialize Ramses adapter."""
+        super().__init__("ramses", config)
 
-        # Aerodrome API endpoints (Base)
-        self.base_url = "https://api.aerodrome.finance"
-        self.subgraph_url = "https://api.studio.thegraph.com/query/48211/aerodrome-cl/version/latest"
-
+        # Ramses API endpoints (Arbitrum)
+        self.base_url = "https://api.ramses.exchange"
+        self.subgraph_url = "https://api.thegraph.com/subgraphs/name/ramsesexchange/concentrated-liquidity-graph"
+        
         # Rate limiting
         self.rate_limit_delay = 1.0  # 1 second between requests
         self.last_request_time = 0
@@ -38,15 +38,16 @@ class AerodromeAdapter(BaseDEX):
         # Session
         self.session = None
 
-        # Common Base token addresses
+        # Common Arbitrum token addresses
         self.token_addresses = {
-            'ETH': '0x4200000000000000000000000000000000000006',  # WETH on Base
-            'WETH': '0x4200000000000000000000000000000000000006',  # WETH on Base
-            'USDC': '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',  # USDC on Base
-            'USDbC': '0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA', # USD Base Coin
-            'DAI': '0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb',   # DAI on Base
-            'WBTC': '0x1C7D4B196Cb0C7B01d743Fbc6116a902379C7238',  # WBTC on Base
-            'AERO': '0x940181a94A35A4569E4529A3CDfB74e38FD98631'   # AERO token
+            'ETH': '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',  # WETH on Arbitrum
+            'WETH': '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',  # WETH on Arbitrum
+            'USDC': '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8',  # USDC on Arbitrum
+            'USDT': '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',  # USDT on Arbitrum
+            'DAI': '0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1',   # DAI on Arbitrum
+            'WBTC': '0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f',  # WBTC on Arbitrum
+            'ARB': '0x912CE59144191C1204E64559FE8253a0e49E6548',   # ARB token
+            'RAM': '0xAAA6C1E32C55A7Bfa8066A6FAE9b42650F262418'    # RAM token
         }
 
         # Token decimals
@@ -54,68 +55,57 @@ class AerodromeAdapter(BaseDEX):
             'ETH': 18,
             'WETH': 18,
             'USDC': 6,
-            'USDbC': 6,
+            'USDT': 6,
             'DAI': 18,
             'WBTC': 8,
-            'AERO': 18
+            'ARB': 18,
+            'RAM': 18
         }
 
-        logger.info(f"Aerodrome adapter initialized for {self.name}")
+        logger.info(f"Ramses adapter initialized for {self.name}")
 
     async def connect(self) -> bool:
-        """Connect to Aerodrome API."""
+        """Connect to Ramses API."""
         try:
             self.session = aiohttp.ClientSession()
 
-            # Test connection with a real query to get top pools
+            # Test connection with a simple query
             query = """
             {
-                pools(first: 5, orderBy: totalValueLockedUSD, orderDirection: desc) {
+                pools(first: 1) {
                     id
-                    token0 {
-                        symbol
-                        name
-                    }
-                    token1 {
-                        symbol
-                        name
-                    }
-                    totalValueLockedUSD
-                    volumeUSD
-                    stable
+                    token0 { symbol }
+                    token1 { symbol }
                 }
             }
             """
 
-            result = await self._query_subgraph(query)
-            if result and 'pools' in result and len(result['pools']) > 0:
-                self.connected = True
-                self.last_update = datetime.now()
-                logger.info(f"✅ Connected to Aerodrome (Base) - Found {len(result['pools'])} pools")
+            async with self.session.post(
+                self.subgraph_url,
+                json={'query': query}
+            ) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    if 'data' in data and 'pools' in data['data']:
+                        self.connected = True
+                        self.last_update = datetime.now()
+                        logger.info("✅ Connected to Ramses (Arbitrum)")
+                        return True
 
-                # Log some pool info for verification
-                for pool in result['pools'][:2]:
-                    tvl = float(pool.get('totalValueLockedUSD', 0))
-                    stable = pool.get('stable', False)
-                    pool_type = "Stable" if stable else "Volatile"
-                    logger.info(f"   {pool_type} Pool: {pool['token0']['symbol']}/{pool['token1']['symbol']} - TVL: ${tvl:,.0f}")
-
-                return True
-
-            logger.error("Failed to connect to Aerodrome subgraph - no valid response")
+            logger.error("Failed to connect to Ramses subgraph")
             return False
 
         except Exception as e:
-            logger.error(f"Error connecting to Aerodrome: {e}")
+            logger.error(f"Error connecting to Ramses: {e}")
             return False
 
     async def get_pairs(self) -> List[Dict[str, Any]]:
-        """Get available trading pairs from Aerodrome."""
+        """Get available trading pairs from Ramses."""
         try:
             pairs = []
 
-            # Create pairs from common Base tokens including AERO
-            common_tokens = ['ETH', 'WETH', 'USDC', 'USDbC', 'DAI', 'WBTC', 'AERO']
+            # Create pairs from common Arbitrum tokens including RAM
+            common_tokens = ['ETH', 'WETH', 'USDC', 'USDT', 'DAI', 'WBTC', 'ARB', 'RAM']
 
             for i, base_token in enumerate(common_tokens):
                 for quote_token in common_tokens[i+1:]:
@@ -127,8 +117,8 @@ class AerodromeAdapter(BaseDEX):
                                 'quote_token': quote_token,
                                 'dex': self.name,
                                 'price': price,
-                                'liquidity': 1200000,  # Higher liquidity on Base
-                                'volume_24h_usd': 8000000,  # ~$8M daily volume
+                                'liquidity': 300000,  # Newer DEX, lower liquidity but great opportunities
+                                'volume_24h_usd': 800000,  # ~$800K daily volume
                                 'last_updated': datetime.now().isoformat()
                             }
                             pairs.append(pair)
@@ -137,15 +127,15 @@ class AerodromeAdapter(BaseDEX):
                         logger.warning(f"Error getting price for {base_token}/{quote_token}: {e}")
                         continue
 
-            logger.info(f"Fetched {len(pairs)} pairs from Aerodrome")
+            logger.info(f"Fetched {len(pairs)} pairs from Ramses")
             return pairs
 
         except Exception as e:
-            logger.error(f"Error fetching pairs from Aerodrome: {e}")
+            logger.error(f"Error fetching pairs from Ramses: {e}")
             return []
 
     async def get_price(self, base_token: str, quote_token: str) -> Optional[float]:
-        """Get current price for a token pair using Aerodrome subgraph."""
+        """Get current price for a token pair using Ramses subgraph."""
         try:
             cache_key = f"{base_token}-{quote_token}"
 
@@ -172,7 +162,7 @@ class AerodromeAdapter(BaseDEX):
 
             self.last_request_time = now
 
-            # Query Aerodrome subgraph for pool data
+            # Query Ramses subgraph for pool data
             query = f"""
             {{
                 pools(
@@ -203,22 +193,22 @@ class AerodromeAdapter(BaseDEX):
             ) as response:
                 if response.status == 200:
                     data = await response.json()
-
+                    
                     if 'data' in data and 'pools' in data['data'] and data['data']['pools']:
                         pool = data['data']['pools'][0]
-
+                        
                         tvl0 = float(pool['totalValueLockedToken0'])
                         tvl1 = float(pool['totalValueLockedToken1'])
-
+                        
                         if tvl0 > 0 and tvl1 > 0:
                             # Determine which token is which
                             token0_address = pool['token0']['id'].lower()
-
+                            
                             if token0_address == base_address.lower():
                                 price = tvl1 / tvl0
                             else:
                                 price = tvl0 / tvl1
-
+                            
                             # Cache the result
                             self.price_cache[cache_key] = (price, datetime.now())
                             return price
@@ -226,16 +216,16 @@ class AerodromeAdapter(BaseDEX):
                     return None
 
                 else:
-                    logger.warning(f"Aerodrome query failed: HTTP {response.status}")
+                    logger.warning(f"Ramses query failed: HTTP {response.status}")
                     return None
 
         except Exception as e:
-            logger.error(f"Error getting Aerodrome price for {base_token}/{quote_token}: {e}")
+            logger.error(f"Error getting Ramses price for {base_token}/{quote_token}: {e}")
             return None
 
     async def get_liquidity(self, base_token: str, quote_token: str) -> Optional[float]:
         """Get liquidity for a token pair."""
-        return 1200000.0  # $1.2M typical liquidity
+        return 300000.0  # $300K typical liquidity for newer DEX
 
     async def get_quote(self, base_token: str, quote_token: str, amount: float) -> Optional[Dict[str, Any]]:
         """Get a quote for swapping tokens."""
@@ -243,59 +233,30 @@ class AerodromeAdapter(BaseDEX):
             price = await self.get_price(base_token, quote_token)
             if not price:
                 return None
-
+            
             expected_output = amount * price
-
+            
             return {
                 'base_token': base_token,
                 'quote_token': quote_token,
                 'input_amount': amount,
                 'expected_output': expected_output,
                 'price': price,
-                'slippage_estimate': 0.2,  # Lower slippage on Base
-                'gas_estimate': 150000,  # Base gas estimate
-                'fee_percentage': 0.05,  # 0.05% fee (very competitive)
+                'slippage_estimate': 0.5,  # Higher slippage for newer/smaller DEX
+                'gas_estimate': 220000,  # Arbitrum gas estimate
+                'fee_percentage': 0.3,  # 0.3% fee
                 'timestamp': datetime.now().isoformat()
             }
-
+            
         except Exception as e:
-            logger.error(f"Error getting Aerodrome quote: {e}")
-            return None
-
-    async def _query_subgraph(self, query: str) -> Optional[Dict[str, Any]]:
-        """Query Aerodrome subgraph."""
-        try:
-            # Rate limiting
-            now = datetime.now().timestamp()
-            if now - self.last_request_time < self.rate_limit_delay:
-                await asyncio.sleep(self.rate_limit_delay)
-
-            self.last_request_time = now
-
-            if not self.session:
-                self.session = aiohttp.ClientSession()
-
-            async with self.session.post(
-                self.subgraph_url,
-                json={'query': query},
-                headers={'Content-Type': 'application/json'}
-            ) as response:
-                if response.status == 200:
-                    result = await response.json()
-                    return result.get('data')
-                else:
-                    logger.error(f"Aerodrome subgraph query failed with status {response.status}")
-                    return None
-
-        except Exception as e:
-            logger.error(f"Error querying Aerodrome subgraph: {e}")
+            logger.error(f"Error getting Ramses quote: {e}")
             return None
 
     async def disconnect(self) -> None:
-        """Disconnect from Aerodrome API."""
+        """Disconnect from Ramses API."""
         if self.session:
             await self.session.close()
             self.session = None
 
         self.connected = False
-        logger.info("Disconnected from Aerodrome")
+        logger.info("Disconnected from Ramses")

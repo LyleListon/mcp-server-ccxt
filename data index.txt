@@ -1,0 +1,32 @@
+DATA DIRECTORY INDEX
+====================
+
+Created: 2025-01-24
+Purpose: Data storage for arbitrage operations and analytics
+
+SUBDIRECTORIES:
+--------------
+arbitrage/ - Arbitrage-related data storage
+  executions/ - Records of executed arbitrage trades
+  opportunities/ - Detected arbitrage opportunities
+  patterns/ - Historical patterns and analysis
+  stats/ - Statistical data and performance metrics
+
+DESCRIPTION:
+-----------
+This directory serves as the data storage layer for the MayArbi
+arbitrage bot. It contains structured directories for organizing
+different types of data generated during bot operations:
+
+- Execution records: Complete logs of executed trades
+- Opportunities: Detected but not necessarily executed opportunities
+- Patterns: Historical analysis and pattern recognition data
+- Statistics: Performance metrics and analytical data
+
+The data is organized in a hierarchical structure to facilitate
+easy access, analysis, and archival of trading information.
+This data is crucial for:
+- Performance analysis
+- Strategy optimization
+- Risk assessment
+- Compliance and auditing

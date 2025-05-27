@@ -1,0 +1,51 @@
+COMMON DIRECTORY INDEX
+======================
+
+Created: 2025-01-24
+Purpose: Shared utilities and common functionality
+
+FILES:
+------
+__init__.py - Created: 2025-01-24 - Python package initialization
+
+SUBDIRECTORIES:
+--------------
+events/ - Event handling and messaging system
+
+DESCRIPTION:
+-----------
+This directory contains shared utilities and common functionality
+used across multiple components of the MayArbi arbitrage bot.
+
+Key components:
+
+1. Events (events/):
+   - Event-driven architecture support
+   - Message passing between components
+   - Event subscription and publishing
+   - Asynchronous event handling
+
+Common functionality includes:
+- Shared data structures and models
+- Common constants and enumerations
+- Utility functions used across modules
+- Configuration management helpers
+- Logging and error handling utilities
+- Validation and sanitization functions
+
+Design principles:
+- DRY (Don't Repeat Yourself) - centralized common code
+- Consistency - standardized interfaces and patterns
+- Reusability - modular and composable components
+- Maintainability - well-documented and tested code
+
+The common directory serves as a foundation layer that:
+- Reduces code duplication
+- Ensures consistency across the application
+- Provides shared abstractions and utilities
+- Facilitates communication between components
+- Simplifies maintenance and updates
+
+This module is essential for maintaining a clean, organized,
+and maintainable codebase as the arbitrage bot grows in
+complexity and functionality.

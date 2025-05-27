@@ -1,0 +1,27 @@
+SCRIPTS DIRECTORY INDEX
+=======================
+
+Created: 2025-01-24
+Purpose: Utility scripts for system management
+
+FILES:
+------
+start_memory_server.sh - Created: 2025-01-24 - Script to start the MCP memory server
+
+DESCRIPTION:
+-----------
+This directory contains utility scripts for managing and operating
+the MayArbi system components.
+
+Current scripts include:
+- Memory Server Startup: Script to initialize and start the
+  MCP (Model Context Protocol) memory server component
+
+These scripts are designed to:
+- Simplify system startup and shutdown procedures
+- Automate common administrative tasks
+- Provide consistent deployment procedures
+- Support development and testing workflows
+
+Scripts should be executable and include appropriate error handling
+and logging for operational use.

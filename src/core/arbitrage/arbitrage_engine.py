@@ -5,7 +5,7 @@ import time
 import uuid
 from typing import Dict, List, Any, Optional
 
-from ...common.events.event_bus import EventBus
+from src.common.events.event_bus import EventBus
 from .path_finder import PathFinder
 from .profit_calculator import ProfitCalculator
 from .risk_analyzer import RiskAnalyzer

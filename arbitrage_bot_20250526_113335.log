@@ -1,0 +1,43 @@
+2025-05-26 11:33:35,343 - core.master_arbitrage_system - INFO - Master arbitrage system initialized
+2025-05-26 11:33:35,343 - core.master_arbitrage_system - INFO - 🚀 Initializing Master Arbitrage System...
+2025-05-26 11:33:35,440 - core.master_arbitrage_system - INFO -    📡 Initializing price feeds...
+2025-05-26 11:33:35,440 - feeds.real_price_feeds - INFO - Real price feeds initialized
+2025-05-26 11:33:35,611 - feeds.real_price_feeds - INFO - ✅ Connected to CoinGecko API
+2025-05-26 11:33:35,611 - core.master_arbitrage_system - INFO -    🌉 Initializing bridge monitor...
+2025-05-26 11:33:35,611 - bridges.bridge_cost_monitor - INFO - Bridge cost monitor initialized
+2025-05-26 11:33:36,147 - bridges.bridge_cost_monitor - INFO - ✅ Synapse Protocol API accessible
+2025-05-26 11:33:36,454 - bridges.bridge_cost_monitor - INFO - ✅ Across Protocol API accessible
+2025-05-26 11:33:36,820 - bridges.bridge_cost_monitor - INFO - ✅ Hop Protocol API accessible
+2025-05-26 11:33:37,057 - bridges.bridge_cost_monitor - WARNING - ⚠️  Stargate Finance API returned 403
+2025-05-26 11:33:37,466 - bridges.bridge_cost_monitor - INFO - ✅ Celer cBridge API accessible
+2025-05-26 11:33:37,466 - bridges.bridge_cost_monitor - INFO - 🔗 Connected to 4 bridge APIs
+2025-05-26 11:33:37,466 - core.master_arbitrage_system - INFO -    ⚡ Initializing executor...
+2025-05-26 11:33:37,466 - core.master_arbitrage_system - INFO - ✅ Master Arbitrage System Ready!
+2025-05-26 11:33:37,466 - core.master_arbitrage_system - INFO - 🎯 Starting Master Arbitrage System
+2025-05-26 11:33:37,466 - core.master_arbitrage_system - INFO - ============================================================
+2025-05-26 11:33:37,466 - core.master_arbitrage_system - INFO - 💰 Mode: SIMULATION
+2025-05-26 11:33:37,466 - core.master_arbitrage_system - INFO - 🎯 Min Profit: $0.5
+2025-05-26 11:33:37,466 - core.master_arbitrage_system - INFO - 📊 Scan Interval: 30s
+2025-05-26 11:33:37,466 - core.master_arbitrage_system - INFO - 🌉 Bridges: across, stargate, synapse
+2025-05-26 11:33:37,466 - core.master_arbitrage_system - INFO - ============================================================
+2025-05-26 11:33:37,466 - core.master_arbitrage_system - INFO - 🔄 Starting main arbitrage loop...
+2025-05-26 11:33:37,466 - core.master_arbitrage_system - INFO - ⏰ Scan #1 - 11:33:37
+2025-05-26 11:33:37,466 - core.master_arbitrage_system - INFO - 🌉 Starting bridge monitoring loop...
+2025-05-26 11:33:37,466 - core.master_arbitrage_system - INFO - 📊 Starting performance reporting loop...
+2025-05-26 11:33:37,548 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 11:33:41,500 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 11:33:41,500 - core.master_arbitrage_system - INFO -    🎯 Found 17 opportunities
+2025-05-26 11:33:41,500 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 11:34:05,304 - core.master_arbitrage_system - INFO - Received shutdown signal (15)
+2025-05-26 11:43:37,568 - core.master_arbitrage_system - INFO - 📊 PERFORMANCE REPORT
+2025-05-26 11:43:37,568 - core.master_arbitrage_system - INFO -    Uptime: 0.2 hours
+2025-05-26 11:43:37,568 - core.master_arbitrage_system - INFO -    Scans: 1
+2025-05-26 11:43:37,568 - core.master_arbitrage_system - INFO -    Opportunities: 17
+2025-05-26 11:43:37,569 - core.master_arbitrage_system - INFO -    Executions: 0
+2025-05-26 11:43:37,569 - core.master_arbitrage_system - INFO -    Success Rate: 0.0%
+2025-05-26 11:43:37,569 - core.master_arbitrage_system - INFO -    Net Profit: $0.00
+2025-05-26 11:43:37,569 - core.master_arbitrage_system - INFO -    Hourly Rate: $0.00/hour
+2025-05-26 11:43:37,569 - core.master_arbitrage_system - INFO - 🧹 Cleaning up system resources...
+2025-05-26 11:43:37,569 - feeds.real_price_feeds - INFO - Disconnected from price feeds
+2025-05-26 11:43:37,569 - bridges.bridge_cost_monitor - INFO - Bridge cost monitor cleanup complete
+2025-05-26 11:43:37,569 - core.master_arbitrage_system - INFO - ✅ Cleanup complete
