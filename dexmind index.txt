@@ -1,0 +1,40 @@
+DEXMIND DIRECTORY INDEX
+=======================
+
+Created: 2025-01-24
+Purpose: DexMind MCP server for DEX intelligence and memory
+
+FILES:
+------
+dexmind.db - Created: 2025-01-24 - SQLite database for DexMind data storage
+package-lock.json - Created: 2025-01-24 - NPM package lock file
+package.json - Created: 2025-01-24 - NPM package configuration
+tsconfig.json - Created: 2025-01-24 - TypeScript configuration
+
+SUBDIRECTORIES:
+--------------
+src/ - Source code for DexMind MCP server
+  index.ts - Created: 2025-01-24 - Main entry point for DexMind server
+  memory.ts - Created: 2025-01-24 - Memory management functionality
+  types.ts - Created: 2025-01-24 - TypeScript type definitions
+
+DESCRIPTION:
+-----------
+DexMind is a specialized MCP (Model Context Protocol) server that provides
+intelligent memory and data management capabilities for DEX (Decentralized
+Exchange) operations within the MayArbi arbitrage bot ecosystem.
+
+Key features:
+- Persistent storage of DEX data and trading patterns
+- Intelligent memory management for arbitrage opportunities
+- Historical data analysis and pattern recognition
+- Integration with the main arbitrage bot through MCP protocol
+
+The DexMind server maintains a local SQLite database to store:
+- DEX metadata and configuration
+- Historical trading data
+- Arbitrage opportunity patterns
+- Performance metrics and analytics
+
+This component enhances the arbitrage bot's decision-making capabilities
+by providing contextual memory and intelligent data retrieval.

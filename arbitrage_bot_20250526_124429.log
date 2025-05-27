@@ -1,0 +1,38 @@
+2025-05-26 12:44:55,338 - core.master_arbitrage_system - INFO - Master arbitrage system initialized
+2025-05-26 12:44:55,338 - core.master_arbitrage_system - INFO - 🚀 Initializing Master Arbitrage System...
+2025-05-26 12:44:55,424 - core.master_arbitrage_system - INFO -    📡 Initializing price feeds...
+2025-05-26 12:44:55,424 - feeds.real_price_feeds - INFO - Real price feeds initialized
+2025-05-26 12:44:55,589 - feeds.real_price_feeds - INFO - ✅ Connected to CoinGecko API
+2025-05-26 12:44:55,589 - core.master_arbitrage_system - INFO -    🌉 Initializing bridge monitor...
+2025-05-26 12:44:55,589 - bridges.bridge_cost_monitor - INFO - Bridge cost monitor initialized
+2025-05-26 12:44:55,961 - bridges.bridge_cost_monitor - INFO - ✅ Synapse Protocol API accessible
+2025-05-26 12:44:56,446 - bridges.bridge_cost_monitor - INFO - ✅ Across Protocol API accessible
+2025-05-26 12:44:56,836 - bridges.bridge_cost_monitor - INFO - ✅ Hop Protocol API accessible
+2025-05-26 12:44:57,025 - bridges.bridge_cost_monitor - WARNING - ⚠️  Stargate Finance API returned 403
+2025-05-26 12:44:57,525 - bridges.bridge_cost_monitor - INFO - ✅ Celer cBridge API accessible
+2025-05-26 12:44:57,525 - bridges.bridge_cost_monitor - INFO - 🔗 Connected to 4 bridge APIs
+2025-05-26 12:44:57,525 - core.master_arbitrage_system - INFO -    ⚡ Initializing executor...
+2025-05-26 12:44:57,525 - core.master_arbitrage_system - INFO - ✅ Master Arbitrage System Ready!
+2025-05-26 12:44:57,525 - core.master_arbitrage_system - INFO - 🎯 Starting Master Arbitrage System
+2025-05-26 12:44:57,525 - core.master_arbitrage_system - INFO - ============================================================
+2025-05-26 12:44:57,525 - core.master_arbitrage_system - INFO - 💰 Mode: LIVE
+2025-05-26 12:44:57,525 - core.master_arbitrage_system - INFO - 🎯 Min Profit: $0.5
+2025-05-26 12:44:57,526 - core.master_arbitrage_system - INFO - 📊 Scan Interval: 30s
+2025-05-26 12:44:57,526 - core.master_arbitrage_system - INFO - 🌉 Bridges: across, stargate, synapse
+2025-05-26 12:44:57,526 - core.master_arbitrage_system - INFO - ============================================================
+2025-05-26 12:44:57,526 - core.master_arbitrage_system - INFO - 🔄 Starting main arbitrage loop...
+2025-05-26 12:44:57,526 - core.master_arbitrage_system - INFO - ⏰ Scan #1 - 12:44:57
+2025-05-26 12:44:57,526 - core.master_arbitrage_system - INFO - 🌉 Starting bridge monitoring loop...
+2025-05-26 12:44:57,526 - core.master_arbitrage_system - INFO - 📊 Starting performance reporting loop...
+2025-05-26 12:44:57,589 - feeds.real_price_feeds - INFO - ✅ CoinGecko: Fetched 4 token prices
+2025-05-26 12:45:03,993 - feeds.real_price_feeds - INFO - ✅ DexScreener: Fetched 15 chain-specific prices
+2025-05-26 12:45:03,993 - core.master_arbitrage_system - INFO -    🎯 Found 18 opportunities
+2025-05-26 12:45:03,993 - core.master_arbitrage_system - INFO -    ⚠️  No viable opportunities after filtering
+2025-05-26 12:45:08,219 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 12:45:34,981 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 12:47:45,937 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 12:47:46,224 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 12:48:24,862 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 12:48:55,722 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 12:48:55,924 - core.master_arbitrage_system - INFO - Received shutdown signal (2)
+2025-05-26 12:49:24,785 - core.master_arbitrage_system - INFO - Received shutdown signal (2)

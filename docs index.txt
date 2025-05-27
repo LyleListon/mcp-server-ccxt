@@ -1,0 +1,37 @@
+DOCS DIRECTORY INDEX
+===================
+
+Created: 2025-01-24
+Purpose: Documentation for the MayArbi arbitrage bot project
+
+FILES:
+------
+01-PROJECT-OVERVIEW.md - Created: 2025-01-24 - High-level project overview and goals
+02-SYSTEM-ARCHITECTURE.md - Created: 2025-01-24 - System architecture documentation
+03-DEXMIND-OVERVIEW.md - Created: 2025-01-24 - DexMind component overview
+04-DEXMIND-TOOLS.md - Created: 2025-01-24 - DexMind tools and utilities documentation
+05-SETUP-GUIDE.md - Created: 2025-01-24 - Setup and installation guide
+06-TRADING-STRATEGY.md - Created: 2025-01-24 - Trading strategy documentation
+ARCHITECTURE.md - Created: 2025-01-24 - Detailed architecture documentation
+DEXMIND.md - Created: 2025-01-24 - DexMind specific documentation
+README.md - Created: 2025-01-24 - Main documentation entry point
+
+SUBDIRECTORIES:
+--------------
+api/ - API documentation and specifications
+architecture/ - Architecture diagrams and detailed design docs
+guides/ - User guides and tutorials
+
+DESCRIPTION:
+-----------
+This directory contains comprehensive documentation for the MayArbi project.
+The documentation is organized to provide both high-level overviews and
+detailed technical specifications for developers and users.
+
+The documentation covers:
+- Project overview and objectives
+- System architecture and design
+- Setup and configuration instructions
+- Trading strategies and algorithms
+- API specifications and usage
+- Developer guides and best practices

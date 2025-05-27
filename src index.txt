@@ -1,0 +1,39 @@
+SRC DIRECTORY INDEX
+==================
+
+Created: 2025-01-24
+Purpose: Main source code directory for the MayArbi arbitrage bot
+
+FILES:
+------
+__init__.py - Created: 2025-01-24 - Python package initialization file
+enhanced_arbitrage_bot.py - Created: 2025-01-24 - Enhanced arbitrage bot implementation
+interfaces.py - Created: 2025-01-24 - Interface definitions for the arbitrage system
+mock_aiohttp.py - Created: 2025-01-24 - Mock HTTP client for testing
+models.py - Created: 2025-01-24 - Data models and structures
+real_arbitrage_bot.py - Created: 2025-01-24 - Real arbitrage bot implementation
+
+SUBDIRECTORIES:
+--------------
+analytics/ - Market analysis and data processing components
+common/ - Shared utilities and common functionality
+config/ - Configuration files and settings
+core/ - Core arbitrage logic and algorithms
+dex/ - DEX (Decentralized Exchange) adapters and integrations
+integrations/ - External service integrations (flash loans, MCP, MEV)
+monitoring/ - System monitoring and alerting
+utils/ - Utility functions and helpers
+wallet/ - Wallet management and transaction handling
+
+DESCRIPTION:
+-----------
+This directory contains the main source code for the MayArbi arbitrage bot project.
+The bot is designed to identify and execute arbitrage opportunities across multiple
+decentralized exchanges (DEXs) on various blockchain networks.
+
+Key components include:
+- DEX adapters for major exchanges (Uniswap, SushiSwap, etc.)
+- Arbitrage detection and execution engines
+- Wallet management and transaction handling
+- Market analysis and monitoring tools
+- Integration with external services for enhanced functionality

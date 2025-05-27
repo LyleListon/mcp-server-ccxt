@@ -1,6 +1,6 @@
 # 🏗️ MayArbi Architecture Documentation
 
-## 🎉️ System Overview
+## 🎯 System Overview
 
 MayArbi is built as a modular, extensible system using the Model Context Protocol (MCP) ecosystem. This architecture enables seamless integration between AI assistants, memory systems, and trading components.
 
@@ -80,15 +80,15 @@ arbitrage_opportunities (
 - Tool recommendation
 - Ecosystem exploration
 
-## 🍐 Multi-Chain Architecture
+## 🌐 Multi-Chain Architecture
 
 ### Chain Support Matrix
 
 | Chain | Node Access | Primary DEXs | Status |
-|-------|-------------|----------------|--------|
+|-------|-------------|--------------|--------|
 | Ethereum | ✅ Direct | Uniswap V3, Curve, Balancer | Active |
-| Arbitrum | 💗 RPA | Camelot, Trader Joe, SushiSwap | Active |
-| Base | 💗 RPC | Aerodrome, Uniswap V3 | Active |
+| Arbitrum | 🔗 RPC | Camelot, Trader Joe, SushiSwap | Active |
+| Base | 🔗 RPC | Aerodrome, Uniswap V3 | Active |
 | Vitruveo | ✅ Direct | Early Discovery | Planning |
 
 ### Node Infrastructure
@@ -96,14 +96,14 @@ arbitrage_opportunities (
 ```
 Personal Infrastructure
 ├── Ethereum Node (Direct)
-│   ├── Mempool Access ✡
-
+│   ├── Mempool Access ⚡
 │   ├── Real-time State 📊
-¢│   └── MEV Opportunities 💖
+│   └── MEV Opportunities 💎
 ├── Vitruveo Node (Direct)
 │   ├── Early Chain Access 🚀
-¢│   ├── Low Competition 🎿
-¢│   └── Discovery Mode 💅�S── RPC Endpoints
+│   ├── Low Competition 🎯
+│   └── Discovery Mode 🔍
+└── RPC Endpoints
     ├── Arbitrum (Alchemy/Infura)
     ├── Base (Coinbase/Public)
     └── Backup Providers
@@ -155,7 +155,7 @@ graph TD
 - **Memory**: Real-time pattern recognition
 - **Risk**: High capital, sophisticated execution
 
-## 🚡️ Security Architecture
+## 🛡️ Security Architecture
 
 ### Key Management
 - **Environment Variables**: Sensitive configuration
@@ -190,7 +190,7 @@ graph TD
 - **Alerts**: Real-time notifications
 - **Dashboards**: Visual performance monitoring
 
-## 💮 Future Architecture Considerations
+## 🔮 Future Architecture Considerations
 
 ### Scalability
 - **Horizontal Scaling**: Multiple bot instances
@@ -204,12 +204,11 @@ graph TD
 - **Portfolio Management**: Multi-strategy coordination
 - **Risk Analytics**: Advanced risk modeling
 
-## 🤥 Integration Points
+## 🤝 Integration Points
 
 ### AI Assistant Integration
 - **Augment Code**: Primary development interface
-- 
-💧 MCP Protocol**: Standardized communication
+- **MCP Protocol**: Standardized communication
 - **Memory Sharing**: Cross-component data access
 - **Code Generation**: AI-assisted development
 

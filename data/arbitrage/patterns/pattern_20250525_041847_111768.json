@@ -1,0 +1,78 @@
+{
+  "id": "pattern_20250525_041847_111768",
+  "timestamp": "2025-05-25T04:18:47.111768",
+  "opportunity": {
+    "base_token": "DAI",
+    "quote_token": "USDC",
+    "buy_dex": "stablecoin_specialist",
+    "sell_dex": "sushiswap",
+    "buy_price": 0.9983309063097663,
+    "sell_price": 2000.0,
+    "spread_percentage": 200234.37684432778,
+    "profit_percentage": 200234.37684432778,
+    "estimated_profit": 2002293.7684432778,
+    "gross_profit": 2002343.7684432778,
+    "estimated_gas_cost": 50,
+    "gas_estimate": 150000,
+    "confidence": 1.0,
+    "trade_amount": 1000,
+    "timestamp": "2025-05-25T04:18:46.009728",
+    "all_prices": {
+      "sushiswap": 2000.0,
+      "stablecoin_specialist": 0.9983309063097663
+    },
+    "tokens": [
+      "DAI",
+      "USDC"
+    ],
+    "profit_analysis": {
+      "gross_profit_usd": 2002293.7684432778,
+      "gas_cost_usd": 9.0,
+      "net_profit_usd": 2002284.7684432778,
+      "profit_percentage": 200234.37684432778,
+      "net_profit_percentage": 200233.47682185355,
+      "profit_amount": 2002284.7684432778,
+      "gas_cost": 9.0,
+      "is_profitable": true,
+      "profit_margin": 200233.47682185355
+    },
+    "risk_analysis": {
+      "risk_score": 40.625,
+      "risk_level": "medium",
+      "liquidity_risk": 90,
+      "slippage_risk": 17.5,
+      "gas_risk": 25,
+      "market_risk": 30,
+      "risk_factors": {
+        "liquidity": "high",
+        "slippage": "low",
+        "gas": "low",
+        "market": "medium"
+      },
+      "is_acceptable": true
+    },
+    "mcp_intelligence": {
+      "market_data_available": true,
+      "historical_patterns": [],
+      "confidence_score": 0.5
+    },
+    "enhanced_profit_score": 178332.9402944633,
+    "analysis_timestamp": "2025-05-25T04:18:47.010855"
+  },
+  "result": {
+    "success": true,
+    "simulated": true,
+    "profit": 2002284.7684432778,
+    "gas_used": 260978,
+    "execution_time": 2.649722164036474,
+    "timestamp": "2025-05-25T04:18:47.111643"
+  },
+  "tokens": [
+    "DAI",
+    "USDC"
+  ],
+  "dexs": [],
+  "profit": 2002284.7684432778,
+  "success": true,
+  "gas_cost": 0
+}

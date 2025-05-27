@@ -74,13 +74,13 @@ MayArbi's strategy is built on the principle that **every green trade matters**,
 
 **Risk Level**: High capital, expert-level execution
 
-## 🎿 Phase 1 Strategy (Current Focus)
+## 🎯 Phase 1 Strategy (Current Focus)
 
 ### Target Opportunities
 
 #### Primary Pairs
 1. **ETH/USDC** - Highest liquidity, most stable
-2. **WBTA/ETH** - Good volatility, decent volume
+2. **WBTC/ETH** - Good volatility, decent volume
 3. **USDC/USDT** - Stablecoin arbitrage (low risk)
 
 #### Primary DEXs
@@ -117,7 +117,7 @@ MayArbi's strategy is built on the principle that **every green trade matters**,
 ## 🧠 DexMind Learning Strategy
 
 ### Data Collection
-Evvry trade teaches us:
+Every trade teaches us:
 ```typescript
 // What DexMind learns from each trade
 {
@@ -143,7 +143,7 @@ As patterns emerge:
 3. **Month 2**: Optimize based on patterns
 4. **Month 3**: Scale successful strategies
 
-## ⚡‍ Execution Strategy
+## ⚡ Execution Strategy
 
 ### Trade Selection Criteria
 ```python
@@ -161,8 +161,7 @@ if spread_percentage > 0.1:  # Minimum spread
 - **Daily Limit**: Maximum 10 trades per day
 
 ### Gas Optimization
-- 
-📊 Dynamic Pricing**: Adjust based on network congestion
+- **Dynamic Pricing**: Adjust based on network congestion
 - **Timing Strategy**: Wait for lower gas periods when possible
 - **Batch Operations**: Combine multiple opportunities
 - **MEV Protection**: Use private mempools when available
@@ -187,7 +186,7 @@ if spread_percentage > 0.1:  # Minimum spread
 - **Strategy Refinement**: Major optimizations
 - **Goal Setting**: Next month's targets
 
-## 💮 Future Strategy Elements
+## 🔮 Future Strategy Elements
 
 ### Advanced Techniques (Phase 2+)
 - **Statistical Arbitrage**: Price correlation analysis
@@ -223,4 +222,4 @@ if spread_percentage > 0.1:  # Minimum spread
 
 **Remember**: Every penny counts, every trade teaches, every pattern matters! 🎯💰
 
-**Next**: See [07-SECURITY-CONSIDERATIONS.md](07-SECURITY-COSSIDERATIONS.md) for safety guidelines.
+**Next**: See [07-SECURITY-CONSIDERATIONS.md](07-SECURITY-CONSIDERATIONS.md) for safety guidelines.

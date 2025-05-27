@@ -1,0 +1,46 @@
+SERENA DIRECTORY INDEX
+======================
+
+Created: 2025-01-24
+Purpose: Serena AI agent framework for enhanced automation
+
+FILES:
+------
+README.md - Created: 2025-01-24 - Documentation for Serena framework
+pyproject.toml - Created: 2025-01-24 - Python project configuration
+serena-project.yml - Created: 2025-01-24 - Serena project configuration
+serena_config.yml - Created: 2025-01-24 - Serena runtime configuration
+uv.lock - Created: 2025-01-24 - UV package manager lock file
+
+SUBDIRECTORIES:
+--------------
+src/ - Source code for Serena framework
+  multilspy/ - Multi-language server protocol support
+  serena/ - Core Serena framework implementation
+
+DESCRIPTION:
+-----------
+Serena is an AI agent framework that enhances the MayArbi arbitrage bot
+with advanced automation and intelligent decision-making capabilities.
+
+Key features:
+- AI-powered trading strategy optimization
+- Automated market analysis and pattern recognition
+- Intelligent risk management and position sizing
+- Multi-language support for various blockchain ecosystems
+- Integration with external data sources and APIs
+
+Serena provides the MayArbi project with:
+- Enhanced decision-making through AI analysis
+- Automated strategy adaptation based on market conditions
+- Intelligent monitoring and alerting systems
+- Advanced backtesting and simulation capabilities
+- Integration with machine learning models for prediction
+
+The framework is designed to work alongside the core arbitrage bot,
+providing higher-level intelligence and automation while maintaining
+the reliability and performance of the underlying trading systems.
+
+Serena acts as the "brain" of the operation, continuously learning
+from market data and trading outcomes to improve the bot's performance
+over time.

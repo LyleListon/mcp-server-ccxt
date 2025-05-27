@@ -1,0 +1,243 @@
+{
+  "trading": {
+    "strategy": "capital_efficient",
+    "min_profit_threshold": 0.3,
+    "max_slippage": 0.5,
+    "max_trade_amount_usd": 5000,
+    "min_liquidity_usd": 50000,
+    "trading_enabled": false,
+    "use_flash_loans": true,
+    "flash_loan_providers": ["aave", "dydx"],
+    "preferred_networks": ["arbitrum", "optimism", "base", "bsc", "fantom", "polygon", "avalanche", "gnosis"],
+    "gas_optimization": true
+  },
+
+  "target_pairs": {
+    "stablecoins": [
+      {"base": "USDC", "quote": "USDT", "priority": 1},
+      {"base": "USDC", "quote": "DAI", "priority": 2},
+      {"base": "USDT", "quote": "DAI", "priority": 3}
+    ],
+    "wrapped_tokens": [
+      {"base": "ETH", "quote": "WETH", "priority": 1}
+    ],
+    "major_pairs": [
+      {"base": "ETH", "quote": "USDC", "priority": 4},
+      {"base": "ETH", "quote": "USDT", "priority": 5},
+      {"base": "WBTC", "quote": "USDC", "priority": 6}
+    ]
+  },
+
+  "dexs": {
+    "aerodrome": {
+      "enabled": true,
+      "network": "base",
+      "priority": 1,
+      "min_liquidity": 100000,
+      "gas_cost_estimate": 150000,
+      "fee_percentage": 0.05
+    },
+    "camelot": {
+      "enabled": true,
+      "network": "arbitrum",
+      "priority": 2,
+      "min_liquidity": 50000,
+      "gas_cost_estimate": 200000,
+      "fee_percentage": 0.25
+    },
+    "velodrome": {
+      "enabled": true,
+      "network": "optimism",
+      "priority": 3,
+      "min_liquidity": 80000,
+      "gas_cost_estimate": 120000,
+      "fee_percentage": 0.05
+    },
+    "thena": {
+      "enabled": true,
+      "network": "bsc",
+      "priority": 4,
+      "min_liquidity": 30000,
+      "gas_cost_estimate": 250000,
+      "fee_percentage": 0.2
+    },
+    "ramses": {
+      "enabled": true,
+      "network": "arbitrum",
+      "priority": 5,
+      "min_liquidity": 25000,
+      "gas_cost_estimate": 220000,
+      "fee_percentage": 0.3
+    },
+    "traderjoe": {
+      "enabled": true,
+      "network": "arbitrum",
+      "priority": 6,
+      "min_liquidity": 60000,
+      "gas_cost_estimate": 180000,
+      "fee_percentage": 0.3
+    },
+    "spiritswap": {
+      "enabled": true,
+      "network": "fantom",
+      "priority": 7,
+      "min_liquidity": 20000,
+      "gas_cost_estimate": 180000,
+      "fee_percentage": 0.25
+    },
+    "spookyswap": {
+      "enabled": true,
+      "network": "fantom",
+      "priority": 8,
+      "min_liquidity": 25000,
+      "gas_cost_estimate": 170000,
+      "fee_percentage": 0.2
+    },
+    "quickswap": {
+      "enabled": true,
+      "network": "polygon",
+      "priority": 9,
+      "min_liquidity": 60000,
+      "gas_cost_estimate": 160000,
+      "fee_percentage": 0.3
+    },
+    "pangolin": {
+      "enabled": true,
+      "network": "avalanche",
+      "priority": 10,
+      "min_liquidity": 35000,
+      "gas_cost_estimate": 140000,
+      "fee_percentage": 0.3
+    },
+    "honeyswap": {
+      "enabled": true,
+      "network": "gnosis",
+      "priority": 11,
+      "min_liquidity": 15000,
+      "gas_cost_estimate": 200000,
+      "fee_percentage": 0.3
+    },
+    "uniswap_v3": {
+      "enabled": false,
+      "network": "ethereum",
+      "priority": 10,
+      "min_liquidity": 500000,
+      "gas_cost_estimate": 300000,
+      "fee_percentage": 0.05,
+      "note": "Disabled - too expensive and competitive"
+    },
+    "sushiswap": {
+      "enabled": false,
+      "network": "ethereum",
+      "priority": 11,
+      "min_liquidity": 200000,
+      "gas_cost_estimate": 250000,
+      "fee_percentage": 0.25,
+      "note": "Disabled - too expensive"
+    }
+  },
+
+  "flash_loans": {
+    "aave": {
+      "enabled": true,
+      "networks": ["ethereum", "arbitrum", "optimism", "base"],
+      "fee_percentage": 0.09,
+      "max_amount_usd": 100000,
+      "priority": 1
+    },
+    "dydx": {
+      "enabled": true,
+      "networks": ["ethereum"],
+      "fee_percentage": 0.0,
+      "max_amount_usd": 50000,
+      "priority": 2
+    }
+  },
+
+  "risk_management": {
+    "max_risk_score": 2,
+    "max_price_impact": 0.5,
+    "max_slippage_total": 1.0,
+    "min_profit_after_fees": 0.2,
+    "position_size_limits": {
+      "stablecoins": 10000,
+      "major_tokens": 5000,
+      "other_tokens": 1000
+    }
+  },
+
+  "monitoring": {
+    "opportunity_scan_interval": 10,
+    "price_update_interval": 5,
+    "max_execution_time": 30,
+    "profit_tracking": true,
+    "gas_tracking": true
+  },
+
+  "networks": {
+    "arbitrum": {
+      "rpc_url": "https://arb1.arbitrum.io/rpc",
+      "chain_id": 42161,
+      "gas_price_gwei": 0.1,
+      "block_time": 0.25,
+      "preferred": true
+    },
+    "optimism": {
+      "rpc_url": "https://mainnet.optimism.io",
+      "chain_id": 10,
+      "gas_price_gwei": 0.001,
+      "block_time": 2,
+      "preferred": true
+    },
+    "base": {
+      "rpc_url": "https://mainnet.base.org",
+      "chain_id": 8453,
+      "gas_price_gwei": 0.001,
+      "block_time": 2,
+      "preferred": true
+    },
+    "bsc": {
+      "rpc_url": "https://bsc-dataseed.binance.org",
+      "chain_id": 56,
+      "gas_price_gwei": 3,
+      "block_time": 3,
+      "preferred": false
+    },
+    "fantom": {
+      "rpc_url": "https://rpc.ftm.tools",
+      "chain_id": 250,
+      "gas_price_gwei": 50,
+      "block_time": 1,
+      "preferred": true
+    },
+    "polygon": {
+      "rpc_url": "https://polygon-rpc.com",
+      "chain_id": 137,
+      "gas_price_gwei": 30,
+      "block_time": 2,
+      "preferred": true
+    },
+    "avalanche": {
+      "rpc_url": "https://api.avax.network/ext/bc/C/rpc",
+      "chain_id": 43114,
+      "gas_price_gwei": 25,
+      "block_time": 2,
+      "preferred": true
+    },
+    "gnosis": {
+      "rpc_url": "https://rpc.gnosischain.com",
+      "chain_id": 100,
+      "gas_price_gwei": 1,
+      "block_time": 5,
+      "preferred": true
+    },
+    "ethereum": {
+      "rpc_url": "https://eth.llamarpc.com",
+      "chain_id": 1,
+      "gas_price_gwei": 20,
+      "block_time": 12,
+      "preferred": false,
+      "note": "Disabled due to high gas costs"
+    }
+  }
+}

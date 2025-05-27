@@ -1,4 +1,4 @@
-# 💠 DexMind MCP Tools Reference
+# 🛠️ DexMind MCP Tools Reference
 
 ## Tool Overview
 
@@ -54,10 +54,10 @@ Spread: 0.03%
 ```
 💰 Green Trades (23 found):
 
-🟢 $0.45 | ETH/USDC | UniswapₒSushiSwap | ethereum
-🟢 $0.32 | WBTA/ETH | Curve→Balancer | ethereum  
+🟢 $0.45 | ETH/USDC | Uniswap→SushiSwap | ethereum
+🟢 $0.32 | WBTC/ETH | Curve→Balancer | ethereum  
 🟢 $0.28 | ARB/USDC | Camelot→TraderJoe | arbitrum
-🟢 $0.15 | ETH/USDC u�Uniswap→Aerodrome | base
+🟢 $0.15 | ETH/USDC | Uniswap→Aerodrome | base
 ...
 ```
 
@@ -82,7 +82,7 @@ Spread: 0.03%
 
 Total Trades: 127
 🟢 Green Trades: 73
-💴 Red Trades: 54
+🔴 Red Trades: 54
 Success Rate: 57.5%
 Total Profit: $18.42
 Average Profit: $0.145
@@ -91,14 +91,12 @@ Average Profit: $0.145
 ```
 
 ### Key Metrics
-- 
-📊 Success Rate**: Percentage of profitable trades
+- **Success Rate**: Percentage of profitable trades
 - **Total Profit**: Cumulative earnings
-- 
-📊 Average Profit**: Mean profit per trade
+- **Average Profit**: Mean profit per trade
 - **Trade Volume**: Total number of attempts
 
-## 🐍 `find_best_pairs`
+## 🔍 `find_best_pairs`
 
 **Purpose**: Identify the most profitable token pairs
 
@@ -112,7 +110,7 @@ Average Profit: $0.145
 
 ### Output
 ```
-💍 Mest pairs analysis coming soon! 
+🔍 Best pairs analysis coming soon! 
 For now, check your green trades to see patterns.
 ```
 
@@ -123,7 +121,7 @@ Will analyze:
 - Optimal trading times
 - Success rate by pair
 
-## ⚡‍ `analyze_gas_efficiency`
+## ⛽ `analyze_gas_efficiency`
 
 **Purpose**: Analyze gas costs vs profits for optimization
 
@@ -136,7 +134,7 @@ Will analyze:
 
 ### Output
 ```
-⚡‍ Gas efficiency analysis coming soon! 
+⛽ Gas efficiency analysis coming soon! 
 Track your gas costs in each trade.
 ```
 
@@ -174,8 +172,7 @@ profit $0.75, gas $0.50, executed successfully"
 
 ### With Other MCP Servers
 - **Serena**: Analyze DexMind code for optimization
-- 
-📁 Filesystem MCP**: Export trade data for analysis
+- **Filesystem MCP**: Export trade data for analysis
 - **MCP Compass**: Discover new trading tools
 
 ### With Augment Code
@@ -187,9 +184,9 @@ profit $0.75, gas $0.50, executed successfully"
 
 ```
 Market Opportunity → store_penny_trade → DexMind Database
-                                                            ↓
+                                            ↓
 Performance Analysis ← get_performance_stats ← Pattern Recognition
-                                                            ↓
+                                            ↓
 Strategy Optimization ← find_best_pairs ← get_green_trades
 ```
 

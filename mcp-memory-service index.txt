@@ -1,0 +1,46 @@
+MCP-MEMORY-SERVICE DIRECTORY INDEX
+==================================
+
+Created: 2025-01-24
+Purpose: MCP memory service for persistent memory and data storage
+
+FILES:
+------
+README.md - Created: 2025-01-24 - Documentation for MCP memory service
+mcp_config.json - Created: 2025-01-24 - MCP service configuration
+pyproject.toml - Created: 2025-01-24 - Python project configuration
+requirements.txt - Created: 2025-01-24 - Python dependencies
+requirements_current.txt - Created: 2025-01-24 - Current Python dependencies
+uv.lock - Created: 2025-01-24 - UV package manager lock file
+
+SUBDIRECTORIES:
+--------------
+src/ - Source code for MCP memory service
+  chroma_test_isolated.py - Created: 2025-01-24 - Chroma database testing
+  mcp_memory_service/ - Main service implementation
+  test_client.py - Created: 2025-01-24 - Test client for service
+  test_management.py - Created: 2025-01-24 - Test management utilities
+templates/ - Template files
+  default.md.j2 - Created: 2025-01-24 - Default Jinja2 template
+
+DESCRIPTION:
+-----------
+The MCP Memory Service provides persistent memory capabilities for the
+MayArbi arbitrage bot through the Model Context Protocol (MCP).
+
+Key features:
+- Persistent memory storage using vector databases
+- Semantic search and retrieval of stored information
+- Integration with AI models for intelligent memory management
+- Support for various data types and formats
+- Efficient indexing and querying capabilities
+
+This service enables the arbitrage bot to:
+- Remember historical trading patterns and outcomes
+- Store and retrieve market analysis data
+- Maintain context across trading sessions
+- Learn from past experiences and improve decision-making
+
+The service uses modern vector database technology (Chroma) to provide
+fast and accurate semantic search capabilities, allowing the bot to
+quickly find relevant historical information when making trading decisions.

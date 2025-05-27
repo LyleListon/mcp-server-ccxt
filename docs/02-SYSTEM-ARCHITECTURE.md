@@ -7,7 +7,7 @@ MayArbi Ecosystem
 ├── 🧠 DexMind (Custom MCP Memory Server)
 ├── 📁 Filesystem MCP Server (File operations)
 ├── 🧭 MCP Compass (Service discovery)
-├── 🔍 Merena (Semantic code analysis)
+├── 🔍 Serena (Semantic code analysis)
 └── 🤖 Augment Code Extension (AI orchestration)
 ```
 
@@ -23,11 +23,11 @@ MayArbi Ecosystem
 
 **Why Custom?**: 
 - Trading-specific memory needs
-- Integration with our MCP Ecosystem
+- Integration with our MCP ecosystem
 - Complete control over data structure
 - No external dependencies or costs
 
-## 🍐 Multi-Chain Infrastructure
+## 🌐 Multi-Chain Infrastructure
 
 ### Node Access Strategy
 
@@ -35,8 +35,8 @@ MayArbi Ecosystem
 |-------|-------------|-----------|
 | Ethereum | 🟢 Direct Node | Mempool visibility, ultra-low latency |
 | Vitruveo | 🟢 Direct Node | Early chain access, low competition |
-| Arbitrum | 💗 RPA | L2 speed, lower gas costs |
-| Base | 💗 RPA | Coinbase ecosystem, growing liquidity |
+| Arbitrum | 🔗 RPC | L2 speed, lower gas costs |
+| Base | 🔗 RPC | Coinbase ecosystem, growing liquidity |
 
 ### Why This Mix?
 - **Direct nodes** = MEV opportunities + fastest execution
@@ -65,7 +65,7 @@ MayArbi Ecosystem
 - **Modular**: Each component has specific purpose
 - **AI-Friendly**: Seamless integration with Augment
 - **Extensible**: Easy to add new capabilities
-- **Standardized**: Uses proven MCP P�tocol
+- **Standardized**: Uses proven MCP protocol
 
 ### Component Synergy
 - **DexMind** stores trading intelligence
@@ -92,7 +92,7 @@ MayArbi Ecosystem
 - Mempool analysis and front-running
 - Sophisticated execution strategies
 
-## 🚡️ Security Architecture
+## 🛡️ Security Architecture
 
 ### Key Principles
 - **Local-First**: Sensitive data stays on your system

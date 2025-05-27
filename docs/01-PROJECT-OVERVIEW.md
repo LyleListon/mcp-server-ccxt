@@ -12,12 +12,12 @@ Instead of chasing big profits immediately, we:
 3. **Build patterns** from real market data
 4. **Scale up** as confidence and capital grow
 
-## 🎉️ Target Chains
+## 🎯 Target Chains
 
-- **👷 Ethereum** - Primary hub with direct node access
-- **💺 Arbitrum** - L2 speed and efficiency
+- **🔷 Ethereum** - Primary hub with direct node access
+- **🔺 Arbitrum** - L2 speed and efficiency
 - **🔵 Base** - Coinbase ecosystem opportunities  
-- **💖 Vitruveo** - Early mover advantage with direct node
+- **💎 Vitruveo** - Early mover advantage with direct node
 
 ## 🧠 The Secret Sauce: DexMind
 
@@ -39,10 +39,10 @@ Our custom **MCP Memory Server** that remembers:
 - ✅ **DexMind Memory System** - Core brain implemented
 - ✅ **Multi-MCP Ecosystem** - Full toolchain ready
 - ✅ **Clean Development Environment** - All conflicts resolved
-- �7✧ **DEX Integration** - In progress
-- �7✧ **Trading Engine** - Planning phase
+- 🚧 **DEX Integration** - In progress
+- 🚧 **Trading Engine** - Planning phase
 
-## 🎿 Success Metrics
+## 🎯 Success Metrics
 
 We measure success differently:
 - **Any green trade = WIN** (even $0.01)

@@ -1,0 +1,78 @@
+{
+  "id": "pattern_20250525_045336_154282",
+  "timestamp": "2025-05-25T04:53:36.154282",
+  "opportunity": {
+    "base_token": "WETH",
+    "quote_token": "USDC",
+    "buy_dex": "stablecoin_specialist",
+    "sell_dex": "coingecko",
+    "buy_price": 1240.2568797245385,
+    "sell_price": 2484.844362783096,
+    "spread_percentage": 100.34916986995314,
+    "profit_percentage": 100.34916986995314,
+    "estimated_profit": 953.4916986995315,
+    "gross_profit": 1003.4916986995315,
+    "estimated_gas_cost": 50,
+    "gas_estimate": 150000,
+    "confidence": 1.0,
+    "trade_amount": 1000,
+    "timestamp": "2025-05-25T04:53:31.391634",
+    "all_prices": {
+      "coingecko": 2484.844362783096,
+      "stablecoin_specialist": 1240.2568797245385
+    },
+    "tokens": [
+      "WETH",
+      "USDC"
+    ],
+    "profit_analysis": {
+      "gross_profit_usd": 953.4916986995315,
+      "gas_cost_usd": 9.0,
+      "net_profit_usd": 944.4916986995315,
+      "profit_percentage": 100.34916986995314,
+      "net_profit_percentage": 99.40197491265947,
+      "profit_amount": 944.4916986995315,
+      "gas_cost": 9.0,
+      "is_profitable": true,
+      "profit_margin": 99.40197491265947
+    },
+    "risk_analysis": {
+      "risk_score": 40.625,
+      "risk_level": "medium",
+      "liquidity_risk": 90,
+      "slippage_risk": 17.5,
+      "gas_risk": 25,
+      "market_risk": 30,
+      "risk_factors": {
+        "liquidity": "high",
+        "slippage": "low",
+        "gas": "low",
+        "market": "medium"
+      },
+      "is_acceptable": true
+    },
+    "mcp_intelligence": {
+      "market_data_available": true,
+      "historical_patterns": [],
+      "confidence_score": 0.5
+    },
+    "enhanced_profit_score": 88.52988390658734,
+    "analysis_timestamp": "2025-05-25T04:53:35.953070"
+  },
+  "result": {
+    "success": true,
+    "simulated": true,
+    "profit": 944.4916986995315,
+    "gas_used": 183866,
+    "execution_time": 4.36993565562215,
+    "timestamp": "2025-05-25T04:53:36.154188"
+  },
+  "tokens": [
+    "WETH",
+    "USDC"
+  ],
+  "dexs": [],
+  "profit": 944.4916986995315,
+  "success": true,
+  "gas_cost": 0
+}

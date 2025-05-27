@@ -1,0 +1,44 @@
+FILESYSTEM-MCP-SERVER DIRECTORY INDEX
+====================================
+
+Created: 2025-01-24
+Purpose: Filesystem MCP server for file operations and management
+
+FILES:
+------
+README.md - Created: 2025-01-24 - Documentation for filesystem MCP server
+mcp.json - Created: 2025-01-24 - MCP server configuration
+package-lock.json - Created: 2025-01-24 - NPM package lock file
+package.json - Created: 2025-01-24 - NPM package configuration
+tsconfig.json - Created: 2025-01-24 - TypeScript configuration
+
+SUBDIRECTORIES:
+--------------
+src/ - Source code for filesystem MCP server
+  config/ - Configuration management
+  index.ts - Created: 2025-01-24 - Main entry point
+  mcp-server/ - MCP server implementation
+  types-global/ - Global type definitions
+  utils/ - Utility functions
+
+DESCRIPTION:
+-----------
+The filesystem-mcp-server provides MCP (Model Context Protocol) capabilities
+for file system operations within the MayArbi project ecosystem.
+
+Key features:
+- File and directory operations (read, write, list, etc.)
+- File content analysis and processing
+- Integration with AI/ML models through MCP protocol
+- Secure file access with appropriate permissions
+- Support for various file formats and encodings
+
+This server enables AI agents and other MCP clients to:
+- Read and analyze project files
+- Perform file system operations
+- Process and transform file content
+- Maintain file system state and metadata
+
+The server is designed with security and performance in mind,
+providing controlled access to the file system while maintaining
+the integrity of the MayArbi project structure.

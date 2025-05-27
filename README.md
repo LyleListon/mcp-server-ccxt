@@ -9,11 +9,11 @@ MayArbi is an automated multi-chain DEX arbitrage bot designed to identify and e
 ### 🌟 Key Features
 
 - **🧠 DexMind Memory System**: Custom MCP server that remembers every trade pattern
-- **🍐 Multi-Chain Support**: Ethereum, Arbitrum, Base, and Vitruveo
-- **⚡‍ Direct Node Access**: Ultra-low latency with personal Ethereum and Vitruveo nodes
-- **💖 MEV Opportunities**: Mempool visibility for advanced trading strategies
+- **🌐 Multi-Chain Support**: Ethereum, Arbitrum, Base, and Vitruveo
+- **⚡ Direct Node Access**: Ultra-low latency with personal Ethereum and Vitruveo nodes
+- **💎 MEV Opportunities**: Mempool visibility for advanced trading strategies
 - **📊 Comprehensive Analytics**: Track performance from pennies to profits
-- **💧 MCP Integration**: Seamless integration with AI coding assistants
+- **🔧 MCP Integration**: Seamless integration with AI coding assistants
 
 ## 🏗️ Architecture
 
@@ -21,23 +21,23 @@ MayArbi is an automated multi-chain DEX arbitrage bot designed to identify and e
 MayArbi Ecosystem
 ├── 🧠 DexMind (Custom MCP Memory Server)
 ├── 📁 Filesystem MCP Server (File operations)
-├── 🧭️ MCP Compass (Service discovery)
+├── 🧭 MCP Compass (Service discovery)
 ├── 🔍 Serena (Semantic code analysis)
 └── 🤖 Augment Code Extension (AI orchestration)
 ```
 
-## 🍐 Supported Chains & DEXs
+## 🌐 Supported Chains & DEXs
 
 ### Ethereum
 - Uniswap V2/V3
 - Curve Finance
-- Banancer
+- Balancer
 - SushiSwap
 
 ### Arbitrum
 - Camelot
 - Trader Joe
-- SUsHIMap
+- SushiSwap
 - Uniswap V3
 
 ### Base
@@ -71,7 +71,7 @@ npm run build
 
 # Install other MCP servers
 cd ../filesystem-mcp-server
-�t install
+npm install
 npm run build
 
 cd ../serena
@@ -103,38 +103,37 @@ MayArbi starts with a simple philosophy: **any green trade is profit worth track
 DexMind is our custom MCP memory server that tracks:
 
 - **💰 Trade Results**: Every profit and loss, down to the penny
-- **⚡‍ Gas Optimization**: Cost analysis across chains
+- **⚡ Gas Optimization**: Cost analysis across chains
 - **📈 Market Patterns**: Timing and liquidity insights
-- **🎉️ Strategy Performance**: What works and what doesn't
-- **💮 MEV Opportunities**: Advanced trading patterns
+- **🎯 Strategy Performance**: What works and what doesn't
+- **🔮 MEV Opportunities**: Advanced trading patterns
 
 ## 📚 Documentation
 
-- [📖 **Project Overview**](docs/01-PROJECT-OVERVIEW.md) - What is MayArbi and why it works
-- [🏗️ **System Architecture**](docs/02-SYSTEM-ARCHITECTURE.md) - How all the pieces fit together
-- [🦠 **DexMind Overview**](docs/03-DEXMIND-OVERVIEW.md) - The brain of the operation
-- [💀 - **DexMind Tools**](docs/04-DEXMIND-TOOLS.md) - Complete tool reference
-- [’️ **Setup Guide**](docs/05-SETUP-GUIDE.md) - Installation and configuration
-- [🎯 **Trading Strategy**](docs/06-TRADING-STRATEGY.md) - Four-phase evolution plan
+- [📖 **Project Architecture**](docs/ARCHITECTURE.md)
+- [🧠 **DexMind Documentation**](docs/DEXMIND.md)
+- [⚙️ **Setup Guide**](docs/SETUP.md)
+- [🔧 **MCP Integration**](docs/MCP_INTEGRATION.md)
+- [📊 **Trading Strategies**](docs/STRATEGIES.md)
+- [🛡️ **Security Considerations**](docs/SECURITY.md)
 
-## 🎿 Current Status
+## 🎯 Current Status
 
 - ✅ **DexMind MCP Server**: Core memory system implemented
 - ✅ **Multi-MCP Ecosystem**: Filesystem, Serena, Compass integrated
 - ✅ **Clean Development Environment**: Python conflicts resolved
-- �7✧ **DEX Integration**: In progress
-- 🚧️ **Trading Engine**: Planning phase
-- 🚧️ **Web Interface**: Future enhancement
+- 🚧 **DEX Integration**: In progress
+- 🚧 **Trading Engine**: Planning phase
+- 🚧 **Web Interface**: Future enhancement
 
-## 🤥 Contributing
+## 🤝 Contributing
 
 This project is currently in active development. Documentation and code quality are top priorities!
 
 ### Development Principles
 - **📝 Document everything**: Code comments, README files, architecture docs
 - **🧪 Test thoroughly**: Every component must be tested
-- 
-🔒 Security first**: Handle private keys and funds with extreme care
+- **🔒 Security first**: Handle private keys and funds with extreme care
 - **📊 Measure everything**: Track all performance metrics
 
 ## 📄 License

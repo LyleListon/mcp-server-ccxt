@@ -1,10 +1,10 @@
-# 📺 MayArbi Documentation
+# 📚 MayArbi Documentation
 
 Welcome to the comprehensive documentation for MayArbi - the multi-chain DEX arbitrage bot that starts small and thinks big!
 
-## 🗺�x� Documentation Map
+## 🗺️ Documentation Map
 
-### 🎉️ Getting Started
+### 🎯 Getting Started
 1. **[Project Overview](01-PROJECT-OVERVIEW.md)** - What is MayArbi and why it works
 2. **[System Architecture](02-SYSTEM-ARCHITECTURE.md)** - How all the pieces fit together
 3. **[Setup Guide](05-SETUP-GUIDE.md)** - Installation and configuration
@@ -13,11 +13,11 @@ Welcome to the comprehensive documentation for MayArbi - the multi-chain DEX arb
 3. **[DexMind Overview](03-DEXMIND-OVERVIEW.md)** - The brain of the operation
 4. **[DexMind Tools](04-DEXMIND-TOOLS.md)** - Complete tool reference
 
-### 🎿 Trading & Strategy
+### 🎯 Trading & Strategy
 6. **[Trading Strategy](06-TRADING-STRATEGY.md)** - Four-phase evolution plan
-7. **[Security Considerations](07-SECURITY-COSSIDERATIONS.md)** - Safety first!
+7. **[Security Considerations](07-SECURITY-CONSIDERATIONS.md)** - Safety first!
 
-### 💧 Technical Reference
+### 🔧 Technical Reference
 8. **[API Reference](08-API-REFERENCE.md)** - Technical specifications
 9. **[Troubleshooting](09-TROUBLESHOOTING.md)** - Common issues and solutions
 
@@ -32,9 +32,9 @@ Welcome to the comprehensive documentation for MayArbi - the multi-chain DEX arb
 **Ready to dive deep?** Explore:
 - [DexMind Overview](03-DEXMIND-OVERVIEW.md) for memory system details
 - [DexMind Tools](04-DEXMIND-TOOLS.md) for complete tool reference
-- ASecurity Considerations](07-SECURITY-COSSIDERATIONS.md) for safety guidelines
+- [Security Considerations](07-SECURITY-CONSIDERATIONS.md) for safety guidelines
 
-## 🎉️ Documentation Philosophy
+## 🎯 Documentation Philosophy
 
 Each document is designed to be:
 - **Focused**: Single topic, easy to digest
@@ -45,18 +45,18 @@ Each document is designed to be:
 ## 📊 Document Status
 
 | Document | Status | Last Updated |
-|---------|-------|--------------|
+|----------|--------|--------------|
 | 01-PROJECT-OVERVIEW.md | ✅ Complete | 2024-05-24 |
 | 02-SYSTEM-ARCHITECTURE.md | ✅ Complete | 2024-05-24 |
 | 03-DEXMIND-OVERVIEW.md | ✅ Complete | 2024-05-24 |
 | 04-DEXMIND-TOOLS.md | ✅ Complete | 2024-05-24 |
 | 05-SETUP-GUIDE.md | ✅ Complete | 2024-05-24 |
 | 06-TRADING-STRATEGY.md | ✅ Complete | 2024-05-24 |
-| 07-SECURITY-CONSIDERATIONS.md | 🚧️ In Progress | - |
-| 08-API-REFERENCE.md | 📋@ Planned | - |
-| 09-TROUBLESHOOTING.md | 📋@ Planned | - |
+| 07-SECURITY-CONSIDERATIONS.md | 🚧 In Progress | - |
+| 08-API-REFERENCE.md | 📋 Planned | - |
+| 09-TROUBLESHOOTING.md | 📋 Planned | - |
 
-## 🤥 Contributing to Documentation
+## 🤝 Contributing to Documentation
 
 ### Documentation Standards
 - **Clear Headings**: Use emoji + descriptive titles
@@ -71,7 +71,7 @@ Each document is designed to be:
 4. **Review & Test**: Ensure accuracy and clarity
 5. **Update Index**: Keep this README current
 
-## 🐍 Finding Information
+## 🔍 Finding Information
 
 ### By Topic
 - **Setup & Installation**: Documents 02, 05
@@ -97,19 +97,19 @@ Each document is designed to be:
 - ✅ Core concept documentation
 - ✅ Setup and configuration guides
 - ✅ DexMind system documentation
-- �7✧ Security and safety guidelines
+- 🚧 Security and safety guidelines
 
 ### Phase 2 (Next)
-- 📋@ Complete API reference
-- �7Ⓥ@ Comprehensive troubleshooting
-- �7Ⓥ@ Advanced configuration options
-- 📋@ Performance optimization guides
+- 📋 Complete API reference
+- 📋 Comprehensive troubleshooting
+- 📋 Advanced configuration options
+- 📋 Performance optimization guides
 
 ### Phase 3 (Future)
-- �7Ⓥ@ Video tutorials and walkthroughs
-- �7Ⓥ@ Community examples and case studies
-- �7Ⓥ@ Integration guides for other tools
-- 📋@ Advanced trading strategy guides
+- 📋 Video tutorials and walkthroughs
+- 📋 Community examples and case studies
+- 📋 Integration guides for other tools
+- 📋 Advanced trading strategy guides
 
 ## 💡 Documentation Tips
 

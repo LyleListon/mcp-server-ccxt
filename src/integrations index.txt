@@ -1,0 +1,52 @@
+INTEGRATIONS DIRECTORY INDEX
+============================
+
+Created: 2025-01-24
+Purpose: External service integrations and protocols
+
+SUBDIRECTORIES:
+--------------
+flash_loans/ - Flash loan integration and management
+mcp/ - Model Context Protocol integrations
+mev/ - MEV (Maximal Extractable Value) related integrations
+
+DESCRIPTION:
+-----------
+This directory contains integrations with external services and
+protocols that enhance the MayArbi arbitrage bot's capabilities.
+
+Key integration areas:
+
+1. Flash Loans (flash_loans/):
+   - Integration with flash loan providers (Aave, dYdX, etc.)
+   - Flash loan strategy implementation
+   - Risk management for leveraged arbitrage
+   - Liquidation protection mechanisms
+
+2. MCP - Model Context Protocol (mcp/):
+   - Integration with AI/ML services
+   - Context sharing between bot components
+   - Memory and state management
+   - External data source connections
+
+3. MEV - Maximal Extractable Value (mev/):
+   - MEV opportunity detection
+   - Integration with MEV-boost and similar services
+   - Front-running protection
+   - Sandwich attack mitigation
+
+These integrations enable:
+- Leveraged arbitrage through flash loans
+- Enhanced decision-making through AI integration
+- Protection against MEV attacks
+- Access to additional liquidity sources
+- Advanced trading strategies
+
+Each integration is designed to be:
+- Modular and independently testable
+- Fault-tolerant with graceful degradation
+- Configurable for different environments
+- Secure with appropriate access controls
+
+The integrations directory extends the bot's capabilities beyond
+basic arbitrage to include advanced DeFi strategies and protections.

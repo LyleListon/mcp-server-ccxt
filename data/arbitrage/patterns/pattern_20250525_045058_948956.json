@@ -1,0 +1,78 @@
+{
+  "id": "pattern_20250525_045058_948956",
+  "timestamp": "2025-05-25T04:50:58.948956",
+  "opportunity": {
+    "base_token": "WBTC",
+    "quote_token": "USDC",
+    "buy_dex": "stablecoin_specialist",
+    "sell_dex": "coingecko",
+    "buy_price": 53602.07475735725,
+    "sell_price": 107313.2138352639,
+    "spread_percentage": 100.20347033401804,
+    "profit_percentage": 100.20347033401804,
+    "estimated_profit": 952.0347033401804,
+    "gross_profit": 1002.0347033401804,
+    "estimated_gas_cost": 50,
+    "gas_estimate": 150000,
+    "confidence": 1.0,
+    "trade_amount": 1000,
+    "timestamp": "2025-05-25T04:50:55.382662",
+    "all_prices": {
+      "coingecko": 107313.2138352639,
+      "stablecoin_specialist": 53602.07475735725
+    },
+    "tokens": [
+      "WBTC",
+      "USDC"
+    ],
+    "profit_analysis": {
+      "gross_profit_usd": 952.0347033401804,
+      "gas_cost_usd": 9.0,
+      "net_profit_usd": 943.0347033401804,
+      "profit_percentage": 100.20347033401804,
+      "net_profit_percentage": 99.25620314948986,
+      "profit_amount": 943.0347033401804,
+      "gas_cost": 9.0,
+      "is_profitable": true,
+      "profit_margin": 99.25620314948986
+    },
+    "risk_analysis": {
+      "risk_score": 40.625,
+      "risk_level": "medium",
+      "liquidity_risk": 90,
+      "slippage_risk": 17.5,
+      "gas_risk": 25,
+      "market_risk": 30,
+      "risk_factors": {
+        "liquidity": "high",
+        "slippage": "low",
+        "gas": "low",
+        "market": "medium"
+      },
+      "is_acceptable": true
+    },
+    "mcp_intelligence": {
+      "market_data_available": true,
+      "historical_patterns": [],
+      "confidence_score": 0.5
+    },
+    "enhanced_profit_score": 88.4000559300144,
+    "analysis_timestamp": "2025-05-25T04:50:58.746803"
+  },
+  "result": {
+    "success": true,
+    "simulated": true,
+    "profit": 943.0347033401804,
+    "gas_used": 231217,
+    "execution_time": 1.9792082820930341,
+    "timestamp": "2025-05-25T04:50:58.948763"
+  },
+  "tokens": [
+    "WBTC",
+    "USDC"
+  ],
+  "dexs": [],
+  "profit": 943.0347033401804,
+  "success": true,
+  "gas_cost": 0
+}

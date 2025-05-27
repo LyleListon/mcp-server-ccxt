@@ -1,0 +1,42 @@
+MCP-SERVER-CCXT DIRECTORY INDEX
+===============================
+
+Created: 2025-01-24
+Purpose: MCP server for CCXT cryptocurrency exchange integration
+
+FILES:
+------
+README.md - Created: 2025-01-24 - Documentation for CCXT MCP server
+pyproject.toml - Created: 2025-01-24 - Python project configuration
+uv.lock - Created: 2025-01-24 - UV package manager lock file
+
+SUBDIRECTORIES:
+--------------
+src/ - Source code for CCXT MCP server
+  __init__.py - Created: 2025-01-24 - Python package initialization
+  server.py - Created: 2025-01-24 - Main MCP server implementation
+
+DESCRIPTION:
+-----------
+The MCP-Server-CCXT provides Model Context Protocol (MCP) integration
+with the CCXT (CryptoCurrency eXchange Trading) library, enabling
+the MayArbi arbitrage bot to interact with multiple cryptocurrency
+exchanges through a unified interface.
+
+Key features:
+- Integration with 100+ cryptocurrency exchanges via CCXT
+- Unified API for market data retrieval
+- Order book and trading pair information
+- Real-time price feeds and market depth data
+- Support for both centralized and decentralized exchanges
+
+This server enables the arbitrage bot to:
+- Fetch real-time market data from multiple exchanges
+- Compare prices across different trading venues
+- Identify arbitrage opportunities
+- Execute trades through supported exchanges
+- Monitor market conditions and liquidity
+
+The CCXT integration provides a robust foundation for multi-exchange
+arbitrage operations, abstracting away the complexity of individual
+exchange APIs while maintaining access to their full functionality.

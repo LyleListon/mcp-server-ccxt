@@ -2,9 +2,9 @@
 
 ## What is DexMind?
 
-DexMind is our **custom MCP Memory server** - the brain that makes MayArbi smarter with every trade. It remembers patterns, optimizes strategies, and learns from both successes and failures.
+DexMind is our **custom MCP memory server** - the brain that makes MayArbi smarter with every trade. It remembers patterns, optimizes strategies, and learns from both successes and failures.
 
-## 🎉️ Core Philosophy
+## 🎯 Core Philosophy
 
 > **"Every penny counts, every pattern matters"**
 
@@ -23,12 +23,10 @@ DexMind tracks even $0.01 profits because:
 - **Backup**: Automatic data protection
 
 ### MCP Integration
-- 
-💧 Protocol**: Standard MCP server
-- **💠 Tools**: 5+ specialized trading tools
+- **Protocol**: Standard MCP server
+- **Tools**: 5+ specialized trading tools
 - **Transport**: Stdio for AI integration
-- 
-🤥 Compatibility**: Works with Augment Code
+- **Compatibility**: Works with Augment Code
 
 ## 📊 What DexMind Remembers
 
@@ -52,7 +50,7 @@ interface PennyTrade {
 ```
 
 ### Gas Intelligence
-- Acerage gas prices by chain
+- Average gas prices by chain
 - Optimal timing for transactions
 - Cost vs profit analysis
 - Gas efficiency trends
@@ -63,7 +61,7 @@ interface PennyTrade {
 - Liquidity pattern recognition
 - Cross-chain correlation data
 
-## 🛠 Key Tools
+## 🛠️ Key Tools
 
 ### `store_penny_trade`
 **Purpose**: Remember every trade attempt
@@ -81,7 +79,7 @@ interface PennyTrade {
 **Purpose**: Optimize gas vs profit
 **Why Important**: Crucial for micro-arbitrage
 
-## 🎉️ Learning Capabilities
+## 🎯 Learning Capabilities
 
 ### Pattern Recognition
 DexMind automatically identifies:
@@ -117,8 +115,7 @@ DexMind automatically identifies:
 - **Average Profit**: Mean profit per trade
 - **Gas Efficiency**: Profit-to-gas ratio
 - **Pattern Accuracy**: Prediction success
-- 
-📊 Learning Rate**: Improvement over time
+- **Learning Rate**: Improvement over time
 
 ### Example Progress
 ```
@@ -128,7 +125,7 @@ Week 3: 61% success rate, $0.24 avg profit
 → DexMind is learning! 🧠📈
 ```
 
-## 💮  Future Intelligence
+## 🔮 Future Intelligence
 
 ### Advanced Analytics (Planned)
 - **Machine Learning**: Pattern prediction
