@@ -22,9 +22,11 @@ class AerodromeAdapter(BaseDEX):
         """Initialize Aerodrome adapter."""
         super().__init__("aerodrome", config)
 
-        # Aerodrome API endpoints (Base)
+        # Aerodrome API endpoints (Base) - with API key
         self.base_url = "https://api.aerodrome.finance"
-        self.subgraph_url = "https://api.studio.thegraph.com/query/48211/aerodrome-cl/version/latest"
+        self.subgraph_url = "https://gateway-arbitrum.network.thegraph.com/api/fc2235999cc4344e7c8722107c9c0bd6/query/48211/aerodrome-cl/version/latest"
+        # Fallback to public endpoint
+        self.subgraph_url_fallback = "https://api.studio.thegraph.com/query/48211/aerodrome-cl/version/latest"
 
         # Rate limiting
         self.rate_limit_delay = 1.0  # 1 second between requests

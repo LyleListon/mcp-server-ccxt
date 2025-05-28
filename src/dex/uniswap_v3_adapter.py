@@ -34,8 +34,8 @@ class UniswapV3Adapter(BaseDEX):
         """
         super().__init__("uniswap_v3", config)
 
-        # The Graph API endpoint for Uniswap V3 (updated endpoint)
-        self.subgraph_url = "https://gateway-arbitrum.network.thegraph.com/api/[api-key]/subgraphs/id/5zvR82QoaXuFy4wDgKRMpzQw5KB2AeyvuVpDbabxjD9K"
+        # The Graph API endpoint for Uniswap V3 (with API key)
+        self.subgraph_url = "https://gateway-arbitrum.network.thegraph.com/api/fc2235999cc4344e7c8722107c9c0bd6/subgraphs/id/5zvR82QoaXuFy4wDgKRMpzQw5KB2AeyvuVpDbabxjD9K"
         # Fallback to public endpoint
         self.subgraph_url_fallback = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3"
 

@@ -134,3 +134,85 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Arbitrage Bot Specific
+arbitrage_bot_*.log
+phase2_arbitrage_*.log
+mcp-debug.log
+*.db
+*.sqlite
+*.sqlite3
+dexmind.db
+dexmind/dexmind.db
+
+# API Keys and Secrets
+config/secrets.json
+config/api_keys.json
+*.key
+*.pem
+
+# Data directories
+data/arbitrage/
+data/memory_bank/
+data/patterns/
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# MCP Server logs
+mcp-*/logs/
+
+# Test artifacts
+test-results/

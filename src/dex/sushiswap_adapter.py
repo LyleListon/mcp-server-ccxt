@@ -34,8 +34,10 @@ class SushiSwapAdapter(BaseDEX):
         """
         super().__init__("sushiswap", config)
 
-        # SushiSwap subgraph endpoints
-        self.subgraph_url = "https://api.thegraph.com/subgraphs/name/sushiswap/exchange"
+        # SushiSwap subgraph endpoints (with API key)
+        self.subgraph_url = "https://gateway-arbitrum.network.thegraph.com/api/fc2235999cc4344e7c8722107c9c0bd6/subgraphs/name/sushiswap/exchange"
+        # Fallback to public endpoint
+        self.subgraph_url_fallback = "https://api.thegraph.com/subgraphs/name/sushiswap/exchange"
 
         # Contract addresses (Ethereum mainnet)
         self.factory_address = "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac"

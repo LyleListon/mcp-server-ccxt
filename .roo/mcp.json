@@ -1,3 +1,24 @@
 {
-  "mcpServers": {}
+  "mcpServers": {
+    "FileScopeMCP": {
+      "command": "/home/lylepaul78/Documents/augment-projects/MayArbi/FileScopeMCP/run.sh",
+      "args": [],
+      "env": {}
+    },
+    "MCP-Compass": {
+      "command": "/home/lylepaul78/Documents/augment-projects/MayArbi/mcp-compass/start-mcp-compass.sh",
+      "args": [],
+      "env": {}
+    },
+    "MCP-Knowledge-Graph": {
+      "command": "/home/lylepaul78/Documents/augment-projects/MayArbi/mcp-knowledge-graph/start-mcp-knowledge-graph.sh",
+      "args": [],
+      "env": {}
+    },
+    "MCP-Memory-Server": {
+      "command": "/home/lylepaul78/Documents/augment-projects/MayArbi/mcp-memory-service/start-mcp-memory-service.sh",
+      "args": [],
+      "env": {}
+    }
+  }
 }

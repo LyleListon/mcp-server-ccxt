@@ -80,17 +80,17 @@ class RealArbitrageBot:
                     'rate_limit_delay': 0.2,
                     'min_deviation': 0.0005  # 0.05% minimum deviation
                 },
-                # Cross-chain DEXs (disabled - need chain-specific setup)
+                # Smaller DEXs (enabled for better arbitrage opportunities)
                 'camelot': {
-                    'enabled': False,  # Arbitrum DEX (disabled - cross-chain)
+                    'enabled': True,  # ✅ ENABLED: Arbitrum DEX for better opportunities
                     'rate_limit_delay': 1.0
                 },
                 'traderjoe': {
-                    'enabled': False,  # Arbitrum DEX (disabled - cross-chain)
+                    'enabled': True,  # ✅ ENABLED: Arbitrum DEX for better opportunities
                     'rate_limit_delay': 1.0
                 },
                 'aerodrome': {
-                    'enabled': False,  # Leading Base DEX (disabled - cross-chain)
+                    'enabled': True,  # ✅ ENABLED: Leading Base DEX for better opportunities
                     'rate_limit_delay': 1.0
                 },
                 # Working smaller DEXs discovered by DEX discovery tool
@@ -266,7 +266,15 @@ class RealArbitrageBot:
                 'timestamp': datetime.now().isoformat()
             }
 
-            await self.mcp_manager.store_arbitrage_pattern(pattern_data)
+            # Create a placeholder result for pattern storage
+            pattern_result = {
+                'success': False,  # Not executed yet
+                'profit': 0,
+                'gas_cost': 0,
+                'timestamp': datetime.now().isoformat()
+            }
+
+            await self.mcp_manager.store_arbitrage_pattern(pattern_data, pattern_result)
 
             # Get historical analysis
             similar_patterns = await self.mcp_manager.get_similar_patterns(pattern_data)
@@ -337,6 +345,19 @@ class RealArbitrageBot:
     def _should_execute_opportunity(self, opportunity: Dict[str, Any], enhanced_score: float, gas_analysis: Dict[str, Any]) -> bool:
         """Determine if opportunity should be executed."""
         try:
+            # PRIORITY 2 FIX: Validate realistic profit amounts
+            estimated_profit = opportunity.get('estimated_profit_usd', 0)
+            if estimated_profit > 10000:  # Flag unrealistic profits > $10,000
+                logger.warning(f"   ⚠️  Unrealistic profit detected: ${estimated_profit:,.2f} - skipping")
+                return False
+
+            # Validate price data quality
+            buy_price = opportunity.get('buy_price', 0)
+            sell_price = opportunity.get('sell_price', 0)
+            if buy_price <= 0 or sell_price <= 0:
+                logger.warning(f"   ⚠️  Invalid price data: buy=${buy_price}, sell=${sell_price} - skipping")
+                return False
+
             # Check minimum profit threshold
             if opportunity['profit_percentage'] < self.config['trading']['min_profit_threshold']:
                 return False
@@ -397,10 +418,11 @@ class RealArbitrageBot:
                 execution_result = {
                     'opportunity_id': opportunity.get('id'),
                     'success': success,
-                    'profit_usd': opportunity['estimated_profit_usd'] if success else 0,
+                    'profit': opportunity['estimated_profit_usd'] if success else 0,
+                    'gas_cost': 3.0,  # Estimated gas cost
                     'timestamp': datetime.now().isoformat()
                 }
-                await self.mcp_manager.store_execution_result(execution_result)
+                await self.mcp_manager.store_execution_result(opportunity, execution_result)
 
             # Log statistics
             self._log_statistics()

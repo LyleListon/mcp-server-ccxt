@@ -22,9 +22,11 @@ class TraderJoeAdapter(BaseDEX):
         """Initialize Trader Joe adapter."""
         super().__init__("traderjoe", config)
 
-        # Trader Joe API endpoints (Arbitrum)
+        # Trader Joe API endpoints (Arbitrum) - with API key
         self.base_url = "https://api.traderjoexyz.com"
-        self.subgraph_url = "https://api.thegraph.com/subgraphs/name/traderjoe-xyz/exchange"
+        self.subgraph_url = "https://gateway-arbitrum.network.thegraph.com/api/fc2235999cc4344e7c8722107c9c0bd6/subgraphs/name/traderjoe-xyz/exchange"
+        # Fallback to public endpoint
+        self.subgraph_url_fallback = "https://api.thegraph.com/subgraphs/name/traderjoe-xyz/exchange"
         
         # Rate limiting
         self.rate_limit_delay = 1.0  # 1 second between requests

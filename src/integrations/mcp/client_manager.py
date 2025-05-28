@@ -203,6 +203,18 @@ class MCPClientManager:
             logger.error(f"Error storing arbitrage pattern: {e}")
             return False
 
+    async def store_execution_result(self, opportunity: Dict[str, Any], result: Dict[str, Any]) -> bool:
+        """Store execution result in memory servers.
+
+        Args:
+            opportunity: The arbitrage opportunity data
+            result: The execution result
+
+        Returns:
+            bool: True if stored successfully
+        """
+        return await self.store_arbitrage_pattern(opportunity, result)
+
     async def _store_in_dexmind(self, pattern_data: Dict[str, Any]) -> None:
         """Store pattern in DexMind memory server."""
         if 'dexmind' not in self.clients:
