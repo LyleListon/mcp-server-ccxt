@@ -1,0 +1,347 @@
+{
+  "flow_statistics": {
+    "price_feeds_price_data": {
+      "sent": 29,
+      "processed": 0,
+      "failed": 0,
+      "last_activity": "2025-06-01T02:55:00.621741"
+    },
+    "arbitrage_engine_arbitrage_opportunities": {
+      "sent": 2,
+      "processed": 0,
+      "failed": 0,
+      "last_activity": "2025-06-01T02:55:00.621752"
+    },
+    "arbitrage_engine_trade_executions": {
+      "sent": 2,
+      "processed": 0,
+      "failed": 0,
+      "last_activity": "2025-06-01T02:54:55.615538"
+    },
+    "arbitrage_engine_price_data": {
+      "sent": 0,
+      "processed": 29,
+      "failed": 0,
+      "last_activity": "2025-06-01T02:55:00.621790"
+    },
+    "bridge_monitor_price_data": {
+      "sent": 0,
+      "processed": 29,
+      "failed": 0,
+      "last_activity": "2025-06-01T02:55:00.621794"
+    },
+    "cross_chain_mev_arbitrage_opportunities": {
+      "sent": 0,
+      "processed": 2,
+      "failed": 0,
+      "last_activity": "2025-06-01T02:55:00.621798"
+    },
+    "wallet_manager_trade_executions": {
+      "sent": 0,
+      "processed": 2,
+      "failed": 0,
+      "last_activity": "2025-06-01T02:54:55.615622"
+    },
+    "memory_system_trade_executions": {
+      "sent": 0,
+      "processed": 2,
+      "failed": 0,
+      "last_activity": "2025-06-01T02:54:55.615629"
+    },
+    "wallet_manager_wallet_balances": {
+      "sent": 1,
+      "processed": 0,
+      "failed": 0,
+      "last_activity": "2025-06-01T02:55:00.621760"
+    },
+    "arbitrage_engine_wallet_balances": {
+      "sent": 0,
+      "processed": 1,
+      "failed": 0,
+      "last_activity": "2025-06-01T02:55:00.632003"
+    }
+  },
+  "data_flows": {
+    "price_feeds_to_arbitrage": {
+      "flow_id": "price_feeds_to_arbitrage",
+      "source_component": "price_feeds",
+      "target_component": "arbitrage_engine",
+      "flow_type": "price_data",
+      "direction": "downstream",
+      "priority": 3,
+      "batch_size": 10,
+      "batch_timeout": 0.5,
+      "enabled": true,
+      "flow_rate_limit": null,
+      "last_activity": null
+    },
+    "price_feeds_to_bridge": {
+      "flow_id": "price_feeds_to_bridge",
+      "source_component": "price_feeds",
+      "target_component": "bridge_monitor",
+      "flow_type": "price_data",
+      "direction": "downstream",
+      "priority": 2,
+      "batch_size": 5,
+      "batch_timeout": 1.0,
+      "enabled": true,
+      "flow_rate_limit": null,
+      "last_activity": null
+    },
+    "arbitrage_to_mev": {
+      "flow_id": "arbitrage_to_mev",
+      "source_component": "arbitrage_engine",
+      "target_component": "cross_chain_mev",
+      "flow_type": "arbitrage_opportunities",
+      "direction": "downstream",
+      "priority": 3,
+      "batch_size": 1,
+      "batch_timeout": 0.1,
+      "enabled": true,
+      "flow_rate_limit": null,
+      "last_activity": null
+    },
+    "mev_to_arbitrage": {
+      "flow_id": "mev_to_arbitrage",
+      "source_component": "cross_chain_mev",
+      "target_component": "arbitrage_engine",
+      "flow_type": "arbitrage_opportunities",
+      "direction": "upstream",
+      "priority": 3,
+      "batch_size": 1,
+      "batch_timeout": 0.1,
+      "enabled": true,
+      "flow_rate_limit": null,
+      "last_activity": null
+    },
+    "bridge_to_arbitrage": {
+      "flow_id": "bridge_to_arbitrage",
+      "source_component": "bridge_monitor",
+      "target_component": "arbitrage_engine",
+      "flow_type": "bridge_costs",
+      "direction": "downstream",
+      "priority": 2,
+      "batch_size": 5,
+      "batch_timeout": 2.0,
+      "enabled": true,
+      "flow_rate_limit": null,
+      "last_activity": null
+    },
+    "bridge_to_mev": {
+      "flow_id": "bridge_to_mev",
+      "source_component": "bridge_monitor",
+      "target_component": "cross_chain_mev",
+      "flow_type": "bridge_costs",
+      "direction": "downstream",
+      "priority": 2,
+      "batch_size": 5,
+      "batch_timeout": 2.0,
+      "enabled": true,
+      "flow_rate_limit": null,
+      "last_activity": null
+    },
+    "arbitrage_to_wallet": {
+      "flow_id": "arbitrage_to_wallet",
+      "source_component": "arbitrage_engine",
+      "target_component": "wallet_manager",
+      "flow_type": "trade_executions",
+      "direction": "downstream",
+      "priority": 4,
+      "batch_size": 1,
+      "batch_timeout": 0.05,
+      "enabled": true,
+      "flow_rate_limit": null,
+      "last_activity": null
+    },
+    "mev_to_wallet": {
+      "flow_id": "mev_to_wallet",
+      "source_component": "cross_chain_mev",
+      "target_component": "wallet_manager",
+      "flow_type": "trade_executions",
+      "direction": "downstream",
+      "priority": 4,
+      "batch_size": 1,
+      "batch_timeout": 0.05,
+      "enabled": true,
+      "flow_rate_limit": null,
+      "last_activity": null
+    },
+    "wallet_to_arbitrage": {
+      "flow_id": "wallet_to_arbitrage",
+      "source_component": "wallet_manager",
+      "target_component": "arbitrage_engine",
+      "flow_type": "wallet_balances",
+      "direction": "downstream",
+      "priority": 3,
+      "batch_size": 1,
+      "batch_timeout": 1.0,
+      "enabled": true,
+      "flow_rate_limit": null,
+      "last_activity": null
+    },
+    "arbitrage_to_memory": {
+      "flow_id": "arbitrage_to_memory",
+      "source_component": "arbitrage_engine",
+      "target_component": "memory_system",
+      "flow_type": "trade_executions",
+      "direction": "downstream",
+      "priority": 2,
+      "batch_size": 10,
+      "batch_timeout": 5.0,
+      "enabled": true,
+      "flow_rate_limit": null,
+      "last_activity": null
+    },
+    "mev_to_memory": {
+      "flow_id": "mev_to_memory",
+      "source_component": "cross_chain_mev",
+      "target_component": "memory_system",
+      "flow_type": "trade_executions",
+      "direction": "downstream",
+      "priority": 2,
+      "batch_size": 10,
+      "batch_timeout": 5.0,
+      "enabled": true,
+      "flow_rate_limit": null,
+      "last_activity": null
+    },
+    "system_to_health": {
+      "flow_id": "system_to_health",
+      "source_component": "error_manager",
+      "target_component": "health_monitor",
+      "flow_type": "error_events",
+      "direction": "downstream",
+      "priority": 3,
+      "batch_size": 5,
+      "batch_timeout": 1.0,
+      "enabled": true,
+      "flow_rate_limit": null,
+      "last_activity": null
+    },
+    "health_broadcast": {
+      "flow_id": "health_broadcast",
+      "source_component": "health_monitor",
+      "target_component": "*",
+      "flow_type": "health_status",
+      "direction": "broadcast",
+      "priority": 2,
+      "batch_size": 1,
+      "batch_timeout": 10.0,
+      "enabled": true,
+      "flow_rate_limit": null,
+      "last_activity": null
+    }
+  },
+  "component_interfaces": {
+    "arbitrage_engine": {
+      "component_name": "arbitrage_engine",
+      "input_flows": [
+        "price_data",
+        "bridge_costs",
+        "wallet_balances"
+      ],
+      "output_flows": [
+        "arbitrage_opportunities",
+        "trade_executions"
+      ],
+      "processing_capacity": 50,
+      "buffer_size": 500,
+      "backpressure_threshold": 0.8
+    },
+    "bridge_monitor": {
+      "component_name": "bridge_monitor",
+      "input_flows": [
+        "price_data",
+        "system_events"
+      ],
+      "output_flows": [
+        "bridge_costs"
+      ],
+      "processing_capacity": 20,
+      "buffer_size": 200,
+      "backpressure_threshold": 0.8
+    },
+    "cross_chain_mev": {
+      "component_name": "cross_chain_mev",
+      "input_flows": [
+        "bridge_costs",
+        "arbitrage_opportunities"
+      ],
+      "output_flows": [
+        "arbitrage_opportunities",
+        "trade_executions"
+      ],
+      "processing_capacity": 30,
+      "buffer_size": 300,
+      "backpressure_threshold": 0.8
+    },
+    "wallet_manager": {
+      "component_name": "wallet_manager",
+      "input_flows": [
+        "trade_executions",
+        "system_events"
+      ],
+      "output_flows": [
+        "wallet_balances"
+      ],
+      "processing_capacity": 40,
+      "buffer_size": 400,
+      "backpressure_threshold": 0.8
+    },
+    "price_feeds": {
+      "component_name": "price_feeds",
+      "input_flows": [
+        "system_events"
+      ],
+      "output_flows": [
+        "price_data",
+        "market_conditions"
+      ],
+      "processing_capacity": 100,
+      "buffer_size": 1000,
+      "backpressure_threshold": 0.8
+    },
+    "memory_system": {
+      "component_name": "memory_system",
+      "input_flows": [
+        "trade_executions",
+        "arbitrage_opportunities",
+        "system_events"
+      ],
+      "output_flows": [
+        "memory_updates"
+      ],
+      "processing_capacity": 60,
+      "buffer_size": 600,
+      "backpressure_threshold": 0.8
+    },
+    "health_monitor": {
+      "component_name": "health_monitor",
+      "input_flows": [
+        "system_events",
+        "error_events"
+      ],
+      "output_flows": [
+        "health_status"
+      ],
+      "processing_capacity": 80,
+      "buffer_size": 800,
+      "backpressure_threshold": 0.8
+    },
+    "error_manager": {
+      "component_name": "error_manager",
+      "input_flows": [
+        "system_events"
+      ],
+      "output_flows": [
+        "error_events"
+      ],
+      "processing_capacity": 70,
+      "buffer_size": 700,
+      "backpressure_threshold": 0.8
+    }
+  },
+  "active_packet_count": 3,
+  "data_lineage_count": 3,
+  "last_updated": "2025-06-01T02:55:01.622265"
+}

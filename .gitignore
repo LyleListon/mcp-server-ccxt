@@ -179,11 +179,20 @@ mcp-debug.log
 dexmind.db
 dexmind/dexmind.db
 
-# API Keys and Secrets
+# API Keys and Secrets - NEVER COMMIT THESE!
 config/secrets.json
 config/api_keys.json
 *.key
 *.pem
+.env*
+!.env.example
+private_keys.txt
+wallet_info.json
+wallet_backup.json
+*_private_key*
+*_api_key*
+mnemonic*
+seed*
 
 # Data directories
 data/arbitrage/

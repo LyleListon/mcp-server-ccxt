@@ -15,7 +15,7 @@ from datetime import datetime
 from typing import Dict, Any, List
 
 # Import our components
-from integrations.mcp.client_manager import MCPClientManager
+from src.integrations.mcp.client_manager import MCPClientManager
 from core.arbitrage.simple_path_finder import SimplePathFinder
 from core.arbitrage.simple_profit_calculator import SimpleProfitCalculator
 from core.arbitrage.simple_risk_analyzer import SimpleRiskAnalyzer

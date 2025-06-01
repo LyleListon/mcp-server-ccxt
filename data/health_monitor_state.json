@@ -1,0 +1,106 @@
+{
+  "components": {
+    "arbitrage_engine": {
+      "status": "healthy",
+      "last_check": "2025-06-01T01:02:25.048834",
+      "last_success": "2025-06-01T01:02:25.048970",
+      "consecutive_failures": 0,
+      "total_checks": 3,
+      "failed_checks": 0,
+      "error_message": null,
+      "recovery_attempts": 0
+    },
+    "bridge_monitor": {
+      "status": "healthy",
+      "last_check": "2025-06-01T01:02:25.048972",
+      "last_success": "2025-06-01T01:02:25.048978",
+      "consecutive_failures": 0,
+      "total_checks": 3,
+      "failed_checks": 0,
+      "error_message": null,
+      "recovery_attempts": 0
+    },
+    "cross_chain_mev": {
+      "status": "healthy",
+      "last_check": "2025-06-01T01:02:25.048996",
+      "last_success": "2025-06-01T01:02:25.049021",
+      "consecutive_failures": 0,
+      "total_checks": 3,
+      "failed_checks": 0,
+      "error_message": null,
+      "recovery_attempts": 0
+    },
+    "wallet_manager": {
+      "status": "healthy",
+      "last_check": "2025-06-01T01:02:25.049023",
+      "last_success": "2025-06-01T01:02:25.049041",
+      "consecutive_failures": 0,
+      "total_checks": 3,
+      "failed_checks": 0,
+      "error_message": null,
+      "recovery_attempts": 0
+    },
+    "price_feeds": {
+      "status": "healthy",
+      "last_check": "2025-06-01T01:02:25.049043",
+      "last_success": "2025-06-01T01:02:25.219835",
+      "consecutive_failures": 0,
+      "total_checks": 3,
+      "failed_checks": 0,
+      "error_message": null,
+      "recovery_attempts": 0
+    },
+    "dex_manager": {
+      "status": "healthy",
+      "last_check": "2025-06-01T01:02:25.219846",
+      "last_success": "2025-06-01T01:02:25.219857",
+      "consecutive_failures": 0,
+      "total_checks": 3,
+      "failed_checks": 0,
+      "error_message": null,
+      "recovery_attempts": 0
+    },
+    "memory_system": {
+      "status": "critical",
+      "last_check": "2025-06-01T01:02:25.219881",
+      "last_success": null,
+      "consecutive_failures": 3,
+      "total_checks": 3,
+      "failed_checks": 3,
+      "error_message": "Memory status: failed",
+      "recovery_attempts": 2
+    },
+    "knowledge_graph": {
+      "status": "healthy",
+      "last_check": "2025-06-01T01:02:25.220098",
+      "last_success": "2025-06-01T01:02:25.220108",
+      "consecutive_failures": 0,
+      "total_checks": 3,
+      "failed_checks": 0,
+      "error_message": null,
+      "recovery_attempts": 0
+    },
+    "filesystem_mcp": {
+      "status": "healthy",
+      "last_check": "2025-06-01T01:02:25.220109",
+      "last_success": "2025-06-01T01:02:25.220114",
+      "consecutive_failures": 0,
+      "total_checks": 3,
+      "failed_checks": 0,
+      "error_message": null,
+      "recovery_attempts": 0
+    },
+    "api_connections": {
+      "status": "recovering",
+      "last_check": "2025-06-01T01:02:25.220115",
+      "last_success": "2025-06-01T01:02:15.039831",
+      "consecutive_failures": 1,
+      "total_checks": 3,
+      "failed_checks": 1,
+      "error_message": "CoinGecko API error: 429",
+      "recovery_attempts": 1
+    }
+  },
+  "alerts": [],
+  "last_updated": "2025-06-01T01:13:02.359005"
+}

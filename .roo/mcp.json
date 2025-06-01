@@ -1,24 +1,80 @@
 {
   "mcpServers": {
+    "DexMind": {
+      "command": "node",
+      "args": [
+        "/home/lylepaul78/Documents/augment-projects/MayArbi/dexmind/dist/index.js"
+      ],
+      "env": {},
+      "description": "AI-powered DEX analysis and memory",
+      "type": "memory",
+      "required": true
+    },
     "FileScopeMCP": {
       "command": "/home/lylepaul78/Documents/augment-projects/MayArbi/FileScopeMCP/run.sh",
       "args": [],
-      "env": {}
+      "env": {},
+      "description": "File system operations and project analysis",
+      "type": "organization",
+      "required": false
+    },
+    "Filesystem-MCP": {
+      "command": "node",
+      "args": [
+        "/home/lylepaul78/Documents/augment-projects/MayArbi/filesystem-mcp-server/dist/index.js"
+      ],
+      "env": {
+        "FS_BASE_DIRECTORY": "/home/lylepaul78/Documents/augment-projects/MayArbi"
+      },
+      "description": "Core file system operations",
+      "type": "organization",
+      "required": false
     },
     "MCP-Compass": {
       "command": "/home/lylepaul78/Documents/augment-projects/MayArbi/mcp-compass/start-mcp-compass.sh",
       "args": [],
-      "env": {}
+      "env": {},
+      "description": "MCP server discovery and recommendations",
+      "type": "discovery",
+      "required": false
     },
     "MCP-Knowledge-Graph": {
       "command": "/home/lylepaul78/Documents/augment-projects/MayArbi/mcp-knowledge-graph/start-mcp-knowledge-graph.sh",
       "args": [],
-      "env": {}
+      "env": {},
+      "description": "Token and market relationship storage",
+      "type": "graph",
+      "required": true
     },
     "MCP-Memory-Server": {
       "command": "/home/lylepaul78/Documents/augment-projects/MayArbi/mcp-memory-service/start-mcp-memory-service.sh",
       "args": [],
-      "env": {}
+      "env": {},
+      "description": "Vector memory storage and retrieval",
+      "type": "memory",
+      "required": true
+    },
+    "MCP-CCXT-Server": {
+      "command": "/home/lylepaul78/Documents/augment-projects/MayArbi/mcp-server-ccxt/.venv/bin/python",
+      "args": [
+        "-m",
+        "mcp_server_ccxt"
+      ],
+      "env": {},
+      "description": "Cryptocurrency exchange integration",
+      "type": "exchange",
+      "required": true
+    },
+    "Docker-MCP": {
+      "command": "/home/lylepaul78/Documents/augment-projects/MayArbi/docker-mcp/.venv/bin/python",
+      "args": [
+        "-m",
+        "docker_mcp"
+      ],
+      "env": {},
+      "description": "Docker container management",
+      "type": "infrastructure",
+      "required": false
     }
   }
 }

@@ -9,7 +9,7 @@ import asyncio
 import logging
 from typing import Dict, Any, Optional, List
 from datetime import datetime
-from utils.simple_data_storage import SimpleDataStorage
+from src.utils.simple_data_storage import SimpleDataStorage
 
 logger = logging.getLogger(__name__)
 

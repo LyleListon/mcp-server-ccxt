@@ -1,0 +1,172 @@
+{
+  "strategy_name": "flash_loan_zero_capital",
+  "description": "Zero capital arbitrage using flash loans - perfect for post-security incident recovery",
+  
+  "trading": {
+    "strategy": "flash_loan_arbitrage",
+    "trading_enabled": false,
+    "use_flash_loans": true,
+    "min_profit_threshold": 0.3,
+    "max_trade_amount_usd": 50000,
+    "min_trade_amount_usd": 500,
+    "max_slippage": 0.005,
+    "gas_price_multiplier": 1.1,
+    "priority_fee_multiplier": 1.2
+  },
+
+  "flash_loan_config": {
+    "enabled": true,
+    "preferred_provider": "auto",
+    "max_loan_amount_usd": 50000,
+    "min_profit_after_fees": 5.0,
+    "providers": {
+      "aave": {
+        "enabled": true,
+        "fee_percentage": 0.09,
+        "max_amount_usd": 100000,
+        "supported_networks": ["arbitrum", "optimism", "base"],
+        "priority": 1
+      },
+      "balancer": {
+        "enabled": true,
+        "fee_percentage": 0.0,
+        "max_amount_usd": 50000,
+        "supported_networks": ["arbitrum", "optimism"],
+        "priority": 2
+      }
+    }
+  },
+
+  "capital_allocation": {
+    "total_capital_usd": 175,
+    "gas_reserves": {
+      "arbitrum": 50,
+      "base": 50,
+      "optimism": 50
+    },
+    "emergency_buffer": 25,
+    "flash_loan_focused": true
+  },
+
+  "target_pairs": [
+    {
+      "base_token": "USDC",
+      "quote_token": "USDT",
+      "min_liquidity_usd": 100000,
+      "flash_loan_viable": true
+    },
+    {
+      "base_token": "ETH",
+      "quote_token": "USDC",
+      "min_liquidity_usd": 500000,
+      "flash_loan_viable": true
+    },
+    {
+      "base_token": "WBTC",
+      "quote_token": "USDC",
+      "min_liquidity_usd": 200000,
+      "flash_loan_viable": true
+    }
+  ],
+
+  "dexs": {
+    "uniswap_v3": {
+      "enabled": true,
+      "network": "arbitrum",
+      "flash_loan_compatible": true,
+      "priority": 1,
+      "gas_estimate": 200000
+    },
+    "aerodrome": {
+      "enabled": true,
+      "network": "base",
+      "flash_loan_compatible": true,
+      "priority": 1,
+      "gas_estimate": 180000
+    },
+    "velodrome": {
+      "enabled": true,
+      "network": "optimism",
+      "flash_loan_compatible": true,
+      "priority": 1,
+      "gas_estimate": 190000
+    },
+    "sushiswap": {
+      "enabled": true,
+      "network": "arbitrum",
+      "flash_loan_compatible": true,
+      "priority": 2,
+      "gas_estimate": 220000
+    },
+    "camelot": {
+      "enabled": true,
+      "network": "arbitrum",
+      "flash_loan_compatible": true,
+      "priority": 2,
+      "gas_estimate": 210000
+    }
+  },
+
+  "networks": {
+    "arbitrum": {
+      "enabled": true,
+      "preferred": true,
+      "rpc_url": "https://arb1.arbitrum.io/rpc",
+      "chain_id": 42161,
+      "gas_price_gwei": 0.1,
+      "flash_loan_support": true,
+      "priority": 1
+    },
+    "base": {
+      "enabled": true,
+      "preferred": true,
+      "rpc_url": "https://mainnet.base.org",
+      "chain_id": 8453,
+      "gas_price_gwei": 0.05,
+      "flash_loan_support": true,
+      "priority": 2
+    },
+    "optimism": {
+      "enabled": true,
+      "preferred": false,
+      "rpc_url": "https://mainnet.optimism.io",
+      "chain_id": 10,
+      "gas_price_gwei": 0.001,
+      "flash_loan_support": true,
+      "priority": 3
+    }
+  },
+
+  "risk_management": {
+    "max_risk_score": 2.0,
+    "max_concurrent_trades": 1,
+    "max_daily_trades": 50,
+    "max_daily_loss_usd": 50,
+    "stop_loss_percentage": 5.0,
+    "flash_loan_safety_margin": 1.2,
+    "min_gas_reserve_usd": 20
+  },
+
+  "profit_optimization": {
+    "target_profit_percentage": 0.5,
+    "min_profit_usd": 5.0,
+    "max_profit_usd": 1000.0,
+    "compound_profits": true,
+    "reinvest_threshold": 100.0
+  },
+
+  "monitoring": {
+    "log_level": "INFO",
+    "enable_telegram": false,
+    "enable_discord": false,
+    "performance_tracking": true,
+    "flash_loan_analytics": true
+  },
+
+  "mev_protection": {
+    "enabled": true,
+    "provider": "flashbots",
+    "max_priority_fee": 2.0,
+    "bundle_simulation": true
+  }
+}

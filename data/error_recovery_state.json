@@ -1,0 +1,208 @@
+{
+  "error_events": [
+    {
+      "error_id": "arbitrage_engine_1748759910_139872158083008",
+      "component": "arbitrage_engine",
+      "error_type": "ConnectionError",
+      "severity": "high",
+      "category": "network",
+      "message": "Network timeout",
+      "timestamp": "2025-06-01T02:38:30.373961",
+      "context": {
+        "test_case": "network_error"
+      },
+      "correlation_id": null,
+      "recovery_attempted": false,
+      "recovery_successful": false,
+      "propagated_to": [
+        "detection_engine"
+      ]
+    },
+    {
+      "error_id": "price_feeds_1748759910_139872159693984",
+      "component": "price_feeds",
+      "error_type": "Exception",
+      "severity": "high",
+      "category": "api",
+      "message": "API error 500",
+      "timestamp": "2025-06-01T02:38:30.374219",
+      "context": {
+        "test_case": "api_error"
+      },
+      "correlation_id": null,
+      "recovery_attempted": false,
+      "recovery_successful": false,
+      "propagated_to": [
+        "arbitrage_engine",
+        "bridge_monitor",
+        "cross_chain_mev",
+        "detection_engine"
+      ]
+    },
+    {
+      "error_id": "arbitrage_engine_1748759910_139872150493920",
+      "component": "arbitrage_engine",
+      "error_type": "Exception",
+      "severity": "high",
+      "category": "execution",
+      "message": "Trade execution failed",
+      "timestamp": "2025-06-01T02:38:30.374486",
+      "context": {
+        "test_case": "execution_error"
+      },
+      "correlation_id": null,
+      "recovery_attempted": false,
+      "recovery_successful": false,
+      "propagated_to": [
+        "detection_engine"
+      ]
+    },
+    {
+      "error_id": "wallet_manager_1748759910_139872150493632",
+      "component": "wallet_manager",
+      "error_type": "ValueError",
+      "severity": "medium",
+      "category": "validation",
+      "message": "Invalid parameter",
+      "timestamp": "2025-06-01T02:38:30.374717",
+      "context": {
+        "test_case": "validation_error"
+      },
+      "correlation_id": null,
+      "recovery_attempted": false,
+      "recovery_successful": false,
+      "propagated_to": []
+    },
+    {
+      "error_id": "bridge_monitor_1748759910_139872150685888",
+      "component": "bridge_monitor",
+      "error_type": "TimeoutError",
+      "severity": "high",
+      "category": "timeout",
+      "message": "Operation timeout",
+      "timestamp": "2025-06-01T02:38:30.374937",
+      "context": {
+        "test_case": "timeout_error"
+      },
+      "correlation_id": null,
+      "recovery_attempted": false,
+      "recovery_successful": false,
+      "propagated_to": [
+        "cross_chain_mev"
+      ]
+    }
+  ],
+  "error_patterns": {
+    "arbitrage_engine_network_ConnectionError": 1,
+    "price_feeds_api_Exception": 1,
+    "arbitrage_engine_execution_Exception": 1,
+    "wallet_manager_validation_ValueError": 1,
+    "bridge_monitor_timeout_TimeoutError": 1
+  },
+  "component_states": {
+    "arbitrage_engine": "failing",
+    "bridge_monitor": "failing",
+    "cross_chain_mev": "failing",
+    "wallet_manager": "degraded",
+    "price_feeds": "failing",
+    "dex_manager": "healthy",
+    "memory_system": "healthy",
+    "knowledge_graph": "healthy",
+    "filesystem_mcp": "healthy",
+    "api_connections": "healthy",
+    "detection_engine": "failing"
+  },
+  "circuit_breakers": {
+    "arbitrage_engine": {
+      "failure_threshold": 5,
+      "recovery_timeout": 60,
+      "current_failures": 2,
+      "state": "closed",
+      "last_failure_time": "2025-06-01T02:38:30.374511",
+      "last_success_time": null
+    },
+    "bridge_monitor": {
+      "failure_threshold": 5,
+      "recovery_timeout": 60,
+      "current_failures": 1,
+      "state": "closed",
+      "last_failure_time": "2025-06-01T02:38:30.374965",
+      "last_success_time": null
+    },
+    "cross_chain_mev": {
+      "failure_threshold": 5,
+      "recovery_timeout": 60,
+      "current_failures": 0,
+      "state": "closed",
+      "last_failure_time": null,
+      "last_success_time": null
+    },
+    "wallet_manager": {
+      "failure_threshold": 5,
+      "recovery_timeout": 60,
+      "current_failures": 1,
+      "state": "closed",
+      "last_failure_time": "2025-06-01T02:38:30.374748",
+      "last_success_time": null
+    },
+    "price_feeds": {
+      "failure_threshold": 5,
+      "recovery_timeout": 60,
+      "current_failures": 1,
+      "state": "closed",
+      "last_failure_time": "2025-06-01T02:38:30.374240",
+      "last_success_time": null
+    },
+    "dex_manager": {
+      "failure_threshold": 5,
+      "recovery_timeout": 60,
+      "current_failures": 0,
+      "state": "closed",
+      "last_failure_time": null,
+      "last_success_time": null
+    },
+    "memory_system": {
+      "failure_threshold": 5,
+      "recovery_timeout": 60,
+      "current_failures": 0,
+      "state": "closed",
+      "last_failure_time": null,
+      "last_success_time": null
+    },
+    "knowledge_graph": {
+      "failure_threshold": 5,
+      "recovery_timeout": 60,
+      "current_failures": 0,
+      "state": "closed",
+      "last_failure_time": null,
+      "last_success_time": null
+    },
+    "filesystem_mcp": {
+      "failure_threshold": 5,
+      "recovery_timeout": 60,
+      "current_failures": 0,
+      "state": "closed",
+      "last_failure_time": null,
+      "last_success_time": null
+    },
+    "api_connections": {
+      "failure_threshold": 5,
+      "recovery_timeout": 60,
+      "current_failures": 0,
+      "state": "closed",
+      "last_failure_time": null,
+      "last_success_time": null
+    },
+    "detection_engine": {
+      "failure_threshold": 5,
+      "recovery_timeout": 60,
+      "current_failures": 0,
+      "state": "closed",
+      "last_failure_time": null,
+      "last_success_time": null
+    }
+  },
+  "recovery_actions": {},
+  "correlation_groups": {},
+  "last_updated": "2025-06-01T02:38:30.375003"
+}

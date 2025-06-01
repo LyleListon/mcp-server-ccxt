@@ -1,0 +1,31 @@
+{
+  "check_interval": 30,
+  "alert_cooldown": 300,
+  "max_recovery_attempts": 3,
+  "components": {
+    "arbitrage_engine": {
+      "enabled": true,
+      "priority": "critical"
+    },
+    "bridge_monitor": {
+      "enabled": true,
+      "priority": "high"
+    },
+    "cross_chain_mev": {
+      "enabled": true,
+      "priority": "high"
+    },
+    "wallet_manager": {
+      "enabled": true,
+      "priority": "critical"
+    },
+    "price_feeds": {
+      "enabled": true,
+      "priority": "critical"
+    },
+    "api_connections": {
+      "enabled": true,
+      "priority": "high"
+    }
+  }
+}

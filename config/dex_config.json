@@ -2,13 +2,21 @@
   "dexs": {
     "uniswap_v3": {
       "enabled": true,
-      "ethereum_rpc_url": "http://localhost:8545",
-      "backup_rpc_url": null,
+      "ethereum_rpc_url": "https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "base_rpc_url": "https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "optimism_rpc_url": "https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "backup_rpc_url": "https://ethereum.publicnode.com",
+      "graph_api_key": "${THE_GRAPH_API_KEY}",
       "max_slippage": 0.5,
       "gas_limit": 300000
     },
     "sushiswap": {
       "enabled": true,
+      "ethereum_rpc_url": "https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "base_rpc_url": "https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "optimism_rpc_url": "https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
       "max_slippage": 0.5,
       "gas_limit": 250000
     },
@@ -21,27 +29,149 @@
     },
     "coingecko": {
       "enabled": true,
-      "api_key": null,
+      "api_key": "${COINGECKO_API_KEY}",
       "rate_limit_delay": 1.0
     },
     "oneinch": {
       "enabled": false,
-      "api_key": null
+      "api_key": null,
+      "note": "Disabled - KYC requirements not preferred"
     },
     "paraswap": {
-      "enabled": false,
-      "api_key": null
+      "enabled": true,
+      "api_key": null,
+      "ethereum_rpc_url": "https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "base_rpc_url": "https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "optimism_rpc_url": "https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.5,
+      "gas_limit": 200000
+    },
+    "camelot": {
+      "enabled": true,
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.5,
+      "gas_limit": 200000,
+      "note": "Arbitrum-native DEX"
+    },
+    "traderjoe": {
+      "enabled": true,
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.5,
+      "gas_limit": 200000,
+      "note": "Multi-chain DEX"
+    },
+    "aerodrome": {
+      "enabled": true,
+      "base_rpc_url": "https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.5,
+      "gas_limit": 200000,
+      "note": "Base-native DEX"
+    },
+    "kyberswap": {
+      "enabled": true,
+      "ethereum_rpc_url": "https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "base_rpc_url": "https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "optimism_rpc_url": "https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.5,
+      "gas_limit": 200000
+    },
+    "velodrome": {
+      "enabled": true,
+      "optimism_rpc_url": "https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.5,
+      "gas_limit": 200000,
+      "note": "Optimism-native DEX"
+    },
+    "curve": {
+      "enabled": true,
+      "ethereum_rpc_url": "https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.1,
+      "gas_limit": 150000,
+      "note": "Stablecoin specialist - high volume"
+    },
+    "balancer": {
+      "enabled": true,
+      "ethereum_rpc_url": "https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.5,
+      "gas_limit": 200000,
+      "note": "Multi-token pools"
+    },
+    "pancakeswap": {
+      "enabled": true,
+      "bsc_rpc_url": "https://bsc-dataseed1.binance.org/",
+      "max_slippage": 0.5,
+      "gas_limit": 200000,
+      "note": "BSC largest DEX"
+    },
+    "quickswap_polygon": {
+      "enabled": true,
+      "polygon_rpc_url": "https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.5,
+      "gas_limit": 200000,
+      "note": "Polygon native DEX"
+    },
+    "spookyswap": {
+      "enabled": true,
+      "fantom_rpc_url": "https://rpc.ftm.tools/",
+      "max_slippage": 0.5,
+      "gas_limit": 200000,
+      "note": "Fantom largest DEX"
+    },
+    "zyberswap": {
+      "enabled": true,
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.8,
+      "gas_limit": 180000,
+      "note": "SMALL DEX - Arbitrum native, less competition"
+    },
+    "swapfish": {
+      "enabled": true,
+      "base_rpc_url": "https://mainnet.base.org",
+      "max_slippage": 0.8,
+      "gas_limit": 150000,
+      "note": "SMALL DEX - Base chain opportunities"
+    },
+    "woofi": {
+      "enabled": true,
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "polygon_rpc_url": "https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.6,
+      "gas_limit": 160000,
+      "note": "SMALL DEX - Multi-chain, synthetic proofs"
+    },
+    "chronos": {
+      "enabled": true,
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.7,
+      "gas_limit": 170000,
+      "note": "SMALL DEX - Arbitrum ve(3,3) model"
     }
   },
   "trading": {
-    "min_profit_threshold": 0.5,
+    "min_profit_threshold": 0.1,
     "max_slippage": 1.0,
-    "max_trade_size_usd": 1000,
-    "gas_price_gwei": 20
+    "max_trade_size_usd": 700,
+    "gas_price_gwei": 15,
+    "min_trade_size_usd": 10,
+    "max_gas_cost_usd": 5,
+    "total_capital_usd": 832,
+    "reserve_percentage": 15,
+    "max_concurrent_trades": 3,
+    "position_sizing": {
+      "conservative": 200,
+      "moderate": 400,
+      "aggressive": 700
+    }
   },
   "monitoring": {
-    "check_interval_seconds": 5,
-    "max_opportunities_per_scan": 10,
-    "log_level": "INFO"
+    "check_interval_seconds": 2,
+    "max_opportunities_per_scan": 20,
+    "log_level": "INFO",
+    "enable_cross_chain": true,
+    "enable_flash_loans": true,
+    "priority_tokens": ["WETH", "USDC", "USDT", "WBTC", "ARB", "OP"]
   }
 }

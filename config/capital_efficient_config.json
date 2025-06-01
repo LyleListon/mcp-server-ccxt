@@ -1,15 +1,18 @@
 {
   "trading": {
-    "strategy": "capital_efficient",
-    "min_profit_threshold": 0.3,
+    "strategy": "flash_loan_default",
+    "min_profit_threshold": 0.2,
     "max_slippage": 0.5,
-    "max_trade_amount_usd": 5000,
+    "max_trade_amount_usd": 100000,
+    "min_trade_amount_usd": 500,
     "min_liquidity_usd": 50000,
     "trading_enabled": false,
     "use_flash_loans": true,
-    "flash_loan_providers": ["aave", "dydx"],
+    "flash_loan_default": true,
+    "flash_loan_providers": ["aave", "balancer", "dydx"],
     "preferred_networks": ["arbitrum", "optimism", "base", "bsc", "fantom", "polygon", "avalanche", "gnosis"],
-    "gas_optimization": true
+    "gas_optimization": true,
+    "capital_mode": "gas_only"
   },
 
   "target_pairs": {
@@ -138,19 +141,34 @@
   },
 
   "flash_loans": {
-    "aave": {
-      "enabled": true,
-      "networks": ["ethereum", "arbitrum", "optimism", "base"],
-      "fee_percentage": 0.09,
-      "max_amount_usd": 100000,
-      "priority": 1
-    },
-    "dydx": {
-      "enabled": true,
-      "networks": ["ethereum"],
-      "fee_percentage": 0.0,
-      "max_amount_usd": 50000,
-      "priority": 2
+    "default_strategy": "always_use",
+    "fallback_to_capital": false,
+    "min_profit_after_fees": 3.0,
+    "providers": {
+      "balancer": {
+        "enabled": true,
+        "networks": ["arbitrum", "optimism", "base"],
+        "fee_percentage": 0.0,
+        "max_amount_usd": 50000,
+        "priority": 1,
+        "description": "Zero fee flash loans"
+      },
+      "aave": {
+        "enabled": true,
+        "networks": ["ethereum", "arbitrum", "optimism", "base"],
+        "fee_percentage": 0.09,
+        "max_amount_usd": 100000,
+        "priority": 2,
+        "description": "Reliable flash loans with small fee"
+      },
+      "dydx": {
+        "enabled": true,
+        "networks": ["ethereum"],
+        "fee_percentage": 0.0,
+        "max_amount_usd": 50000,
+        "priority": 3,
+        "description": "Zero fee but Ethereum only"
+      }
     }
   },
 

@@ -148,7 +148,37 @@ class RealArbitrageBot:
                         'dexmind': {
                             'command': 'node',
                             'args': ['/home/lylepaul78/Documents/augment-projects/MayArbi/dexmind/dist/index.js'],
-                            'description': 'Custom memory server for arbitrage patterns'
+                            'description': 'AI-powered DEX analysis and memory',
+                            'type': 'memory',
+                            'required': True
+                        },
+                        'memory_service': {
+                            'command': '/home/lylepaul78/Documents/augment-projects/MayArbi/mcp-memory-service/start-mcp-memory-service.sh',
+                            'args': [],
+                            'description': 'Vector memory storage and retrieval',
+                            'type': 'memory',
+                            'required': True
+                        },
+                        'knowledge_graph': {
+                            'command': '/home/lylepaul78/Documents/augment-projects/MayArbi/mcp-knowledge-graph/start-mcp-knowledge-graph.sh',
+                            'args': [],
+                            'description': 'Token and market relationship storage',
+                            'type': 'graph',
+                            'required': True
+                        },
+                        'ccxt_server': {
+                            'command': '/home/lylepaul78/Documents/augment-projects/MayArbi/mcp-server-ccxt/.venv/bin/python',
+                            'args': ['-m', 'mcp_server_ccxt'],
+                            'description': 'Cryptocurrency exchange integration',
+                            'type': 'exchange',
+                            'required': True
+                        },
+                        'filescopemcp': {
+                            'command': '/home/lylepaul78/Documents/augment-projects/MayArbi/FileScopeMCP/run.sh',
+                            'args': [],
+                            'description': 'Project file organization and tracking',
+                            'type': 'organization',
+                            'required': False
                         }
                     }
                 }

@@ -34,10 +34,16 @@ class UniswapV3Adapter(BaseDEX):
         """
         super().__init__("uniswap_v3", config)
 
-        # The Graph API endpoint for Uniswap V3 (with API key)
-        self.subgraph_url = "https://gateway-arbitrum.network.thegraph.com/api/fc2235999cc4344e7c8722107c9c0bd6/subgraphs/id/5zvR82QoaXuFy4wDgKRMpzQw5KB2AeyvuVpDbabxjD9K"
-        # Fallback to public endpoint
+        # The Graph API endpoint for Uniswap V3 (with API key from environment)
+        import os
+        graph_api_key = os.getenv('THE_GRAPH_API_KEY', config.get('graph_api_key', 'fc2235999cc4344e7c8722107c9c0bd6'))
+
+        # Primary endpoint with user's API key
+        self.subgraph_url = f"https://gateway.thegraph.com/api/{graph_api_key}/subgraphs/id/HUZDsRpEVP2AvzDCyzDHtdc64dyDxx8FQjzsmqSg4H3B"
+
+        # Fallback endpoints
         self.subgraph_url_fallback = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3"
+        self.subgraph_url_backup = "https://gateway.thegraph.com/api/fc2235999cc4344e7c8722107c9c0bd6/subgraphs/id/HUZDsRpEVP2AvzDCyzDHtdc64dyDxx8FQjzsmqSg4H3B"
 
         # Web3 configuration
         self.rpc_url = config.get('ethereum_rpc_url', 'http://localhost:8545')

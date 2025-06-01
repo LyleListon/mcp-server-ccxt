@@ -1,0 +1,94 @@
+MayArbi Project Directory Index
+Created: 2024-12-01
+Purpose: Main directory listing after cleanup
+
+=== CORE ARBITRAGE SYSTEM ===
+fixed_flashloan_system.py - WORKING flashloan arbitrage system (MAIN SYSTEM)
+simple_flashloan_system.py - Simplified flashloan system for testing
+simple_real_executor.py - Real execution system with wallet integration
+run_flash_loan_arbitrage.py - Original flashloan runner (needs fixing)
+
+=== CONFIGURATION ===
+config/ - System configuration files
+  ├── dex_config.json - 18 DEX configurations
+  ├── capital_efficient_config.json - Capital allocation settings
+  └── flash_loan_strategy_config.json - Flashloan strategy parameters
+
+=== SMART CONTRACTS ===
+contracts/ - Solidity smart contracts
+  └── FlashloanArbitrage.sol - Real flashloan arbitrage contract
+
+=== SOURCE CODE ===
+src/ - Main source code directory
+  ├── core/ - Core arbitrage engine
+  ├── dex/ - DEX integrations
+  ├── flashloan/ - Flashloan implementations
+  ├── integrations/ - MCP and external integrations
+  ├── monitoring/ - System monitoring
+  ├── utils/ - Utility functions
+  └── wallet/ - Wallet management
+
+=== MCP SERVERS ===
+mcp-compass/ - MCP server recommendation system
+mcp-knowledge-graph/ - Knowledge graph MCP server
+mcp-memory-service/ - Memory management MCP server
+mcp-server-ccxt/ - CCXT trading MCP server
+FileScopeMCP/ - File scope management
+filesystem-mcp-server/ - Filesystem operations
+dexmind/ - DEX intelligence system
+serena/ - Additional MCP functionality
+
+=== DOCUMENTATION ===
+docs/ - Project documentation
+  ├── 01-PROJECT-OVERVIEW.md - Project overview
+  ├── 02-SYSTEM-ARCHITECTURE.md - System architecture
+  ├── 03-DEXMIND-OVERVIEW.md - DexMind overview
+  ├── 04-DEXMIND-TOOLS.md - DexMind tools
+  ├── 05-SETUP-GUIDE.md - Setup instructions
+  └── 06-TRADING-STRATEGY.md - Trading strategy
+
+memory-bank/ - AI memory system
+  ├── projectbrief.md - Project foundation
+  ├── productContext.md - Product context
+  ├── systemPatterns.md - System patterns
+  ├── techContext.md - Technical context
+  ├── activeContext.md - Current work context
+  └── progress.md - Progress tracking
+
+reports/ - System analysis reports
+implementation_plans/ - Implementation roadmaps
+
+=== UTILITIES ===
+check_api_keys.py - API key verification
+l2_bridging_guide.py - L2 bridging guide
+tools/ - Development tools
+scripts/ - Utility scripts
+tests/ - Test suites
+
+=== DATA ===
+data/ - Runtime data and state files
+dexmind.db - DexMind database
+
+=== PROJECT FILES ===
+README.md - Project README
+LICENSE - Project license
+DEPLOYMENT_GUIDE.md - Deployment instructions
+SYSTEM_SUMMARY.md - System summary
+MIGRATION_IMPLEMENTATION_ROADMAP.md - Migration roadmap
+PHASE2_IMPLEMENTATION_COMPLETE.md - Phase 2 completion
+
+=== STATUS ===
+✅ Flashloan arbitrage system: WORKING
+✅ 18 DEX configurations: COMPLETE
+✅ MCP server integration: COMPLETE
+✅ Real market data: WORKING
+✅ Smart contract template: CREATED
+⚠️  Wallet configuration: NEEDED for live trading
+🎯 Ready for live deployment with wallet setup
+
+=== NEXT STEPS ===
+1. Configure wallet environment variables
+2. Deploy flashloan contract to Arbitrum
+3. Test with small amounts
+4. Scale to full execution
+5. Implement cross-chain MEV strategies
