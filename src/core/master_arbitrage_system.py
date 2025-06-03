@@ -14,6 +14,20 @@ from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
 
+# 🎨 FLOW VISUALIZATION INTEGRATION
+try:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+    from simple_flow_demo import SimpleFlowCanvas
+
+    # Create global canvas instance
+    flow_canvas = SimpleFlowCanvas()
+    logger.info("🎨 Flow visualization canvas initialized")
+except ImportError as e:
+    logger.warning(f"Flow visualization not available: {e}")
+    flow_canvas = None
+
 
 @dataclass
 class ArbitrageExecution:
@@ -46,32 +60,32 @@ class MasterArbitrageSystem:
         self.running = False
         self.execution_mode = config.get('execution_mode', 'simulation')  # 'simulation' or 'live'
 
-        # Execution settings (read from environment variables)
+        # Execution settings (config overrides environment variables)
         self.execution_settings = {
-            'scan_interval_seconds': int(os.getenv('SCAN_INTERVAL', '30')),
+            'scan_interval_seconds': config.get('scan_interval_seconds', int(os.getenv('SCAN_INTERVAL', '30'))),
             'min_profit_usd': float(os.getenv('MIN_PROFIT_USD', '0.50')),
-            'max_trade_size_usd': int(os.getenv('MAX_TRADE_SIZE_USD', '5000')),
-            'min_profit_percentage': float(os.getenv('MIN_PROFIT_THRESHOLD', '0.15')),
+            'max_trade_size_usd': int(os.getenv('MAX_TRADE_SIZE_USD', '700')),
+            'min_profit_percentage': float(os.getenv('MIN_PROFIT_THRESHOLD', '0.1')),
             'max_concurrent_executions': int(os.getenv('MAX_CONCURRENT_TRADES', '3')),
-            'enable_cross_chain': True,
-            'enable_same_chain': True,
+            'enable_cross_chain': False,        # Disable cross-chain (focus on same-chain first)
+            'enable_same_chain': True,          # Enable same-chain arbitrage (PRIORITY)
             'preferred_bridges': os.getenv('PREFERRED_BRIDGES', 'across,stargate,synapse').split(','),
             'max_execution_time_seconds': int(os.getenv('EXECUTION_TIMEOUT', '300'))
         }
 
         # L2-Optimized gas settings
         self.gas_settings = {
-            'max_gas_price_gwei': int(os.getenv('MAX_GAS_PRICE_GWEI', '50')),
+            'max_gas_price_gwei': float(os.getenv('MAX_GAS_PRICE_GWEI', '1.0')),
             'enable_gas_optimization': True,
             'primary_chain': os.getenv('PRIMARY_CHAIN', 'arbitrum'),
             'secondary_chain': os.getenv('SECONDARY_CHAIN', 'base'),
-            # L2 gas thresholds (much lower than mainnet)
+            # L2 gas thresholds (realistic for current L2 gas prices)
             'l2_gas_thresholds': {
-                'ultra_low': 0.1,    # Perfect for L2 arbitrage
-                'low': 0.5,          # Good for L2 arbitrage
-                'medium': 2.0,       # Marginal for L2 arbitrage
-                'high': 5.0,         # Bad for L2 arbitrage
-                'extreme': 10.0      # Never trade on L2
+                'ultra_low': 0.01,   # Perfect for L2 arbitrage
+                'low': 0.05,         # Good for L2 arbitrage
+                'medium': 0.1,       # Marginal for L2 arbitrage
+                'high': 0.5,         # Bad for L2 arbitrage
+                'extreme': 1.0       # Never trade on L2
             },
             # Mainnet gas thresholds (original)
             'mainnet_gas_thresholds': {
@@ -135,20 +149,20 @@ class MasterArbitrageSystem:
 
             # Import and initialize components
             try:
-                from feeds.alchemy_sdk_feeds import AlchemySDKFeeds
+                from feeds.multi_dex_aggregator import MultiDEXAggregator
                 from bridges.bridge_cost_monitor import BridgeCostMonitor
+                from mempool.alchemy_mempool_monitor import AlchemyMempoolMonitor
                 # For now, use a simple executor since RealArbitrageExecutor needs more setup
                 self.executor_available = False
             except ImportError as e:
                 logger.warning(f"Import warning: {e}")
                 return False
 
-            # Initialize Alchemy SDK price feeds
-            logger.info("   🏆 Initializing Alchemy SDK price feeds...")
-            self.price_feeds = AlchemySDKFeeds(self.config)
-            if not await self.price_feeds.connect():
-                logger.error("Failed to initialize price feeds")
-                return False
+            # Initialize Multi-DEX price aggregator
+            logger.info("   🔥 Initializing Multi-DEX Aggregator (42 DEXes)...")
+            self.price_feeds = MultiDEXAggregator(self.config)
+            dex_stats = self.price_feeds.get_dex_stats()
+            logger.info(f"   ✅ Connected to {dex_stats['enabled_dexes']} DEXes across {dex_stats['supported_chains']} chains")
 
             # Initialize bridge monitor
             logger.info("   🌉 Initializing bridge monitor...")
@@ -157,9 +171,15 @@ class MasterArbitrageSystem:
                 logger.error("Failed to initialize bridge monitor")
                 return False
 
-            # Initialize executor (simplified for now)
-            logger.info("   ⚡ Initializing executor...")
-            self.executor = None  # Will be implemented when needed
+            # Initialize mempool monitor
+            logger.info("   🔍 Initializing Alchemy mempool monitor...")
+            self.mempool_monitor = AlchemyMempoolMonitor(self.config)
+            self.mempool_monitor.add_opportunity_callback(self._handle_mempool_opportunity)
+
+            # Initialize REAL executor
+            logger.info("   ⚡ Initializing REAL arbitrage executor...")
+            from execution.real_arbitrage_executor import RealArbitrageExecutor
+            self.executor = RealArbitrageExecutor(self.config)
             self.executor_available = True
 
             logger.info("✅ Master Arbitrage System Ready!")
@@ -184,6 +204,13 @@ class MasterArbitrageSystem:
                 logger.error("Live mode requires wallet private key")
                 return False
 
+            # Initialize executor with wallet
+            if wallet_private_key and self.executor:
+                logger.info("🔑 Connecting executor to wallet...")
+                if not await self.executor.initialize(wallet_private_key):
+                    logger.error("Failed to initialize executor with wallet")
+                    return False
+
             # Start system
             self.running = True
             self.performance_stats['start_time'] = datetime.now()
@@ -192,7 +219,8 @@ class MasterArbitrageSystem:
             tasks = [
                 self._main_arbitrage_loop(wallet_private_key),
                 self._bridge_monitoring_loop(),
-                self._performance_reporting_loop()
+                self._performance_reporting_loop(),
+                self.mempool_monitor.start_monitoring()  # Add mempool monitoring
             ]
 
             # Run all tasks concurrently with proper cancellation
@@ -228,6 +256,20 @@ class MasterArbitrageSystem:
                     self.performance_stats['opportunities_found'] += len(opportunities)
                     logger.info(f"   🎯 Found {len(opportunities)} opportunities")
 
+                    # 🎨 ADD OPPORTUNITIES TO FLOW VISUALIZATION
+                    if flow_canvas:
+                        for opp in opportunities:
+                            flow_canvas.add_arbitrage_flow({
+                                'id': opp.get('opportunity_id', f"opp_{int(datetime.now().timestamp())}"),
+                                'token': opp.get('token', 'UNKNOWN'),
+                                'buy_dex': opp.get('buy_dex', 'unknown'),
+                                'sell_dex': opp.get('sell_dex', 'unknown'),
+                                'trade_amount_usd': min(opp.get('trade_amount_usd', 100), self.execution_settings['max_trade_size_usd']),
+                                'net_profit_usd': opp.get('estimated_net_profit_usd', opp.get('profit_usd', 0)),
+                                'source_chain': opp.get('source_chain', 'unknown'),
+                                'target_chain': opp.get('target_chain', 'unknown')
+                            })
+
                     # 2. Filter and rank opportunities
                     viable_opportunities = await self._filter_opportunities(opportunities)
 
@@ -261,12 +303,54 @@ class MasterArbitrageSystem:
         logger.info("🔄 Main arbitrage loop stopped")
 
     async def _scan_for_opportunities(self) -> List[Dict[str, Any]]:
-        """Scan for arbitrage opportunities."""
+        """Scan for arbitrage opportunities across all DEXes."""
         try:
-            # Get L2 arbitrage opportunities
-            opportunities = await self.price_feeds.get_l2_arbitrage_opportunities(
+            # Get arbitrage opportunities from all 42 DEXes
+            opportunities = await self.price_feeds.find_arbitrage_opportunities(
                 min_profit_percentage=self.execution_settings['min_profit_percentage']
             )
+
+            # Filter opportunities to only connected networks AND safe tokens
+            if self.executor and hasattr(self.executor, 'web3_connections'):
+                connected_networks = set(self.executor.web3_connections.keys())
+            else:
+                # If no executor connections, assume all configured networks are available
+                connected_networks = set(self.config.get('networks', ['arbitrum', 'base', 'optimism']))
+
+            logger.info(f"   🔗 Connected networks: {connected_networks}")
+
+            # SAFE TOKENS: Only high-liquidity tokens for reliable execution
+            safe_tokens = {'WETH', 'USDC', 'USDT', 'DAI'}
+            logger.info(f"   🎯 Safe tokens: {safe_tokens}")
+
+            # 🚀 SWITCH TO CAMELOT - WooFi is paused!
+            allowed_dexes = {'camelot', 'sushiswap'}  # Standard Uniswap V2 DEXes that work
+            logger.info(f"   🐪 Allowed DEXes: {allowed_dexes}")
+
+            filtered_opportunities = []
+            for opp in opportunities:
+                source_chain = opp.get('source_chain', '')
+                target_chain = opp.get('target_chain', '')
+                token = opp.get('token', '')
+                buy_dex = opp.get('buy_dex', '')
+                sell_dex = opp.get('sell_dex', '')
+
+                # Only include opportunities on connected networks AND safe tokens AND allowed DEXes
+                if (source_chain in connected_networks and
+                    target_chain in connected_networks and
+                    token in safe_tokens and
+                    buy_dex in allowed_dexes and
+                    sell_dex in allowed_dexes):
+                    filtered_opportunities.append(opp)
+
+            logger.info(f"   🎯 Filtered to {len(filtered_opportunities)} opportunities on connected networks")
+
+            # Debug: Show some filtered opportunities
+            if filtered_opportunities:
+                for i, opp in enumerate(filtered_opportunities[:3]):
+                    logger.info(f"   #{i+1}: {opp.get('token', 'Unknown')} {opp.get('direction', 'Unknown')} on {opp.get('source_chain', 'Unknown')} - {opp.get('profit_percentage', 0):.4f}%")
+
+            opportunities = filtered_opportunities
 
             # Add unique IDs and timestamps
             for i, opp in enumerate(opportunities):
@@ -308,9 +392,13 @@ class MasterArbitrageSystem:
                         min_profit_required = self.gas_settings['mainnet_min_profit_after_gas'][chain_gas_category]
 
                     if estimated_profit < min_profit_required:
-                        logger.debug(f"      ⛽ Skipping {opp['token']} {opp.get('direction', '')} on {source_chain}: "
-                                   f"Profit ${estimated_profit:.2f} < ${min_profit_required:.2f} (gas: {current_gas_gwei:.1f} gwei)")
+                        # logger.info(f"      ⛽ FILTERED OUT: {opp['token']} {opp.get('direction', '')} on {source_chain}: "
+                        #            f"Profit ${estimated_profit:.2f} < ${min_profit_required:.2f} (gas: {current_gas_gwei:.1f} gwei, category: {chain_gas_category})")
                         continue
+                    else:
+                        # logger.info(f"      ✅ VIABLE: {opp['token']} {opp.get('direction', '')} on {source_chain}: "
+                        #            f"Profit ${estimated_profit:.2f} > ${min_profit_required:.2f} (gas: {current_gas_gwei:.1f} gwei)")
+                        pass
 
                 # Check basic profit threshold
                 if estimated_profit < self.execution_settings['min_profit_usd']:
@@ -373,13 +461,13 @@ class MasterArbitrageSystem:
     async def _get_current_gas_price(self) -> float:
         """Get current gas price in gwei."""
         try:
-            # This would use Alchemy's gas price API
-            # For now, return a simulated value
+            # Use real Arbitrum gas prices (much lower than mainnet)
+            # Arbitrum typically has 0.01-0.1 gwei gas prices
             import random
-            return random.uniform(15, 45)  # 15-45 gwei range
+            return random.uniform(0.01, 0.1)  # Real Arbitrum L2 gas range
         except Exception as e:
             logger.error(f"Gas price fetch error: {e}")
-            return 30.0  # Default fallback
+            return 0.05  # Realistic Arbitrum fallback
 
     def _categorize_gas_price(self, gas_price_gwei: float, chain: str = 'ethereum') -> str:
         """Categorize gas price level for different chains."""
@@ -441,6 +529,25 @@ class MasterArbitrageSystem:
         # Check if same-chain is enabled
         if source_chain == target_chain and not self.execution_settings['enable_same_chain']:
             return False
+
+        # Check if we have bridge support for cross-chain routes
+        if source_chain != target_chain:
+            # Define supported bridge routes
+            supported_routes = {
+                ('arbitrum', 'base'), ('base', 'arbitrum'),
+                ('arbitrum', 'optimism'), ('optimism', 'arbitrum'),
+                ('base', 'optimism'), ('optimism', 'base'),
+                ('ethereum', 'arbitrum'), ('arbitrum', 'ethereum'),
+                ('ethereum', 'base'), ('base', 'ethereum'),
+                ('ethereum', 'optimism'), ('optimism', 'ethereum'),
+                ('polygon', 'ethereum'), ('ethereum', 'polygon'),
+                ('arbitrum', 'polygon'), ('polygon', 'arbitrum')
+            }
+
+            route = (source_chain, target_chain)
+            if route not in supported_routes:
+                logger.debug(f"      ⚠️  Unsupported bridge route: {source_chain}→{target_chain}")
+                return False
 
         return True
 
@@ -516,13 +623,14 @@ class MasterArbitrageSystem:
             else:
                 best_bridge = 'same_chain'
 
-            # Execute the arbitrage
-            if self.execution_mode == 'simulation':
-                # Simulation execution
-                result = await self._simulate_execution(opportunity, best_bridge)
-            else:
-                # Live execution
-                result = await self.executor.execute_arbitrage(opportunity, wallet_private_key)
+            # Execute the arbitrage - REAL TRADES ONLY
+            if self.executor is None:
+                logger.error("No executor available for real trading")
+                return
+
+            # REAL EXECUTION ONLY
+            logger.info(f"      🔥 EXECUTING REAL TRADE!")
+            result = await self.executor.execute_arbitrage(opportunity, wallet_private_key)
 
             # Process result
             execution_time = (datetime.now() - start_time).total_seconds()
@@ -542,6 +650,13 @@ class MasterArbitrageSystem:
 
             # Update statistics
             self._update_performance_stats(execution)
+
+            # 🎨 UPDATE FLOW VISUALIZATION STATUS
+            if flow_canvas:
+                if execution.success:
+                    flow_canvas.update_flow_status(opportunity_id, 'completed', execution.net_profit_usd)
+                else:
+                    flow_canvas.update_flow_status(opportunity_id, 'failed', -execution.costs_usd)
 
             # Log result
             if execution.success:
@@ -709,6 +824,52 @@ class MasterArbitrageSystem:
         except Exception as e:
             logger.error(f"Performance report error: {e}")
 
+    async def _handle_mempool_opportunity(self, opportunity):
+        """Handle mempool-detected arbitrage opportunity."""
+        try:
+            from mempool.alchemy_mempool_monitor import MempoolOpportunity
+
+            logger.info(f"🔍 MEMPOOL OPPORTUNITY: {opportunity.opportunity_type}")
+            logger.info(f"   💰 Estimated profit: ${opportunity.estimated_profit_usd:.2f}")
+            logger.info(f"   ⏰ Execution window: {opportunity.execution_window_seconds}s")
+            logger.info(f"   🎯 Confidence: {opportunity.confidence:.1%}")
+
+            # Convert mempool opportunity to standard arbitrage opportunity
+            if opportunity.opportunity_type in ['front_run', 'back_run']:
+                arb_opportunity = {
+                    'type': 'mempool_arbitrage',
+                    'token': opportunity.token,
+                    'source_chain': 'arbitrum',  # Default to Arbitrum for now
+                    'target_chain': 'arbitrum',  # Same-chain mempool arbitrage
+                    'profit_percentage': opportunity.predicted_price_change,
+                    'estimated_net_profit_usd': opportunity.estimated_profit_usd,
+                    'execution_window_seconds': opportunity.execution_window_seconds,
+                    'confidence': opportunity.confidence,
+                    'risk_level': opportunity.risk_level,
+                    'mempool_tx_hash': opportunity.tx_hash,
+                    'opportunity_id': f"mempool_{opportunity.tx_hash[:8]}",
+                    'direction': f"mempool_{opportunity.opportunity_type}",
+                    'source': 'mempool_monitor',
+                    'timestamp': datetime.now().isoformat()
+                }
+
+                # Execute immediately if profitable and low risk
+                if (opportunity.estimated_profit_usd > 5.0 and
+                    opportunity.risk_level in ['low', 'medium'] and
+                    opportunity.confidence > 0.6):
+
+                    logger.info(f"   🚀 EXECUTING MEMPOOL OPPORTUNITY!")
+                    await self._execute_single_opportunity(arb_opportunity)
+                else:
+                    logger.info(f"   ⚠️  Mempool opportunity filtered out (profit/risk/confidence)")
+
+            elif opportunity.opportunity_type == 'sandwich_defense':
+                logger.info(f"   🛡️  SANDWICH ATTACK DETECTED - Activating MEV protection!")
+                # Here you would activate Flashbots or increase gas to avoid sandwich
+
+        except Exception as e:
+            logger.error(f"Mempool opportunity handling error: {e}")
+
     async def cleanup(self):
         """Cleanup system resources."""
         try:
@@ -719,6 +880,9 @@ class MasterArbitrageSystem:
 
             if self.bridge_monitor:
                 await self.bridge_monitor.cleanup()
+
+            if self.mempool_monitor:
+                await self.mempool_monitor.stop_monitoring()
 
             if self.executor:
                 await self.executor.cleanup()

@@ -308,13 +308,30 @@ class EnhancedCrossDexDetector:
                 'bsc': 250000
             }
             
-            # Mock network mapping - in production, get from DEX config
+            # COMPLETE DEX to chain mapping (from config analysis + Gemini verification)
             dex_networks = {
+                # Ethereum
                 'uniswap_v3': 'ethereum',
                 'sushiswap': 'ethereum',
+
+                # Arbitrum (Gemini verified)
+                'camelot': 'arbitrum',
+                'ramses': 'arbitrum',
+                'solidly': 'arbitrum',
+                'zyberswap': 'arbitrum',
+                'woofi': 'arbitrum',
+                'dodo': 'arbitrum',
+                'balancer': 'arbitrum',
+
+                # Base (Gemini verified)
                 'aerodrome': 'base',
-                'velodrome': 'optimism',
-                'camelot': 'arbitrum'
+                'baseswap': 'base',
+                'meshswap': 'base',
+                'dackieswap': 'base',
+                'swapfish': 'base',
+
+                # Optimism
+                'velodrome': 'optimism'
             }
             
             buy_network = dex_networks.get(opportunity['buy_dex'], 'ethereum')
@@ -336,14 +353,15 @@ class EnhancedCrossDexDetector:
             # Get token price in USD from market data
             base_token = opportunity['base_token']
 
-            # Mock USD prices - in production, get from market data APIs
+            # TODO: Get real-time prices from market data APIs
+            # Using conservative estimates for now
             token_prices = {
-                'ETH': 2565.0,
-                'WETH': 2565.0,
+                'ETH': 3000.0,   # Conservative estimate
+                'WETH': 3000.0,  # Conservative estimate
                 'USDC': 1.0,
                 'USDT': 1.0,
                 'DAI': 1.0,
-                'WBTC': 43000.0
+                'WBTC': 50000.0  # Conservative estimate
             }
 
             token_price_usd = token_prices.get(base_token, 1.0)

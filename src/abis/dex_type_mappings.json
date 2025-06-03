@@ -1,0 +1,14 @@
+{
+  "zyberswap": "uniswap_v2",
+  "camelot": "uniswap_v2",
+  "sushiswap": "uniswap_v2",
+  "ramses": "uniswap_v2",
+  "uniswap_v3": "uniswap_v3",
+  "solidly": "solidly",
+  "woofi": "woofi",
+  "dodo": "dodo",
+  "balancer": "balancer",
+  "aerodrome": "uniswap_v2",
+  "baseswap": "uniswap_v2",
+  "velodrome": "uniswap_v2"
+}

@@ -1,0 +1,130 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "fromToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "toToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "approveTarget",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "swapTarget",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fromTokenAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minReturnAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "feeData",
+        "type": "bytes"
+      },
+      {
+        "internalType": "bytes",
+        "name": "callDataConcat",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint256",
+        "name": "deadLine",
+        "type": "uint256"
+      }
+    ],
+    "name": "externalSwap",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "receiveAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "fromToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "toToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fromTokenAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minReturnAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "mixAdapters",
+        "type": "address[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "mixPairs",
+        "type": "address[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "assetTo",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "directions",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes[]",
+        "name": "moreInfos",
+        "type": "bytes[]"
+      },
+      {
+        "internalType": "bytes",
+        "name": "feeData",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint256",
+        "name": "deadLine",
+        "type": "uint256"
+      }
+    ],
+    "name": "mixSwap",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "receiveAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  }
+]

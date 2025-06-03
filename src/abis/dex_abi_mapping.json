@@ -1,0 +1,14 @@
+{
+  "zyberswap": "uniswap_v3_router",
+  "camelot": "uniswap_v2_router",
+  "sushiswap": "uniswap_v2_router",
+  "ramses": "uniswap_v2_router",
+  "aerodrome": "uniswap_v2_router",
+  "baseswap": "uniswap_v2_router",
+  "velodrome": "uniswap_v2_router",
+  "solidly": "uniswap_v2_router",
+  "woofi": "woofi_router",
+  "dodo": "dodo_fee_route_proxy",
+  "balancer": "balancer_vault",
+  "uniswap_v3": "uniswap_v3_router"
+}

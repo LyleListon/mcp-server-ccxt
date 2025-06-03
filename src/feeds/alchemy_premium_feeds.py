@@ -21,9 +21,15 @@ class AlchemyPremiumFeeds:
     def __init__(self, config: Dict[str, Any]):
         """Initialize Alchemy premium feeds."""
         self.config = config
-        
-        # Alchemy configuration
-        self.alchemy_api_key = os.getenv('ALCHEMY_API_KEY', 'kRXhWVt8YU_8LnGS20145F5uBDFbL_k0')
+
+        # Get API key from environment or config
+        self.alchemy_api_key = config.get('alchemy_api_key') or os.getenv('ALCHEMY_API_KEY')
+
+        if not self.alchemy_api_key:
+            logger.error("❌ ALCHEMY_API_KEY not found in config or environment!")
+            raise ValueError("ALCHEMY_API_KEY is required for premium feeds")
+
+        logger.info(f"🔑 Premium feeds using API key: {self.alchemy_api_key[:8]}...{self.alchemy_api_key[-4:]}")
         self.alchemy_base_url = f"https://eth-mainnet.alchemyapi.io/v2/{self.alchemy_api_key}"
         
         # Alchemy endpoints

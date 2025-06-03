@@ -16,10 +16,10 @@ from typing import Dict, Any, List
 
 # Import our components
 from src.integrations.mcp.client_manager import MCPClientManager
-from core.arbitrage.simple_path_finder import SimplePathFinder
-from core.arbitrage.simple_profit_calculator import SimpleProfitCalculator
-from core.arbitrage.simple_risk_analyzer import SimpleRiskAnalyzer
-from core.detection.simple_cross_dex_detector import SimpleCrossDexDetector
+from src.core.arbitrage.simple_path_finder import SimplePathFinder
+from src.core.arbitrage.simple_profit_calculator import SimpleProfitCalculator
+from src.core.arbitrage.simple_risk_analyzer import SimpleRiskAnalyzer
+from src.core.detection.simple_cross_dex_detector import SimpleCrossDexDetector
 
 # Configure logging
 logging.basicConfig(
@@ -384,11 +384,11 @@ async def main():
     # Configuration
     config = {
         'max_path_length': 3,
-        'gas_price_gwei': 20,
+        'gas_price_gwei': 0.1,
         'eth_price_usd': 3000,
         'dexs': ['uniswap_v3', 'sushiswap', 'curve'],
         'trading': {
-            'min_profit_threshold': 0.5,  # 0.5% minimum profit
+            'min_profit_threshold': 0.1,  # 0.1% minimum profit
             'max_risk_score': 60,          # Maximum acceptable risk
             'trading_enabled': False,      # Simulation mode
             'scan_interval': 15            # Scan every 15 seconds (reduced API pressure)

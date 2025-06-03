@@ -194,6 +194,12 @@ wallet_backup.json
 mnemonic*
 seed*
 
+# Shell configuration files that might contain API keys
+.bashrc
+.bash_profile
+.zshrc
+.profile
+
 # Data directories
 data/arbitrage/
 data/memory_bank/

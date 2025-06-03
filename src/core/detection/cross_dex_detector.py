@@ -45,8 +45,8 @@ class CrossDexDetector(OpportunityDetector):
 
         # Configuration
         self.min_profit_percentage = Decimal(
-            self.config.get("min_profit_percentage", "0.05")
-        )  # 0.05%
+            self.config.get("min_profit_percentage", "0.1")
+        )  # 0.1%
         self.max_slippage = Decimal(self.config.get("max_slippage", "0.5"))  # 0.5%
         self.min_liquidity_usd = Decimal(
             self.config.get("min_liquidity_usd", "10000")
@@ -749,8 +749,8 @@ class CrossDexDetector(OpportunityDetector):
         # Estimate gas costs
         # Use average gas costs from market condition or default values
         gas_price = (
-            market_condition.get('gas_price', 50 * 10**9) # Use .get()
-        )  # 50 gwei default
+            market_condition.get('gas_price', 0.1 * 10**9) # Use .get()
+        )  # 0.1 gwei default
         priority_fee = (
             market_condition.get('priority_fee', 1.5 * 10**9) # Use .get()
         )  # 1.5 gwei default

@@ -1,9 +1,9 @@
 {
   "trading": {
     "strategy": "flash_loan_default",
-    "min_profit_threshold": 0.2,
+    "min_profit_threshold": 0.1,
     "max_slippage": 0.5,
-    "max_trade_amount_usd": 100000,
+    "max_trade_amount_usd": 700,
     "min_trade_amount_usd": 500,
     "min_liquidity_usd": 50000,
     "trading_enabled": false,

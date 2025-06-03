@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 MayArbi Flow Canvas - Arbitrage Art in Motion</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            font-family: 'Courier New', monospace;
+            color: #00ff88;
+            overflow: hidden;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #flowCanvas {
+            background: radial-gradient(circle at center, rgba(0,255,136,0.05) 0%, transparent 70%);
+            cursor: crosshair;
+        }
+
+        .hud {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid #00ff88;
+            border-radius: 10px;
+            padding: 15px;
+            min-width: 250px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hud h2 {
+            margin: 0 0 10px 0;
+            color: #00ff88;
+            text-shadow: 0 0 10px #00ff88;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            font-size: 12px;
+        }
+
+        .stat-value {
+            color: #88ff00;
+            font-weight: bold;
+        }
+
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid #00ff88;
+            border-radius: 10px;
+            padding: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            font-size: 12px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        .chain-label {
+            position: absolute;
+            background: rgba(0,0,0,0.9);
+            border: 1px solid #4488ff;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #4488ff;
+            text-shadow: 0 0 5px #4488ff;
+        }
+
+        .dex-node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #00ff88;
+            background: radial-gradient(circle, rgba(0,255,136,0.3) 0%, rgba(0,255,136,0.1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0,255,136,0.5);
+        }
+
+        .dex-node:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 30px rgba(0,255,136,0.8);
+        }
+
+        .dex-node.active {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px rgba(0,255,136,0.5); }
+            50% { box-shadow: 0 0 40px rgba(0,255,136,1); }
+            100% { box-shadow: 0 0 20px rgba(0,255,136,0.5); }
+        }
+
+        .flow-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 10px currentColor;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        .flow-trail {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, currentColor 50%, transparent 100%);
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .profit-popup {
+            position: absolute;
+            background: rgba(0,0,0,0.9);
+            border: 1px solid #00ff88;
+            border-radius: 5px;
+            padding: 8px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 1000;
+            animation: fadeInOut 3s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(10px); }
+            20% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+
+        .connection-status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .connected {
+            background: rgba(0,255,136,0.2);
+            border: 1px solid #00ff88;
+            color: #00ff88;
+        }
+
+        .disconnected {
+            background: rgba(255,68,68,0.2);
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+
+        .title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            font-weight: bold;
+            color: rgba(0,255,136,0.1);
+            text-shadow: 0 0 20px rgba(0,255,136,0.3);
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas-container">
+        <canvas id="flowCanvas" width="1200" height="800"></canvas>
+        
+        <div class="title">MAYARBI FLOW CANVAS</div>
+        
+        <div class="hud">
+            <h2>🎨 Live Stats</h2>
+            <div class="stat-row">
+                <span>Active Flows:</span>
+                <span class="stat-value" id="activeFlows">0</span>
+            </div>
+            <div class="stat-row">
+                <span>Total Profit:</span>
+                <span class="stat-value" id="totalProfit">$0.00</span>
+            </div>
+            <div class="stat-row">
+                <span>DEX Nodes:</span>
+                <span class="stat-value" id="dexNodes">0</span>
+            </div>
+            <div class="stat-row">
+                <span>Success Rate:</span>
+                <span class="stat-value" id="successRate">0%</span>
+            </div>
+            <div class="stat-row">
+                <span>Avg Profit:</span>
+                <span class="stat-value" id="avgProfit">$0.00</span>
+            </div>
+        </div>
+
+        <div class="legend">
+            <h3 style="margin: 0 0 10px 0; color: #00ff88;">🌈 Flow Legend</h3>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #00ff88;"></div>
+                <span>High Profit (>$50)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #88ff00;"></div>
+                <span>Medium Profit ($10-$50)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ffff00;"></div>
+                <span>Low Profit ($0-$10)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ff4444;"></div>
+                <span>Loss</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #4488ff;"></div>
+                <span>Pending</span>
+            </div>
+        </div>
+
+        <div class="connection-status disconnected" id="connectionStatus">
+            🔌 Disconnected
+        </div>
+    </div>
+
+    <script>
+        class ArbitrageFlowCanvas {
+            constructor() {
+                this.canvas = document.getElementById('flowCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.ws = null;
+                this.dexNodes = {};
+                this.activeFlows = {};
+                this.particles = [];
+                this.stats = {
+                    totalProfit: 0,
+                    completedTrades: 0,
+                    successfulTrades: 0
+                };
+                
+                this.setupCanvas();
+                this.connectWebSocket();
+                this.startAnimationLoop();
+            }
+
+            setupCanvas() {
+                // Make canvas responsive
+                this.resizeCanvas();
+                window.addEventListener('resize', () => this.resizeCanvas());
+                
+                // Add mouse interaction
+                this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+                this.canvas.addEventListener('click', (e) => this.handleClick(e));
+            }
+
+            resizeCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+
+            connectWebSocket() {
+                try {
+                    this.ws = new WebSocket('ws://localhost:8765');
+                    
+                    this.ws.onopen = () => {
+                        console.log('🔌 Connected to MayArbi Flow Canvas');
+                        document.getElementById('connectionStatus').className = 'connection-status connected';
+                        document.getElementById('connectionStatus').textContent = '🔌 Connected';
+                    };
+                    
+                    this.ws.onmessage = (event) => {
+                        const data = JSON.parse(event.data);
+                        this.handleMessage(data);
+                    };
+                    
+                    this.ws.onclose = () => {
+                        console.log('🔌 Disconnected from MayArbi Flow Canvas');
+                        document.getElementById('connectionStatus').className = 'connection-status disconnected';
+                        document.getElementById('connectionStatus').textContent = '🔌 Disconnected';
+                        
+                        // Reconnect after 5 seconds
+                        setTimeout(() => this.connectWebSocket(), 5000);
+                    };
+                    
+                } catch (error) {
+                    console.error('WebSocket connection error:', error);
+                }
+            }
+
+            handleMessage(data) {
+                switch (data.type) {
+                    case 'initial_state':
+                        this.dexNodes = data.dex_nodes || {};
+                        this.activeFlows = data.active_flows || {};
+                        break;
+                        
+                    case 'canvas_update':
+                        this.dexNodes = data.dex_nodes || {};
+                        this.activeFlows = data.active_flows || {};
+                        this.updateStats(data.stats || {});
+                        break;
+                        
+                    case 'new_flow':
+                        this.addNewFlow(data.data);
+                        break;
+                        
+                    case 'flow_update':
+                        this.updateFlow(data.data);
+                        break;
+                }
+            }
+
+            addNewFlow(flowData) {
+                this.activeFlows[flowData.id] = flowData;
+                
+                // Create visual particle
+                const particle = {
+                    id: flowData.id,
+                    x: 0, y: 0,
+                    targetX: 0, targetY: 0,
+                    color: flowData.color,
+                    size: Math.max(4, Math.min(12, flowData.amount_usd / 50)),
+                    progress: 0,
+                    trail: []
+                };
+                
+                this.particles.push(particle);
+                this.showProfitPopup(flowData);
+            }
+
+            updateFlow(flowData) {
+                if (flowData.status === 'completed') {
+                    this.stats.completedTrades++;
+                    this.stats.successfulTrades++;
+                    this.stats.totalProfit += flowData.profit_usd;
+                } else if (flowData.status === 'failed') {
+                    this.stats.completedTrades++;
+                }
+            }
+
+            showProfitPopup(flowData) {
+                const popup = document.createElement('div');
+                popup.className = 'profit-popup';
+                popup.style.color = flowData.color;
+                popup.innerHTML = `
+                    💰 ${flowData.token}<br>
+                    💵 $${flowData.amount_usd.toFixed(2)}<br>
+                    📈 $${flowData.profit_usd.toFixed(2)}
+                `;
+                
+                // Position randomly on screen
+                popup.style.left = Math.random() * (window.innerWidth - 200) + 'px';
+                popup.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+                
+                document.body.appendChild(popup);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    if (popup.parentNode) {
+                        popup.parentNode.removeChild(popup);
+                    }
+                }, 3000);
+            }
+
+            updateStats(stats) {
+                document.getElementById('activeFlows').textContent = stats.total_active_flows || 0;
+                document.getElementById('dexNodes').textContent = stats.total_dex_nodes || 0;
+                document.getElementById('totalProfit').textContent = `$${this.stats.totalProfit.toFixed(2)}`;
+                
+                const successRate = this.stats.completedTrades > 0 
+                    ? (this.stats.successfulTrades / this.stats.completedTrades * 100).toFixed(1)
+                    : 0;
+                document.getElementById('successRate').textContent = `${successRate}%`;
+                
+                const avgProfit = this.stats.successfulTrades > 0
+                    ? (this.stats.totalProfit / this.stats.successfulTrades).toFixed(2)
+                    : 0;
+                document.getElementById('avgProfit').textContent = `$${avgProfit}`;
+            }
+
+            startAnimationLoop() {
+                const animate = () => {
+                    this.clearCanvas();
+                    this.drawDEXNodes();
+                    this.drawFlowParticles();
+                    this.drawConnections();
+                    requestAnimationFrame(animate);
+                };
+                animate();
+            }
+
+            clearCanvas() {
+                this.ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+            }
+
+            drawDEXNodes() {
+                Object.entries(this.dexNodes).forEach(([key, node]) => {
+                    const x = node.position.x;
+                    const y = node.position.y;
+                    const radius = 30 + node.activity_level * 20;
+                    
+                    // Draw node glow
+                    const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, radius);
+                    gradient.addColorStop(0, `rgba(0, 255, 136, ${0.3 + node.activity_level * 0.7})`);
+                    gradient.addColorStop(1, 'rgba(0, 255, 136, 0)');
+                    
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, radius, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    // Draw node border
+                    this.ctx.strokeStyle = '#00ff88';
+                    this.ctx.lineWidth = 2;
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, 25, 0, Math.PI * 2);
+                    this.ctx.stroke();
+                    
+                    // Draw node label
+                    this.ctx.fillStyle = '#00ff88';
+                    this.ctx.font = '10px Courier New';
+                    this.ctx.textAlign = 'center';
+                    this.ctx.fillText(node.name.toUpperCase(), x, y + 4);
+                });
+            }
+
+            drawFlowParticles() {
+                this.particles.forEach((particle, index) => {
+                    // Update particle position
+                    particle.progress += 0.02;
+                    
+                    if (particle.progress >= 1) {
+                        this.particles.splice(index, 1);
+                        return;
+                    }
+                    
+                    // Calculate position along path
+                    const startNode = this.findNodeByName(this.activeFlows[particle.id]?.source_dex);
+                    const endNode = this.findNodeByName(this.activeFlows[particle.id]?.target_dex);
+                    
+                    if (startNode && endNode) {
+                        particle.x = startNode.position.x + (endNode.position.x - startNode.position.x) * particle.progress;
+                        particle.y = startNode.position.y + (endNode.position.y - startNode.position.y) * particle.progress;
+                        
+                        // Add to trail
+                        particle.trail.push({x: particle.x, y: particle.y});
+                        if (particle.trail.length > 10) {
+                            particle.trail.shift();
+                        }
+                        
+                        // Draw trail
+                        this.ctx.strokeStyle = particle.color;
+                        this.ctx.lineWidth = 2;
+                        this.ctx.globalAlpha = 0.3;
+                        this.ctx.beginPath();
+                        particle.trail.forEach((point, i) => {
+                            if (i === 0) {
+                                this.ctx.moveTo(point.x, point.y);
+                            } else {
+                                this.ctx.lineTo(point.x, point.y);
+                            }
+                        });
+                        this.ctx.stroke();
+                        this.ctx.globalAlpha = 1;
+                        
+                        // Draw particle
+                        this.ctx.fillStyle = particle.color;
+                        this.ctx.shadowColor = particle.color;
+                        this.ctx.shadowBlur = 10;
+                        this.ctx.beginPath();
+                        this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                        this.ctx.fill();
+                        this.ctx.shadowBlur = 0;
+                    }
+                });
+            }
+
+            drawConnections() {
+                // Draw potential connection lines between DEX nodes
+                const nodes = Object.values(this.dexNodes);
+                for (let i = 0; i < nodes.length; i++) {
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const node1 = nodes[i];
+                        const node2 = nodes[j];
+                        
+                        this.ctx.strokeStyle = 'rgba(68, 136, 255, 0.1)';
+                        this.ctx.lineWidth = 1;
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(node1.position.x, node1.position.y);
+                        this.ctx.lineTo(node2.position.x, node2.position.y);
+                        this.ctx.stroke();
+                    }
+                }
+            }
+
+            findNodeByName(dexName) {
+                return Object.values(this.dexNodes).find(node => 
+                    node.name.toLowerCase().includes(dexName?.toLowerCase() || '')
+                );
+            }
+
+            handleMouseMove(e) {
+                // Add mouse interaction effects here
+            }
+
+            handleClick(e) {
+                // Add click interaction effects here
+            }
+        }
+
+        // Initialize the canvas when page loads
+        window.addEventListener('load', () => {
+            new ArbitrageFlowCanvas();
+        });
+    </script>
+</body>
+</html>

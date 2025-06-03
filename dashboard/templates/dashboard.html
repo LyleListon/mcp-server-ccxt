@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MayArbi Live Trading Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #00ff88;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .status-item {
+            text-align: center;
+        }
+        
+        .status-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00ff88;
+        }
+        
+        .status-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 20px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        
+        .card h3 {
+            margin-bottom: 15px;
+            color: #00ff88;
+            border-bottom: 2px solid #00ff88;
+            padding-bottom: 10px;
+        }
+        
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .metric-label {
+            opacity: 0.8;
+        }
+        
+        .metric-value {
+            font-weight: bold;
+            color: #00ff88;
+        }
+        
+        .profit-positive {
+            color: #00ff88 !important;
+        }
+        
+        .profit-negative {
+            color: #ff4444 !important;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 20px;
+        }
+        
+        .dex-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .dex-item {
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #00ff88;
+        }
+        
+        .dex-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .dex-stats {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .trade-log {
+            max-height: 400px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .trade-item {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border-left: 4px solid #00ff88;
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .trade-success {
+            border-left-color: #00ff88;
+        }
+        
+        .trade-failed {
+            border-left-color: #ff4444;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .two-thirds {
+            grid-column: span 2;
+        }
+        
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .status-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 MAYARBI LIVE TRADING DASHBOARD</h1>
+        <p>Real-time arbitrage monitoring across 17 DEXes</p>
+    </div>
+    
+    <div class="status-bar">
+        <div class="status-item">
+            <div class="status-value" id="net-profit">$0.00</div>
+            <div class="status-label">Net Profit</div>
+        </div>
+        <div class="status-item">
+            <div class="status-value" id="success-rate">0%</div>
+            <div class="status-label">Success Rate</div>
+        </div>
+        <div class="status-item">
+            <div class="status-value" id="active-trades">0</div>
+            <div class="status-label">Active Trades</div>
+        </div>
+        <div class="status-item">
+            <div class="status-value" id="opportunities-found">0</div>
+            <div class="status-label">Opportunities Found</div>
+        </div>
+        <div class="status-item">
+            <div class="status-value" id="scan-speed">5.0s</div>
+            <div class="status-label">Scan Speed</div>
+        </div>
+        <div class="status-item">
+            <div class="status-value pulse" id="system-status">STARTING</div>
+            <div class="status-label">System Status</div>
+        </div>
+    </div>
+    
+    <div class="dashboard-grid">
+        <!-- Trading Performance -->
+        <div class="card">
+            <h3>💰 Trading Performance</h3>
+            <div class="metric-row">
+                <span class="metric-label">Total Scans:</span>
+                <span class="metric-value" id="total-scans">0</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Opportunities Executed:</span>
+                <span class="metric-value" id="opportunities-executed">0</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Successful Trades:</span>
+                <span class="metric-value" id="successful-trades">0</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Failed Trades:</span>
+                <span class="metric-value" id="failed-trades">0</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Best Trade:</span>
+                <span class="metric-value" id="best-trade">$0.00</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Avg Profit/Trade:</span>
+                <span class="metric-value" id="avg-profit">$0.00</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">ROI:</span>
+                <span class="metric-value" id="roi">0.00%</span>
+            </div>
+        </div>
+        
+        <!-- System Metrics -->
+        <div class="card">
+            <h3>⚡ System Metrics</h3>
+            <div class="metric-row">
+                <span class="metric-label">Current Scan:</span>
+                <span class="metric-value" id="current-scan">0</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Gas Price:</span>
+                <span class="metric-value" id="gas-price">0 gwei</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Gas Category:</span>
+                <span class="metric-value" id="gas-category">unknown</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Uptime:</span>
+                <span class="metric-value" id="uptime">0s</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Trades/Hour:</span>
+                <span class="metric-value" id="trades-per-hour">0</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Capital Deployed:</span>
+                <span class="metric-value">$832.00</span>
+            </div>
+        </div>
+        
+        <!-- Network Performance -->
+        <div class="card">
+            <h3>🌐 Network Performance</h3>
+            <div id="network-stats">
+                <div class="metric-row">
+                    <span class="metric-label">Arbitrum:</span>
+                    <span class="metric-value" id="arbitrum-stats">0 ops, $0.00</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Base:</span>
+                    <span class="metric-value" id="base-stats">0 ops, $0.00</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Optimism:</span>
+                    <span class="metric-value" id="optimism-stats">0 ops, $0.00</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Profit Chart -->
+        <div class="card two-thirds">
+            <h3>📈 Profit Over Time</h3>
+            <div class="chart-container">
+                <canvas id="profit-chart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Recent Trades -->
+        <div class="card">
+            <h3>📊 Recent Trades</h3>
+            <div class="trade-log" id="trade-log">
+                <div class="trade-item">
+                    <div>Waiting for trades...</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- DEX Performance -->
+        <div class="card full-width">
+            <h3>🔥 DEX Performance (17 DEXes)</h3>
+            <div class="dex-grid" id="dex-grid">
+                <!-- DEX items will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize Socket.IO connection
+        const socket = io();
+        
+        // Initialize profit chart
+        const ctx = document.getElementById('profit-chart').getContext('2d');
+        const profitChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Net Profit ($)',
+                    data: [],
+                    borderColor: '#00ff88',
+                    backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: 'white' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    y: {
+                        ticks: { color: 'white' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    }
+                }
+            }
+        });
+        
+        // Socket event handlers
+        socket.on('connect', function() {
+            console.log('Connected to MayArbi Dashboard');
+            document.getElementById('system-status').textContent = 'CONNECTED';
+            document.getElementById('system-status').className = 'status-value';
+        });
+        
+        socket.on('trading_update', function(data) {
+            updateDashboard(data);
+        });
+        
+        function updateDashboard(data) {
+            const stats = data.trading_stats;
+            const live = data.live_metrics;
+            const networks = data.network_performance;
+            
+            // Update status bar
+            document.getElementById('net-profit').textContent = `$${stats.net_profit_usd.toFixed(2)}`;
+            document.getElementById('net-profit').className = stats.net_profit_usd >= 0 ? 'status-value profit-positive' : 'status-value profit-negative';
+            
+            document.getElementById('success-rate').textContent = `${stats.success_rate.toFixed(1)}%`;
+            document.getElementById('active-trades').textContent = live.active_trades;
+            document.getElementById('opportunities-found').textContent = stats.opportunities_found;
+            document.getElementById('scan-speed').textContent = `${live.scan_speed_seconds.toFixed(1)}s`;
+            document.getElementById('system-status').textContent = 'TRADING';
+            
+            // Update trading performance
+            document.getElementById('total-scans').textContent = stats.total_scans;
+            document.getElementById('opportunities-executed').textContent = stats.opportunities_executed;
+            document.getElementById('successful-trades').textContent = stats.successful_trades;
+            document.getElementById('failed-trades').textContent = stats.failed_trades;
+            document.getElementById('best-trade').textContent = `$${stats.best_trade_usd.toFixed(2)}`;
+            document.getElementById('avg-profit').textContent = `$${stats.avg_profit_per_trade.toFixed(2)}`;
+            document.getElementById('roi').textContent = `${stats.roi_percentage.toFixed(2)}%`;
+            
+            // Update system metrics
+            document.getElementById('current-scan').textContent = live.current_scan;
+            document.getElementById('gas-price').textContent = `${live.gas_price_gwei.toFixed(1)} gwei`;
+            document.getElementById('gas-category').textContent = live.gas_category;
+            document.getElementById('uptime').textContent = formatUptime(live.uptime_seconds);
+            document.getElementById('trades-per-hour').textContent = stats.trades_per_hour.toFixed(1);
+            
+            // Update network performance
+            document.getElementById('arbitrum-stats').textContent = 
+                `${networks.arbitrum.opportunities} ops, $${networks.arbitrum.profit.toFixed(2)}`;
+            document.getElementById('base-stats').textContent = 
+                `${networks.base.opportunities} ops, $${networks.base.profit.toFixed(2)}`;
+            document.getElementById('optimism-stats').textContent = 
+                `${networks.optimism.opportunities} ops, $${networks.optimism.profit.toFixed(2)}`;
+            
+            // Update profit chart
+            updateProfitChart(stats.net_profit_usd);
+        }
+        
+        function updateProfitChart(profit) {
+            const now = new Date().toLocaleTimeString();
+            profitChart.data.labels.push(now);
+            profitChart.data.datasets[0].data.push(profit);
+            
+            // Keep only last 20 data points
+            if (profitChart.data.labels.length > 20) {
+                profitChart.data.labels.shift();
+                profitChart.data.datasets[0].data.shift();
+            }
+            
+            profitChart.update('none');
+        }
+        
+        function formatUptime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${hours}h ${minutes}m ${secs}s`;
+        }
+        
+        // Initialize DEX grid
+        function initializeDEXGrid() {
+            const dexList = [
+                'uniswap_v3', 'sushiswap', 'paraswap', 'camelot', 'traderjoe',
+                'aerodrome', 'velodrome', 'kyberswap', 'curve', 'balancer',
+                'zyberswap', 'swapfish', 'woofi', 'chronos', 'pancakeswap',
+                'quickswap_polygon', 'spookyswap'
+            ];
+            
+            const dexGrid = document.getElementById('dex-grid');
+            dexGrid.innerHTML = '';
+            
+            dexList.forEach(dex => {
+                const dexItem = document.createElement('div');
+                dexItem.className = 'dex-item';
+                dexItem.innerHTML = `
+                    <div class="dex-name">${dex.replace('_', ' ').toUpperCase()}</div>
+                    <div class="dex-stats" id="dex-${dex}">0 ops, $0.00</div>
+                `;
+                dexGrid.appendChild(dexItem);
+            });
+        }
+        
+        // Initialize dashboard
+        initializeDEXGrid();
+        
+        // Fetch initial data
+        fetch('/api/stats')
+            .then(response => response.json())
+            .then(data => updateDashboard(data))
+            .catch(error => console.error('Error fetching initial data:', error));
+    </script>
+</body>
+</html>

@@ -221,10 +221,10 @@ class GasPriceOracle:
         except Exception as e:
             logger.error(f"Error aggregating gas prices: {e}")
             return {
-                'slow': 10.0,
-                'standard': 15.0,
-                'fast': 25.0,
-                'instant': 35.0
+                'slow': 0.01,
+                'standard': 0.05,
+                'fast': 0.1,
+                'instant': 0.2
             }
     
     async def calculate_transaction_cost(self, tx_type: str, gas_speed: str = 'standard') -> Dict[str, float]:

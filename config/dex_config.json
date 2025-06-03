@@ -148,13 +148,193 @@
       "max_slippage": 0.7,
       "gas_limit": 170000,
       "note": "SMALL DEX - Arbitrum ve(3,3) model"
+    },
+    "ramses": {
+      "enabled": true,
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.8,
+      "gas_limit": 180000,
+      "note": "SMALL DEX - Arbitrum ve(3,3) fork, LESS COMPETITION"
+    },
+    "baseswap": {
+      "enabled": true,
+      "base_rpc_url": "https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.8,
+      "gas_limit": 160000,
+      "note": "SMALL DEX - Base chain native, GROWING FAST"
+    },
+    "alienbase": {
+      "enabled": true,
+      "base_rpc_url": "https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.9,
+      "gas_limit": 170000,
+      "note": "TINY DEX - Base chain, VERY LOW COMPETITION"
+    },
+    "beethoven": {
+      "enabled": true,
+      "optimism_rpc_url": "https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.6,
+      "gas_limit": 180000,
+      "note": "SMALL DEX - Optimism Balancer fork, UNIQUE POOLS"
+    },
+    "dodo": {
+      "enabled": true,
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "base_rpc_url": "https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "polygon_rpc_url": "https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.7,
+      "gas_limit": 190000,
+      "note": "MEDIUM DEX - Multi-chain PMM model, DIFFERENT PRICING"
+    },
+    "maverick": {
+      "enabled": true,
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "base_rpc_url": "https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.6,
+      "gas_limit": 180000,
+      "note": "SMALL DEX - Dynamic distribution AMM, UNIQUE ALGORITHM"
+    },
+    "gmx": {
+      "enabled": true,
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.5,
+      "gas_limit": 200000,
+      "note": "PERP DEX - Arbitrum, DIFFERENT PRICING MODEL"
+    },
+    "rubicon": {
+      "enabled": true,
+      "optimism_rpc_url": "https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.8,
+      "gas_limit": 170000,
+      "note": "SMALL DEX - Optimism order book, UNIQUE STRUCTURE"
+    },
+    "retro": {
+      "enabled": true,
+      "polygon_rpc_url": "https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.8,
+      "gas_limit": 170000,
+      "note": "SMALL DEX - Polygon ve(3,3), LESS COMPETITION"
+    },
+    "meshswap": {
+      "enabled": true,
+      "polygon_rpc_url": "https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.9,
+      "gas_limit": 160000,
+      "note": "TINY DEX - Polygon, VERY LOW COMPETITION"
+    },
+    "solidly": {
+      "enabled": true,
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.8,
+      "gas_limit": 180000,
+      "note": "SMALL DEX - Arbitrum solidly fork, EMERGING"
+    },
+    "dackieswap": {
+      "enabled": true,
+      "base_rpc_url": "https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.9,
+      "gas_limit": 160000,
+      "note": "TINY DEX - Base chain, VERY NEW"
+    },
+    "zipswap": {
+      "enabled": true,
+      "optimism_rpc_url": "https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.8,
+      "gas_limit": 170000,
+      "note": "SMALL DEX - Optimism native, GROWING"
+    },
+    "gains": {
+      "enabled": true,
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "polygon_rpc_url": "https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.6,
+      "gas_limit": 180000,
+      "note": "SMALL DEX - Multi-chain leverage trading, DIFFERENT MODEL"
+    },
+    "vela": {
+      "enabled": true,
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.7,
+      "gas_limit": 190000,
+      "note": "SMALL DEX - Arbitrum perp trading, UNIQUE PRICING"
+    },
+    "radiant": {
+      "enabled": true,
+      "arbitrum_rpc_url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.6,
+      "gas_limit": 180000,
+      "note": "SMALL DEX - Arbitrum lending/borrowing, DIFFERENT LIQUIDITY"
+    },
+    "swapbased": {
+      "enabled": true,
+      "base_rpc_url": "https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.9,
+      "gas_limit": 160000,
+      "note": "TINY DEX - Base ecosystem, VERY NEW"
+    },
+    "thena": {
+      "enabled": true,
+      "bsc_rpc_url": "https://bsc-dataseed1.binance.org/",
+      "max_slippage": 0.7,
+      "gas_limit": 170000,
+      "note": "SMALL DEX - BSC ve(3,3), LESS COMPETITION"
+    },
+    "spiritswap": {
+      "enabled": true,
+      "fantom_rpc_url": "https://rpc.ftm.tools/",
+      "max_slippage": 0.8,
+      "gas_limit": 170000,
+      "note": "SMALL DEX - Fantom native, LOWER COMPETITION"
+    },
+    "equalizer": {
+      "enabled": true,
+      "fantom_rpc_url": "https://rpc.ftm.tools/",
+      "max_slippage": 0.8,
+      "gas_limit": 160000,
+      "note": "SMALL DEX - Fantom ve(3,3), EMERGING"
+    },
+    "pangolin": {
+      "enabled": true,
+      "avalanche_rpc_url": "https://api.avax.network/ext/bc/C/rpc",
+      "max_slippage": 0.7,
+      "gas_limit": 180000,
+      "note": "SMALL DEX - Avalanche native, DIFFERENT ECOSYSTEM"
+    },
+    "platypus": {
+      "enabled": true,
+      "avalanche_rpc_url": "https://api.avax.network/ext/bc/C/rpc",
+      "max_slippage": 0.6,
+      "gas_limit": 170000,
+      "note": "SMALL DEX - Avalanche stablecoin specialist, UNIQUE MODEL"
+    },
+    "lydia": {
+      "enabled": true,
+      "avalanche_rpc_url": "https://api.avax.network/ext/bc/C/rpc",
+      "max_slippage": 0.8,
+      "gas_limit": 160000,
+      "note": "TINY DEX - Avalanche, VERY LOW COMPETITION"
+    },
+    "biswap": {
+      "enabled": true,
+      "bsc_rpc_url": "https://bsc-dataseed1.binance.org/",
+      "max_slippage": 0.8,
+      "gas_limit": 170000,
+      "note": "SMALL DEX - BSC alternative, LESS COMPETITION"
+    },
+    "apeswap": {
+      "enabled": true,
+      "bsc_rpc_url": "https://bsc-dataseed1.binance.org/",
+      "polygon_rpc_url": "https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+      "max_slippage": 0.8,
+      "gas_limit": 170000,
+      "note": "SMALL DEX - Multi-chain, LOWER COMPETITION"
     }
   },
   "trading": {
     "min_profit_threshold": 0.1,
     "max_slippage": 1.0,
     "max_trade_size_usd": 700,
-    "gas_price_gwei": 15,
+    "gas_price_gwei": 0.1,
     "min_trade_size_usd": 10,
     "max_gas_cost_usd": 5,
     "total_capital_usd": 832,
