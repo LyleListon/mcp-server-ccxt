@@ -6,7 +6,7 @@
     "max_trade_amount_usd": 700,
     "min_trade_amount_usd": 500,
     "min_liquidity_usd": 50000,
-    "trading_enabled": false,
+    "trading_enabled": true,
     "use_flash_loans": true,
     "flash_loan_default": true,
     "flash_loan_providers": ["aave", "balancer", "dydx"],

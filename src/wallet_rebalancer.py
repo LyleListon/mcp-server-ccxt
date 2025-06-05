@@ -105,23 +105,26 @@ class WalletRebalancer:
 
     def _load_network_configs(self) -> Dict[str, Any]:
         """Load network configurations."""
+        # Import the corrected token addresses
+        from config.token_addresses import get_token_address_by_name
+
         return {
             'arbitrum': {
                 'rpc_url': 'https://arb1.arbitrum.io/rpc',
                 'chain_id': 42161,
-                'usdc_address': '0xA0b86a33E6441b8e8C7F94D0b8A3C5C0C8C8C8C8',
+                'usdc_address': get_token_address_by_name('arbitrum', 'USDC'),
                 'bridge_contracts': ['0x...']  # Bridge contract addresses
             },
             'base': {
                 'rpc_url': 'https://mainnet.base.org',
                 'chain_id': 8453,
-                'usdc_address': '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+                'usdc_address': get_token_address_by_name('base', 'USDC'),
                 'bridge_contracts': ['0x...']
             },
             'optimism': {
                 'rpc_url': 'https://mainnet.optimism.io',
                 'chain_id': 10,
-                'usdc_address': '0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85',
+                'usdc_address': get_token_address_by_name('optimism', 'USDC'),
                 'bridge_contracts': ['0x...']
             }
         }

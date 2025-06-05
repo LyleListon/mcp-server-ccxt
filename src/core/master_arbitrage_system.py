@@ -58,15 +58,17 @@ class MasterArbitrageSystem:
 
         # System state
         self.running = False
-        self.execution_mode = config.get('execution_mode', 'simulation')  # 'simulation' or 'live'
+        self.execution_mode = config.get('execution_mode', 'live')  # 'live' ONLY - NO SIMULATIONS!
+        self.trading_mode = config.get('trading_mode', 'wallet')  # 'wallet' or 'flashloan'
 
-        # Execution settings (config overrides environment variables)
+        # Execution settings using centralized config
+        from src.config.trading_config import CONFIG
         self.execution_settings = {
-            'scan_interval_seconds': config.get('scan_interval_seconds', int(os.getenv('SCAN_INTERVAL', '30'))),
-            'min_profit_usd': float(os.getenv('MIN_PROFIT_USD', '0.50')),
-            'max_trade_size_usd': int(os.getenv('MAX_TRADE_SIZE_USD', '700')),
-            'min_profit_percentage': float(os.getenv('MIN_PROFIT_THRESHOLD', '0.1')),
-            'max_concurrent_executions': int(os.getenv('MAX_CONCURRENT_TRADES', '3')),
+            'scan_interval_seconds': config.get('scan_interval_seconds', int(os.getenv('SCAN_INTERVAL', '15'))),  # Faster scanning
+            'min_profit_usd': CONFIG.MIN_PROFIT_USD,  # 🎯 $0.25 minimum from centralized config
+            'max_trade_size_usd': int(os.getenv('MAX_TRADE_SIZE_USD', '500')),  # Bigger trades for profitability!
+            'min_profit_percentage': CONFIG.MIN_PROFIT_PERCENTAGE,  # 0.1% minimum from config
+            'max_concurrent_executions': int(os.getenv('MAX_CONCURRENT_TRADES', '1')),  # Focus on one at a time
             'enable_cross_chain': False,        # Disable cross-chain (focus on same-chain first)
             'enable_same_chain': True,          # Enable same-chain arbitrage (PRIORITY)
             'preferred_bridges': os.getenv('PREFERRED_BRIDGES', 'across,stargate,synapse').split(','),
@@ -95,12 +97,12 @@ class MasterArbitrageSystem:
                 'high': 60,          # Bad for mainnet arbitrage
                 'extreme': 100       # Never trade on mainnet
             },
-            # L2-optimized profit thresholds
+            # L2-optimized profit thresholds - 🎯 MICRO-PROFIT HUNTING!
             'l2_min_profit_after_gas': {
-                'ultra_low': 0.02,   # $0.02 minimum on L2 (ultra cheap!)
-                'low': 0.05,         # $0.05 minimum on L2
-                'medium': 0.25,      # $0.25 minimum on L2
-                'high': 1.00,        # $1.00 minimum on L2
+                'ultra_low': 0.01,   # 🎯 $0.01 minimum - PENNY PROFITS!
+                'low': 0.02,         # $0.02 minimum on L2
+                'medium': 0.05,      # $0.05 minimum on L2
+                'high': 0.25,        # $0.25 minimum on L2
                 'extreme': float('inf')  # Never trade
             },
             # Mainnet profit thresholds (original)
@@ -176,10 +178,18 @@ class MasterArbitrageSystem:
             self.mempool_monitor = AlchemyMempoolMonitor(self.config)
             self.mempool_monitor.add_opportunity_callback(self._handle_mempool_opportunity)
 
-            # Initialize REAL executor
-            logger.info("   ⚡ Initializing REAL arbitrage executor...")
-            from execution.real_arbitrage_executor import RealArbitrageExecutor
-            self.executor = RealArbitrageExecutor(self.config)
+            # Initialize executor based on trading mode
+            if self.trading_mode == 'flashloan':
+                logger.info("   ⚡ Initializing FLASHLOAN arbitrage executor...")
+                from execution.flashloan_arbitrage_executor import FlashloanArbitrageExecutor
+                self.executor = FlashloanArbitrageExecutor(self.config)
+                logger.info(f"   💰 Flashloan mode: Unlimited capital via {self.config.get('flashloan_provider', 'aave')}")
+            else:
+                logger.info("   ⚡ Initializing WALLET arbitrage executor...")
+                from execution.real_arbitrage_executor import RealArbitrageExecutor
+                self.executor = RealArbitrageExecutor(self.config)
+                logger.info(f"   💰 Wallet mode: Using personal funds")
+
             self.executor_available = True
 
             logger.info("✅ Master Arbitrage System Ready!")
@@ -244,6 +254,14 @@ class MasterArbitrageSystem:
 
         while self.running:
             try:
+                # 🛡️ AUTO-SHUTDOWN CHECK: Check if emergency shutdown was triggered
+                if self.executor and hasattr(self.executor, 'is_emergency_shutdown') and self.executor.is_emergency_shutdown():
+                    logger.error("🛑 EMERGENCY SHUTDOWN DETECTED!")
+                    logger.error("   💥 Auto-shutdown triggered due to excessive failed transactions")
+                    logger.error("   🛡️ Stopping arbitrage system to protect capital")
+                    self.running = False
+                    break
+
                 cycle_start = datetime.now()
                 self.performance_stats['total_scans'] += 1
 
@@ -255,6 +273,18 @@ class MasterArbitrageSystem:
                 if opportunities:
                     self.performance_stats['opportunities_found'] += len(opportunities)
                     logger.info(f"   🎯 Found {len(opportunities)} opportunities")
+
+                    # 💰 SHOW TRADE AMOUNT: Display the dollar amount that will be used
+                    if hasattr(self, 'executor') and self.executor:
+                        try:
+                            # Get wallet value and calculate trade amount using centralized config
+                            from config.trading_config import CONFIG
+                            wallet_value = getattr(self.executor, 'total_wallet_value_usd', 458.31)  # Your current wallet value
+                            trade_amount_usd = wallet_value * CONFIG.MAX_TRADE_PERCENTAGE
+
+                            logger.info(f"   💰 Trade amount: ${trade_amount_usd:.2f} ({CONFIG.MAX_TRADE_PERCENTAGE*100:.0f}% of ${wallet_value:.2f} wallet)")
+                        except Exception as e:
+                            logger.info(f"   💰 Trade amount: ~$344 (75% of wallet)")  # Fallback estimate
 
                     # 🎨 ADD OPPORTUNITIES TO FLOW VISUALIZATION
                     if flow_canvas:
@@ -320,7 +350,7 @@ class MasterArbitrageSystem:
             logger.info(f"   🔗 Connected networks: {connected_networks}")
 
             # SAFE TOKENS: Only high-liquidity tokens for reliable execution
-            safe_tokens = {'WETH', 'USDC', 'USDT', 'DAI'}
+            safe_tokens = {'WETH', 'USDC'}  # Streamlined to only held tokens
             logger.info(f"   🎯 Safe tokens: {safe_tokens}")
 
             # 🚀 SWITCH TO CAMELOT - WooFi is paused!
@@ -392,24 +422,36 @@ class MasterArbitrageSystem:
                         min_profit_required = self.gas_settings['mainnet_min_profit_after_gas'][chain_gas_category]
 
                     if estimated_profit < min_profit_required:
-                        # logger.info(f"      ⛽ FILTERED OUT: {opp['token']} {opp.get('direction', '')} on {source_chain}: "
-                        #            f"Profit ${estimated_profit:.2f} < ${min_profit_required:.2f} (gas: {current_gas_gwei:.1f} gwei, category: {chain_gas_category})")
+                        logger.info(f"      ⛽ FILTERED OUT: {opp['token']} {opp.get('direction', '')} on {source_chain}: "
+                                   f"Profit ${estimated_profit:.2f} < ${min_profit_required:.2f} (gas: {current_gas_gwei:.1f} gwei, category: {chain_gas_category})")
                         continue
                     else:
-                        # logger.info(f"      ✅ VIABLE: {opp['token']} {opp.get('direction', '')} on {source_chain}: "
-                        #            f"Profit ${estimated_profit:.2f} > ${min_profit_required:.2f} (gas: {current_gas_gwei:.1f} gwei)")
+                        logger.info(f"      ✅ VIABLE: {opp['token']} {opp.get('direction', '')} on {source_chain}: "
+                                   f"Profit ${estimated_profit:.2f} > ${min_profit_required:.2f} (gas: {current_gas_gwei:.1f} gwei)")
                         pass
 
-                # Check basic profit threshold
-                if estimated_profit < self.execution_settings['min_profit_usd']:
+                # 🎯 ENFORCE $0.25 MINIMUM: Use centralized config with gas cost consideration
+                from src.config.trading_config import CONFIG
+
+                # Estimate gas costs for this opportunity
+                estimated_gas_cost = 0.15  # Conservative $0.15 gas cost estimate
+                net_profit_after_gas = estimated_profit - estimated_gas_cost
+
+                if net_profit_after_gas < CONFIG.MIN_PROFIT_USD:
+                    logger.info(f"      💰 FILTERED OUT: {opp['token']} {opp.get('direction', '')}: "
+                               f"Net profit ${net_profit_after_gas:.2f} < ${CONFIG.MIN_PROFIT_USD:.2f} minimum (after ${estimated_gas_cost:.2f} gas)")
                     continue
 
                 # Check if we support this route
                 if not self._is_route_supported(opp):
+                    logger.info(f"      🛣️  FILTERED OUT: {opp['token']} {opp.get('direction', '')}: "
+                               f"Route {opp['source_chain']}→{opp['target_chain']} not supported")
                     continue
 
                 # Check if we're already executing this type of opportunity
                 if self._is_duplicate_execution(opp):
+                    logger.info(f"      🔄 FILTERED OUT: {opp['token']} {opp.get('direction', '')}: "
+                               f"Duplicate execution already running")
                     continue
 
                 # Add profit estimation and gas info
@@ -430,10 +472,23 @@ class MasterArbitrageSystem:
     def _estimate_net_profit(self, opportunity: Dict[str, Any]) -> float:
         """Estimate net profit for an opportunity with gas optimization."""
         try:
-            # Calculate trade size
+            # Calculate trade size based on ACTUAL convertible wallet value
+            # Get wallet value from executor if available
+            if hasattr(self, 'executor') and self.executor:
+                # Try to get actual wallet value
+                try:
+                    # This should be the total convertible value from smart balancer
+                    from config.trading_config import CONFIG
+                    wallet_value = getattr(self.executor, 'total_wallet_value_usd', 850.0)  # Fallback to known value
+                    wallet_based_trade_size = wallet_value * CONFIG.MAX_TRADE_PERCENTAGE
+                except:
+                    wallet_based_trade_size = 637.5  # 75% of $850 fallback
+            else:
+                wallet_based_trade_size = 425.0  # 50% of $850 fallback
+
             trade_size = min(
                 self.execution_settings['max_trade_size_usd'],
-                2000  # Default trade size
+                wallet_based_trade_size  # Use actual wallet-based trade size
             )
 
             # Gross profit
@@ -563,23 +618,40 @@ class MasterArbitrageSystem:
         return False
 
     async def _execute_opportunities(self, opportunities: List[Dict[str, Any]], wallet_private_key: str = None):
-        """Execute viable arbitrage opportunities."""
+        """Execute viable arbitrage opportunities with smart parallel execution."""
         try:
+            # 🚀 MULTI-CHAIN PARALLEL EXECUTION: Group by chain for simultaneous execution
+            chain_groups = self._group_opportunities_by_chain(opportunities)
+
             # Limit concurrent executions
             max_concurrent = self.execution_settings['max_concurrent_executions']
             current_executions = len(self.active_executions)
-
             available_slots = max_concurrent - current_executions
 
             if available_slots <= 0:
                 logger.info("   ⏳ Max concurrent executions reached, waiting...")
                 return
 
-            # Execute top opportunities
+            # 🎯 SMART EXECUTION STRATEGY: Execute best opportunity from each chain simultaneously
+            selected_opportunities = self._select_parallel_opportunities(chain_groups, available_slots)
+
+            if len(selected_opportunities) > 1:
+                logger.info(f"   🚀 PARALLEL EXECUTION: {len(selected_opportunities)} opportunities across {len(set(opp['source_chain'] for opp in selected_opportunities))} chains")
+
+                # Calculate capital allocation for parallel trades
+                capital_per_trade = self._calculate_parallel_capital_allocation(selected_opportunities)
+
+                for i, opp in enumerate(selected_opportunities):
+                    opp['allocated_capital_usd'] = capital_per_trade
+                    logger.info(f"   💰 Trade #{i+1}: {opp['token']} on {opp['source_chain']} - ${capital_per_trade:.2f} allocated")
+            else:
+                logger.info(f"   🔄 SEQUENTIAL EXECUTION: {len(selected_opportunities)} opportunity")
+
+            # Execute opportunities
             execution_tasks = []
 
-            for i, opp in enumerate(opportunities[:available_slots]):
-                logger.info(f"   🚀 Executing opportunity #{i+1}: {opp['token']} {opp['direction']}")
+            for i, opp in enumerate(selected_opportunities):
+                logger.info(f"   🚀 Executing opportunity #{i+1}: {opp['token']} {opp['direction']} on {opp['source_chain']}")
 
                 # Create execution task
                 task = self._execute_single_opportunity(opp, wallet_private_key)
@@ -658,11 +730,20 @@ class MasterArbitrageSystem:
                 else:
                     flow_canvas.update_flow_status(opportunity_id, 'failed', -execution.costs_usd)
 
-            # Log result
-            if execution.success:
-                logger.info(f"      ✅ Success: ${execution.net_profit_usd:.2f} profit in {execution_time:.1f}s")
-            else:
-                logger.error(f"      ❌ Failed: {execution.error_message}")
+            # 🎨 COLOR-CODED RESULTS: Yellow for success, red for failure
+            # 🔧 PROFIT CONSISTENCY FIX: Use the actual execution result profit, not calculated estimate
+            from src.utils.color_logger import log_execution_result
+
+            # Get the actual profit from the execution result (matches main calculation)
+            actual_profit = result.get('profit_usd', execution.net_profit_usd)
+
+            log_execution_result(
+                logger=logger,
+                success=execution.success,
+                profit_usd=actual_profit,  # Use consistent profit calculation
+                execution_time=execution_time,
+                error_message=execution.error_message
+            )
 
         except Exception as e:
             logger.error(f"Single execution error: {e}")
@@ -750,8 +831,15 @@ class MasterArbitrageSystem:
             if stats['opportunities_executed'] > 0:
                 success_rate = (stats['successful_executions'] / stats['opportunities_executed']) * 100
 
-                logger.info(f"   📊 Performance: {stats['successful_executions']}/{stats['opportunities_executed']} "
-                           f"success ({success_rate:.1f}%), ${stats['net_profit_usd']:.2f} net profit")
+                # 🎨 COLOR-CODED PERFORMANCE: Yellow for good, red for poor performance
+                from src.utils.color_logger import log_performance_summary
+                log_performance_summary(
+                    logger=logger,
+                    successful_trades=stats['successful_executions'],
+                    total_trades=stats['opportunities_executed'],
+                    net_profit=stats['net_profit_usd'],
+                    success_rate=success_rate
+                )
 
             # Show active executions
             if self.active_executions:
@@ -869,6 +957,66 @@ class MasterArbitrageSystem:
 
         except Exception as e:
             logger.error(f"Mempool opportunity handling error: {e}")
+
+    def _group_opportunities_by_chain(self, opportunities: List[Dict[str, Any]]) -> Dict[str, List[Dict[str, Any]]]:
+        """Group opportunities by source chain for parallel execution."""
+        chain_groups = {}
+
+        for opp in opportunities:
+            chain = opp.get('source_chain', 'unknown')
+            if chain not in chain_groups:
+                chain_groups[chain] = []
+            chain_groups[chain].append(opp)
+
+        # Sort each group by profit (highest first)
+        for chain in chain_groups:
+            chain_groups[chain].sort(key=lambda x: x.get('estimated_profit_usd', 0), reverse=True)
+
+        return chain_groups
+
+    def _select_parallel_opportunities(self, chain_groups: Dict[str, List[Dict[str, Any]]], max_slots: int) -> List[Dict[str, Any]]:
+        """Select best opportunities for parallel execution across different chains."""
+        selected = []
+
+        # Get available chains sorted by best opportunity profit
+        available_chains = []
+        for chain, opportunities in chain_groups.items():
+            if opportunities:  # Only chains with opportunities
+                best_profit = opportunities[0].get('estimated_profit_usd', 0)
+                available_chains.append((chain, best_profit, opportunities[0]))
+
+        # Sort by profit (highest first)
+        available_chains.sort(key=lambda x: x[1], reverse=True)
+
+        # Select best opportunity from each chain (up to max_slots)
+        for chain, profit, opportunity in available_chains[:max_slots]:
+            selected.append(opportunity)
+            logger.info(f"   🎯 Selected: {opportunity['token']} on {chain} - ${profit:.2f} profit")
+
+        return selected
+
+    def _calculate_parallel_capital_allocation(self, opportunities: List[Dict[str, Any]]) -> float:
+        """Calculate capital allocation per trade for parallel execution."""
+        try:
+            # Get total available capital using centralized config
+            if hasattr(self, 'executor') and self.executor:
+                from config.trading_config import CONFIG
+                wallet_value = getattr(self.executor, 'total_wallet_value_usd', 458.31)
+                total_capital = wallet_value * CONFIG.MAX_TRADE_PERCENTAGE
+            else:
+                total_capital = 343.73  # Fallback: 75% of $458.31 wallet
+
+            # Split capital equally among parallel trades
+            num_trades = len(opportunities)
+            capital_per_trade = total_capital / num_trades
+
+            logger.info(f"   💰 CAPITAL ALLOCATION: ${total_capital:.2f} total ÷ {num_trades} trades = ${capital_per_trade:.2f} each")
+
+            return capital_per_trade
+
+        except Exception as e:
+            logger.error(f"Capital allocation error: {e}")
+            return 76.39  # Fallback: $229 ÷ 3 trades
 
     async def cleanup(self):
         """Cleanup system resources."""

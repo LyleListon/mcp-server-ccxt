@@ -1,14 +1,45 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "@aave/core-v3/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol";
-import "@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol";
-import "@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol";
-import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
+// 🔥 SIMPLIFIED FLASHLOAN ARBITRAGE CONTRACT
+// Self-contained with minimal dependencies for fast deployment
+
+// Minimal IERC20 interface
+interface IERC20 {
+    function transfer(address to, uint256 amount) external returns (bool);
+    function transferFrom(address from, address to, uint256 amount) external returns (bool);
+    function balanceOf(address account) external view returns (uint256);
+    function approve(address spender, uint256 amount) external returns (bool);
+}
+
+// Minimal DEX Router interface
+interface IDEXRouter {
+    function swapExactETHForTokens(
+        uint amountOutMin,
+        address[] calldata path,
+        address to,
+        uint deadline
+    ) external payable returns (uint[] memory amounts);
+
+    function swapExactTokensForETH(
+        uint amountIn,
+        uint amountOutMin,
+        address[] calldata path,
+        address to,
+        uint deadline
+    ) external returns (uint[] memory amounts);
+}
+
+// WETH interface
+interface IWETH {
+    function deposit() external payable;
+    function withdraw(uint256 amount) external;
+    function balanceOf(address account) external view returns (uint256);
+}
 
 /**
- * @title FlashloanArbitrage
- * @dev Real flashloan arbitrage contract for cross-DEX trading
+ * @title SimplifiedFlashloanArbitrage
+ * @dev Simplified arbitrage contract for fast deployment and testing
  */
 contract FlashloanArbitrage is FlashLoanSimpleReceiverBase {
     

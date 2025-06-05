@@ -1,0 +1,297 @@
+
+🔧 CONFIGURATION MIGRATION PLAN
+===============================
+
+Found 77 scattered configuration values that need to be centralized.
+
+
+📁 immediate_profit_optimization.py
+===================================
+  Line  36: min_profit      = 0.05     | "change": "min_profit_usd: 0.05 → 3.00"...
+  Line  36: min_profit      = 0.05     | "change": "min_profit_usd: 0.05 → 3.00"...
+  Line  50: max_trade       = 0.50     | "change": "max_trade_percentage: 0.50 → 0.75"...
+  Line  50: max_trade       = 0.50     | "change": "max_trade_percentage: 0.50 → 0.75"...
+  Line  57: gas_price       = 2.0      | "change": "gas_price_multiplier: 2.0 → 3.0"...
+  Line  57: gas_price       = 2.0      | "change": "gas_price_multiplier: 2.0 → 3.0"...
+  Line  57: gas_price       = 2.0      | "change": "gas_price_multiplier: 2.0 → 3.0"...
+  Line  43: scan_interval   = 2.0      | "change": "scan_interval: 2.0 → 1.0"...
+  Line  43: scan_interval   = 2.0      | "change": "scan_interval: 2.0 → 1.0"...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     min_profit_usd: 0.05 → CONFIG.MIN_PROFIT_USD
+     min_profit_usd: 0.05 → CONFIG.MIN_PROFIT_USD
+     max_trade_percentage: 0.50 → CONFIG.MAX_TRADE_USD
+     max_trade_percentage: 0.50 → CONFIG.MAX_TRADE_USD
+     gas_price_multiplier: 2.0 → CONFIG.GAS_PRICE_MULTIPLIER
+     gas_price_multiplier: 2.0 → CONFIG.GAS_PRICE_MULTIPLIER
+     gas_price_multiplier: 2.0 → CONFIG.GAS_PRICE_MULTIPLIER
+     scan_interval: 2.0 → CONFIG.SCAN_INTERVAL_SECONDS
+     scan_interval: 2.0 → CONFIG.SCAN_INTERVAL_SECONDS
+
+
+📁 test_contract_fix.py
+=======================
+  Line  14: slippage        = 50       | print("   • Slippage: 50% (unrealistic)")...
+  Line  20: slippage        = 5        | print("   • Slippage: 5% (realistic for DEX swaps)")...
+  Line  14: slippage        = 50       | print("   • Slippage: 50% (unrealistic)")...
+  Line  20: slippage        = 5        | print("   • Slippage: 5% (realistic for DEX swaps)")...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     Slippage: 50 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+     Slippage: 5 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+     Slippage: 50 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+     Slippage: 5 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+
+
+📁 ultimate_speed_strategy.py
+=============================
+  Line 134: min_profit      = 3.00     | print("   min_profit_usd: 3.00  # Was 0.05")...
+  Line 134: min_profit      = 3.00     | print("   min_profit_usd: 3.00  # Was 0.05")...
+  Line 137: gas_price       = 3.0      | print("   gas_multiplier: 3.0   # Was 2.0")...
+  Line 135: scan_interval   = 1.0      | print("   scan_interval: 1.0    # Was 2.0")...
+  Line 135: scan_interval   = 1.0      | print("   scan_interval: 1.0    # Was 2.0")...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     min_profit_usd: 3.00 → CONFIG.MIN_PROFIT_USD
+     min_profit_usd: 3.00 → CONFIG.MIN_PROFIT_USD
+     gas_multiplier: 3.0 → CONFIG.GAS_PRICE_MULTIPLIER
+     scan_interval: 1.0 → CONFIG.SCAN_INTERVAL_SECONDS
+     scan_interval: 1.0 → CONFIG.SCAN_INTERVAL_SECONDS
+
+
+📁 test_speed_optimizations.py
+==============================
+  Line  81: gas_price       = 1.5      | print("   • fast_gas_multiplier: 1.5x")...
+  Line  80: scan_interval   = 2        | print("   • scan_interval: 2 seconds")...
+  Line  80: scan_interval   = 2        | print("   • scan_interval: 2 seconds")...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     gas_multiplier: 1.5 → CONFIG.GAS_PRICE_MULTIPLIER
+     scan_interval: 2 → CONFIG.SCAN_INTERVAL_SECONDS
+     scan_interval: 2 → CONFIG.SCAN_INTERVAL_SECONDS
+
+
+📁 dexmind/base_dex_scanner_integration_example.py
+==================================================
+  Line 197: min_profit      = 1.0      | min_profit_usd=1.0,  # Set minimum profit to $1.0...
+  Line 197: min_profit      = 1.0      | min_profit_usd=1.0,  # Set minimum profit to $1.0...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     min_profit_usd=1.0 → CONFIG.MIN_PROFIT_USD
+     min_profit_usd=1.0 → CONFIG.MIN_PROFIT_USD
+
+
+📁 src/crosschain/cross_chain_mev_engine.py
+===========================================
+  Line 231: min_profit      = 0.2      | min_profit_threshold = 0.2  # 0.2% minimum...
+  Line 231: min_profit      = 0.2      | min_profit_threshold = 0.2  # 0.2% minimum...
+  Line 231: min_profit      = 0.2      | min_profit_threshold = 0.2  # 0.2% minimum...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     min_profit_threshold = 0.2 → CONFIG.MIN_PROFIT_USD
+     min_profit_threshold = 0.2 → CONFIG.MIN_PROFIT_USD
+     profit_threshold = 0.2 → CONFIG.MIN_PROFIT_USD
+
+
+📁 src/dex/stablecoin_adapter.py
+================================
+  Line 287: slippage        = 0.01     | slippage_estimate = 0.01  # 0.01%...
+  Line 287: slippage        = 0.01     | slippage_estimate = 0.01  # 0.01%...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     slippage_estimate = 0.01 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+     slippage_estimate = 0.01 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+
+
+📁 src/dex/uniswap_v3_adapter.py
+================================
+  Line 264: slippage        = 5.0      | slippage_estimate = 5.0...
+  Line 264: slippage        = 5.0      | slippage_estimate = 5.0...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     slippage_estimate = 5.0 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+     slippage_estimate = 5.0 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+
+
+📁 src/execution/real_arbitrage_executor.py
+===========================================
+  Line 436: max_trade       = .2       | logger.info(f"🚀 ENHANCED CAPITAL: {trade_percentage*100:.0f}...
+  Line 436: max_trade       = .6       | logger.info(f"🚀 ENHANCED CAPITAL: {trade_percentage*100:.0f}...
+  Line 443: max_trade       = .6       | logger.info(f"⚠️  FALLBACK: Using {trade_percentage*100:.0f}...
+  Line 990: max_trade       = 700      | MAX_TRADE_USD = 700  # Your configured max...
+  Line 436: max_trade       = .2       | logger.info(f"🚀 ENHANCED CAPITAL: {trade_percentage*100:.0f}...
+  Line 436: max_trade       = .6       | logger.info(f"🚀 ENHANCED CAPITAL: {trade_percentage*100:.0f}...
+  Line 443: max_trade       = .6       | logger.info(f"⚠️  FALLBACK: Using {trade_percentage*100:.0f}...
+  Line 990: max_trade       = 700      | MAX_TRADE_USD = 700  # Your configured max...
+  Line 1038: gas_price       = 100      | MAX_GAS_PRICE_GWEI = 100  # Emergency stop...
+  Line 1039: gas_price       = 1        | WARN_GAS_PRICE_GWEI = 1   # Warning threshold...
+  Line 1042: gas_price       = .2       | return {'valid': False, 'error': f'Gas price {gas_price_gwei...
+  Line 1045: gas_price       = .2       | logger.warning(f"   ⚠️  High gas price: {gas_price_gwei:.2f}...
+  Line 1103: gas_price       = .3       | logger.info(f"      ⛽ Gas: {gas_price_gwei:.3f} gwei (accept...
+  Line 1038: gas_price       = 100      | MAX_GAS_PRICE_GWEI = 100  # Emergency stop...
+  Line 1039: gas_price       = 1        | WARN_GAS_PRICE_GWEI = 1   # Warning threshold...
+  Line 1042: gas_price       = .2       | return {'valid': False, 'error': f'Gas price {gas_price_gwei...
+  Line 1045: gas_price       = .2       | logger.warning(f"   ⚠️  High gas price: {gas_price_gwei:.2f}...
+  Line 1103: gas_price       = .3       | logger.info(f"      ⛽ Gas: {gas_price_gwei:.3f} gwei (accept...
+  Line 832: slippage        = 0.05     | slippage_tolerance = 0.05  # 🔧 FIXED: 5% realistic slippage ...
+  Line 832: slippage        = 0.05     | slippage_tolerance = 0.05  # 🔧 FIXED: 5% realistic slippage ...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     max_trade_usd:.2 → CONFIG.MAX_TRADE_USD
+     max_trade_eth:.6 → CONFIG.MAX_TRADE_USD
+     max_trade_eth:.6 → CONFIG.MAX_TRADE_USD
+     MAX_TRADE_USD = 700 → CONFIG.MAX_TRADE_USD
+     max_trade_usd:.2 → CONFIG.MAX_TRADE_USD
+     max_trade_eth:.6 → CONFIG.MAX_TRADE_USD
+     max_trade_eth:.6 → CONFIG.MAX_TRADE_USD
+     MAX_TRADE_USD = 700 → CONFIG.MAX_TRADE_USD
+     GAS_PRICE_GWEI = 100 → CONFIG.GAS_PRICE_MULTIPLIER
+     GAS_PRICE_GWEI = 1 → CONFIG.GAS_PRICE_MULTIPLIER
+     gas_price_gwei:.2 → CONFIG.GAS_PRICE_MULTIPLIER
+     gas_price_gwei:.2 → CONFIG.GAS_PRICE_MULTIPLIER
+     gas_price_gwei:.3 → CONFIG.GAS_PRICE_MULTIPLIER
+     GAS_PRICE_GWEI = 100 → CONFIG.GAS_PRICE_MULTIPLIER
+     GAS_PRICE_GWEI = 1 → CONFIG.GAS_PRICE_MULTIPLIER
+     gas_price_gwei:.2 → CONFIG.GAS_PRICE_MULTIPLIER
+     gas_price_gwei:.2 → CONFIG.GAS_PRICE_MULTIPLIER
+     gas_price_gwei:.3 → CONFIG.GAS_PRICE_MULTIPLIER
+     slippage_tolerance = 0.05 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+     slippage_tolerance = 0.05 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+
+
+📁 src/execution/real_executor.py
+=================================
+  Line 249: max_trade       = .0       | 'error': f"Minimum viable trade size ${min_trade_size:.0f} e...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     trade_size:.0 → CONFIG.MAX_TRADE_USD
+
+
+📁 src/core/master_arbitrage_system.py
+======================================
+  Line 406: min_profit      = .2       | f"Profit ${estimated_profit:.2f} < ${min_profit_required:.2f...
+  Line 410: min_profit      = .2       | f"Profit ${estimated_profit:.2f} > ${min_profit_required:.2f...
+  Line 406: min_profit      = .2       | f"Profit ${estimated_profit:.2f} < ${min_profit_required:.2f...
+  Line 410: min_profit      = .2       | f"Profit ${estimated_profit:.2f} > ${min_profit_required:.2f...
+  Line 459: max_trade       = 425.0    | wallet_based_trade_size = 425.0  # 50% of $850 fallback...
+  Line 461: max_trade       = 425.0    | wallet_based_trade_size = 425.0  # 50% of $850 fallback...
+  Line 710: max_trade       = 2000     | trade_size = 2000...
+  Line 517: gas_price       = 30.0     | gas_price_gwei = 30.0  # Default...
+  Line 517: gas_price       = 30.0     | gas_price_gwei = 30.0  # Default...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     min_profit_required:.2 → CONFIG.MIN_PROFIT_USD
+     min_profit_required:.2 → CONFIG.MIN_PROFIT_USD
+     min_profit_required:.2 → CONFIG.MIN_PROFIT_USD
+     min_profit_required:.2 → CONFIG.MIN_PROFIT_USD
+     trade_size = 425.0 → CONFIG.MAX_TRADE_USD
+     trade_size = 425.0 → CONFIG.MAX_TRADE_USD
+     trade_size = 2000 → CONFIG.MAX_TRADE_USD
+     gas_price_gwei = 30.0 → CONFIG.GAS_PRICE_MULTIPLIER
+     gas_price_gwei = 30.0 → CONFIG.GAS_PRICE_MULTIPLIER
+
+
+📁 src/wallet/wallet_manager.py
+===============================
+  Line 172: gas_price       = 20       | gas_price_gwei = 20  # 20 gwei...
+  Line 172: gas_price       = 20       | gas_price_gwei = 20  # 20 gwei...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     gas_price_gwei = 20 → CONFIG.GAS_PRICE_MULTIPLIER
+     gas_price_gwei = 20 → CONFIG.GAS_PRICE_MULTIPLIER
+
+
+📁 src/wallet/smart_wallet_manager.py
+=====================================
+  Line  30: slippage        = 0.02     | self.conversion_slippage = 0.02  # 2% slippage tolerance for...
+  Line 904: slippage        = 0.002    | slippage = 0.002  # 0.2% slippage...
+  Line  30: slippage        = 0.02     | self.conversion_slippage = 0.02  # 2% slippage tolerance for...
+  Line 904: slippage        = 0.002    | slippage = 0.002  # 0.2% slippage...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     slippage = 0.02 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+     slippage = 0.002 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+     slippage = 0.02 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+     slippage = 0.002 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+
+
+📁 src/security/transaction_validator.py
+========================================
+  Line  21: max_trade       = 1000     | self.max_trade_amount_usd = 1000  # Hard limit...
+  Line  21: max_trade       = 1000     | self.max_trade_amount_usd = 1000  # Hard limit...
+  Line  20: gas_price       = 100      | self.max_gas_price_gwei = 100  # Emergency brake...
+  Line  20: gas_price       = 100      | self.max_gas_price_gwei = 100  # Emergency brake...
+  Line  23: slippage        = 5.0      | self.max_slippage_percent = 5.0  # 5% max slippage...
+  Line  23: slippage        = 5.0      | self.max_slippage_percent = 5.0  # 5% max slippage...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     max_trade_amount_usd = 1000 → CONFIG.MAX_TRADE_USD
+     max_trade_amount_usd = 1000 → CONFIG.MAX_TRADE_USD
+     gas_price_gwei = 100 → CONFIG.GAS_PRICE_MULTIPLIER
+     gas_price_gwei = 100 → CONFIG.GAS_PRICE_MULTIPLIER
+     slippage_percent = 5.0 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+     slippage_percent = 5.0 → CONFIG.MAX_SLIPPAGE_PERCENTAGE
+
+
+📁 src/core/arbitrage/profit_calculator.py
+==========================================
+  Line 120: gas_price       = 20.0     | gas_price_gwei = 20.0  # Default gas price in gwei...
+  Line 120: gas_price       = 20.0     | gas_price_gwei = 20.0  # Default gas price in gwei...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     gas_price_gwei = 20.0 → CONFIG.GAS_PRICE_MULTIPLIER
+     gas_price_gwei = 20.0 → CONFIG.GAS_PRICE_MULTIPLIER
+
+
+📁 src/core/detection/enhanced_cross_dex_detector.py
+====================================================
+  Line 370: max_trade       = 5000.0   | trade_size_usd = 5000.0...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     trade_size_usd = 5000.0 → CONFIG.MAX_TRADE_USD
+
+
+📁 src/integrations/mev/flashbots_manager.py
+============================================
+  Line 309: gas_price       = 25       | avg_gas_price = 25_000_000_000  # 25 gwei default...
+  Line 309: gas_price       = 25       | avg_gas_price = 25_000_000_000  # 25 gwei default...
+
+  🔄 REPLACE WITH:
+     from src.config.trading_config import CONFIG
+     gas_price = 25 → CONFIG.GAS_PRICE_MULTIPLIER
+     gas_price = 25 → CONFIG.GAS_PRICE_MULTIPLIER
+
+
+🎯 MIGRATION BENEFITS:
+=====================
+✅ Single source of truth - change one value, updates everywhere
+✅ No more configuration mismatches between files  
+✅ Easy A/B testing - change CONFIG.MIN_PROFIT_USD and test
+✅ Environment variable overrides for production
+✅ Type safety and validation
+✅ Clean, professional codebase
+
+🚀 NEXT STEPS:
+=============
+1. Review this migration plan
+2. Update files one by one (start with most critical)
+3. Test each change to ensure it works
+4. Remove old configuration files once migrated
+5. Implement $1 minimum profit filter using CONFIG.MIN_PROFIT_USD
+

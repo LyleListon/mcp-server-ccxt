@@ -17,6 +17,10 @@ from typing import Dict, List, Any
 from dex.dex_manager import DEXManager
 from integrations.mcp.client_manager import MCPClientManager
 from utils.gas_price_oracle import GasPriceOracle
+from src.core.filters.advanced_opportunity_filter import AdvancedOpportunityFilter
+
+# 🎯 CENTRALIZED CONFIGURATION - Single source of truth!
+from config.trading_config import CONFIG
 
 # Configure logging
 logging.basicConfig(
@@ -36,14 +40,26 @@ class RealArbitrageBot:
         self.mcp_manager = None
         self.gas_oracle = None
 
+        # Initialize advanced opportunity filter
+        filter_config = {
+            'max_opportunity_age_seconds': 15,  # 🚀 SPEED: Only execute opportunities < 15 seconds old
+            'min_profit_after_decay': 1.0,     # 💰 PROFIT: Minimum $1 after decay
+            'min_execution_speed_score': 0.4,  # ⚡ SPEED: Minimum speed score
+            'max_estimated_execution_time': 12.0  # ⏱️ TIME: Max 12 seconds execution time
+        }
+        self.opportunity_filter = AdvancedOpportunityFilter(filter_config)
+
         # Enhanced Configuration for Phase 1
         self.config = {
             'trading': {
                 'min_profit_threshold': 0.05,  # 0.05% minimum profit (micro-arbitrage)
                 'max_risk_score': 50,
-                'trading_enabled': False,  # Start in simulation mode
-                'scan_interval': 5,  # Scan every 5 seconds (higher frequency)
-                'max_trade_size_usd': 2000  # $2000 max trade size
+                'trading_enabled': True,  # 🚀 SPEED: Enable real trading for testing
+                'scan_interval': 2,  # 🚀 SPEED: Scan every 2 seconds (ultra-fast detection)
+                'max_trade_size_usd': 2000,  # $2000 max trade size
+                'fast_gas_multiplier': 1.5,  # 🚀 SPEED: Pay 50% more gas for priority
+                'parallel_execution': True,  # 🚀 SPEED: Prepare transactions in parallel
+                'skip_gas_estimation': True  # 🚀 SPEED: Use fixed gas limits
             },
             'dexs': {
                 'uniswap_v3': {
@@ -266,11 +282,23 @@ class RealArbitrageBot:
             gas_analysis = await self._check_gas_profitability(opportunity)
             logger.info(f"   Gas analysis: {gas_analysis['recommendation']} (Net: ${gas_analysis.get('net_profit_usd', 0):.2f})")
 
-            # Check if opportunity meets criteria
-            if self._should_execute_opportunity(opportunity, enhanced_score, gas_analysis):
+            # 🚀 ADVANCED FILTERING: Apply smart opportunity filter
+            filter_result = self.opportunity_filter.filter_opportunity(opportunity)
+            logger.info(f"   🎯 Filter result: {filter_result.reason}")
+            logger.info(f"   📊 Priority score: {filter_result.priority_score:.2f}")
+            logger.info(f"   ⏱️  Estimated execution: {filter_result.estimated_execution_time:.1f}s")
+            logger.info(f"   📉 Profit decay factor: {filter_result.profit_decay_factor:.2f}")
+
+            # Check if opportunity meets ALL criteria (original + advanced filter)
+            if (filter_result.should_execute and
+                self._should_execute_opportunity(opportunity, enhanced_score, gas_analysis)):
+                logger.info("   🚀 EXECUTING: Opportunity passed all filters!")
                 await self._execute_opportunity(opportunity, intelligence)
             else:
-                logger.info("   ⏭️  Skipping opportunity (score too low, risk too high, or unprofitable after gas)")
+                if not filter_result.should_execute:
+                    logger.info(f"   ⏭️  FILTERED OUT: {filter_result.reason}")
+                else:
+                    logger.info("   ⏭️  Skipping opportunity (score too low, risk too high, or unprofitable after gas)")
 
         except Exception as e:
             logger.error(f"Error processing opportunity: {e}")
@@ -404,9 +432,11 @@ class RealArbitrageBot:
             if not gas_analysis.get('is_profitable', False):
                 return False
 
-            # Check minimum net profit after gas
+            # 🎯 ENFORCE $0.25 MINIMUM: Use centralized config with gas costs
+            from src.config.trading_config import CONFIG
             net_profit = gas_analysis.get('net_profit_usd', 0)
-            if net_profit < 0.5:  # Minimum $0.50 profit after gas
+            if net_profit < CONFIG.MIN_PROFIT_USD:  # Use $0.25 minimum from config
+                logger.info(f"💰 FILTERED OUT: Net profit ${net_profit:.2f} < ${CONFIG.MIN_PROFIT_USD:.2f} minimum (after gas)")
                 return False
 
             return True

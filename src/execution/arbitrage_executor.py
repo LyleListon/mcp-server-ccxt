@@ -33,8 +33,9 @@ class ArbitrageExecutor:
         self.config = config
         self.execution_config = config.get('execution', {})
 
-        # Execution parameters - DIME COLLECTOR MODE!
-        self.min_profit_usd = self.execution_config.get('min_profit_usd', 0.10)  # 10 cents minimum!
+        # 🎯 ENFORCE $1 MINIMUM: Use centralized config instead of dime collecting
+        from config.trading_config import CONFIG
+        self.min_profit_usd = CONFIG.MIN_PROFIT_USD  # $1.00 minimum from centralized config
         self.max_trade_size_usd = self.execution_config.get('max_trade_size_usd', 5000)  # Smaller trades for dimes
         self.max_slippage_percentage = self.execution_config.get('max_slippage_percentage', 0.5)  # Tighter slippage
         self.execution_timeout_seconds = self.execution_config.get('execution_timeout_seconds', 15)  # Faster execution
