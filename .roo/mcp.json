@@ -75,6 +75,26 @@
       "description": "Docker container management",
       "type": "infrastructure",
       "required": false
+    },
+    "MCP-Screenshot": {
+      "command": "node",
+      "args": [
+        "/home/lylepaul78/Documents/augment-projects/MayArbi/mcp-screenshot/dist/index.js"
+      ],
+      "env": {},
+      "description": "Screen capture and OCR capabilities for Linux",
+      "type": "automation",
+      "required": false
+    },
+    "GitHub-MCP": {
+      "command": "/home/lylepaul78/Documents/augment-projects/MayArbi/github-mcp-server/start-github-mcp.sh",
+      "args": [],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "description": "Official GitHub MCP server for repository operations",
+      "type": "github",
+      "required": false
     }
   }
 }

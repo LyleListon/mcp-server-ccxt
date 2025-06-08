@@ -147,35 +147,68 @@ class FlashloanArbitrageExecutor:
     async def _validate_flashloan_profitability(self, opportunity: Dict[str, Any], flashloan_amount: float) -> bool:
         """Validate that flashloan will be profitable after all fees."""
         try:
+            # 🔍 PROFIT TRACKING: Show where expected profit comes from
+            logger.info(f"   🔍 PROFIT CALCULATION BREAKDOWN:")
+
+            # Original opportunity data
+            original_profit_pct = opportunity.get('profit_percentage', 0)
+            original_profit_usd = opportunity.get('estimated_profit_usd', 0)
+            original_trade_amount = opportunity.get('trade_amount_usd', 0)
+
+            logger.info(f"      📊 ORIGINAL OPPORTUNITY:")
+            logger.info(f"         💰 Trade amount: ${original_trade_amount:,.2f}")
+            logger.info(f"         📈 Profit %: {original_profit_pct:.4f}%")
+            logger.info(f"         💵 Expected profit: ${original_profit_usd:.2f}")
+
+            # Flashloan calculation
             profit_pct = opportunity.get('profit_percentage', 0)
             gross_profit = flashloan_amount * (profit_pct / 100)
-            
+
+            logger.info(f"      🏦 FLASHLOAN SCALING:")
+            logger.info(f"         💰 Flashloan amount: ${flashloan_amount:,.2f}")
+            logger.info(f"         📈 Same profit %: {profit_pct:.4f}%")
+            logger.info(f"         💵 Scaled gross profit: ${gross_profit:.2f}")
+            logger.info(f"         🔄 Scaling factor: {flashloan_amount / max(original_trade_amount, 1):.2f}x")
+
             # Calculate costs
             if self.flashloan_provider == 'balancer':
                 flashloan_fee = 0.0  # 0% Balancer fee - FREE!
+                fee_pct = 0.0
             elif self.flashloan_provider == 'aave':
                 flashloan_fee = flashloan_amount * 0.0009  # 0.09% Aave fee
+                fee_pct = 0.09
             else:
                 flashloan_fee = 0.0  # Default to free
+                fee_pct = 0.0
 
             gas_cost = 10  # Estimated gas cost on L2
-            
+
+            logger.info(f"      💸 COST BREAKDOWN:")
+            logger.info(f"         🏦 Flashloan fee ({fee_pct}%): ${flashloan_fee:.2f}")
+            logger.info(f"         ⛽ Gas cost estimate: ${gas_cost:.2f}")
+            logger.info(f"         💰 Total costs: ${flashloan_fee + gas_cost:.2f}")
+
             net_profit = gross_profit - flashloan_fee - gas_cost
             required_profit = flashloan_fee * self.flashloan_safety_margin
-            
-            logger.info(f"   📊 FLASHLOAN PROFITABILITY:")
-            logger.info(f"      💰 Borrow amount: ${flashloan_amount:,.2f}")
-            logger.info(f"      📈 Gross profit: ${gross_profit:.2f}")
-            logger.info(f"      💸 Flashloan fee: ${flashloan_fee:.2f}")
-            logger.info(f"      ⛽ Gas cost: ${gas_cost:.2f}")
-            logger.info(f"      🎯 Net profit: ${net_profit:.2f}")
-            logger.info(f"      🛡️  Required profit: ${required_profit:.2f}")
-            
+
+            logger.info(f"      🎯 FINAL CALCULATION:")
+            logger.info(f"         📈 Gross profit: ${gross_profit:.2f}")
+            logger.info(f"         💸 Total costs: ${flashloan_fee + gas_cost:.2f}")
+            logger.info(f"         🎯 Expected net profit: ${net_profit:.2f}")
+            logger.info(f"         🛡️  Required profit: ${required_profit:.2f}")
+
+            # 🚨 PROFIT ESTIMATION WARNINGS
+            if abs(gross_profit - original_profit_usd) > 10:
+                logger.warning(f"      ⚠️  PROFIT MISMATCH: Original ${original_profit_usd:.2f} vs Scaled ${gross_profit:.2f}")
+
+            if net_profit < original_profit_usd * 0.5:
+                logger.warning(f"      ⚠️  HIGH COST IMPACT: Net profit ${net_profit:.2f} much lower than expected ${original_profit_usd:.2f}")
+
             is_profitable = net_profit >= required_profit
             logger.info(f"      {'✅' if is_profitable else '❌'} Profitable: {is_profitable}")
-            
+
             return is_profitable
-            
+
         except Exception as e:
             logger.error(f"   ❌ Profitability validation error: {e}")
             return False
@@ -203,15 +236,46 @@ class FlashloanArbitrageExecutor:
             if not self.wallet_account:
                 return {'success': False, 'error': 'No wallet account available'}
 
+            # 🔍 EXECUTION TRACKING: Show expected vs actual
+            expected_profit = opportunity.get('estimated_profit_usd', 0)
+            logger.info(f"   🎯 EXECUTION TRACKING:")
+            logger.info(f"      📊 Expected profit: ${expected_profit:.2f}")
+
             # Execute REAL flashloan
             result = await provider.execute_flashloan_arbitrage(opportunity, web3, self.wallet_account)
 
+            # 🔍 RESULT ANALYSIS: Compare expected vs actual
+            actual_profit = result.get('net_profit', 0)
+            profit_difference = actual_profit - expected_profit
+
             if result['success']:
                 logger.info(f"   ✅ REAL FLASHLOAN SUCCESS!")
-                logger.info(f"   💰 Transaction: {result['transaction_hash']}")
-                logger.info(f"   🎯 Net profit: ${result['net_profit']:.2f}")
+                logger.info(f"   💰 Transaction: {result.get('transaction_hash', 'N/A')}")
+                logger.info(f"   🔍 PROFIT ANALYSIS:")
+                logger.info(f"      📊 Expected profit: ${expected_profit:.2f}")
+                logger.info(f"      🎯 Actual net profit: ${actual_profit:.2f}")
+                logger.info(f"      📈 Difference: ${profit_difference:.2f} ({((profit_difference/max(expected_profit,0.01))*100):+.1f}%)")
+
+                # 🚨 PROFIT LOSS ANALYSIS
+                if actual_profit < expected_profit * 0.5:
+                    logger.warning(f"      ⚠️  MAJOR PROFIT LOSS: {((1-actual_profit/max(expected_profit,0.01))*100):.1f}% of expected profit lost!")
+
+                    # Try to identify causes
+                    gas_cost = result.get('gas_cost_usd', 0)
+                    slippage_loss = result.get('slippage_loss_usd', 0)
+                    fee_cost = result.get('fee_cost_usd', 0)
+
+                    logger.warning(f"      🔍 LOSS BREAKDOWN:")
+                    if gas_cost > 0:
+                        logger.warning(f"         ⛽ Gas costs: ${gas_cost:.2f}")
+                    if slippage_loss > 0:
+                        logger.warning(f"         📉 Slippage loss: ${slippage_loss:.2f}")
+                    if fee_cost > 0:
+                        logger.warning(f"         💸 Fee costs: ${fee_cost:.2f}")
+
             else:
                 logger.error(f"   ❌ REAL FLASHLOAN FAILED: {result.get('error', 'Unknown')}")
+                logger.error(f"   💔 Expected profit lost: ${expected_profit:.2f}")
 
             return result
             

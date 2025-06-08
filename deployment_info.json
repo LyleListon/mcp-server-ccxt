@@ -1,0 +1,10 @@
+{
+  "contract_address": "0x1bcEf6CCa4cad0620e0363E6cD266E82112984b7",
+  "transaction_hash": "4cdac916b503ef6fe65cd7e98e37a6053a64f1ec25438f237b4dc0b0f4200ccf",
+  "deployer": "0x55e701F8f224Dfd080924cf30FFDa42aff6467B1",
+  "block_number": 344443679,
+  "gas_used": 529776,
+  "deployment_time": 1749196865.704793,
+  "network": "arbitrum",
+  "aave_provider": "0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"
+}

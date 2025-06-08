@@ -1,0 +1,422 @@
+[
+  {
+    "contract_address": "0xd16FA1d916f6Eb8318c82b08a879322D9F5c7a8d",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x8B3d5dcAcD304eb75e0487A58142e3cC3E409FF4",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x29Dc4033c5868695e8571Bd9F4E48f233ef1F28d",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xe6a74B9bCE7ad8a58d07cAdBb4B1756d475E9603",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x7090dA028F85C1c7Af164d61150Ee8a255955ceA",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x590264017215F6FAEbD039284357E123C7Edb6c7",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x12fc3489C827635058387d8320FD43640c43A38a",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xa1f77013999797204cFf9E864cA8D2EB1a43442C",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x12cdd3c3e2c2CDC5C576292CE5323A93853bc00c",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x8B6b954C1717799Ecd3d66496b73B8Cdf1d4a321",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x225979A05f0f3f12F1042ae5F30dDf56b221aA38",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xc1dBDbfB01C5cD117681511Ae1A69b3bc734a934",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xb3aCb3DD12Aa7F7e3f7628483C047E785603f111",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xbF5AbB1aBf47421899eAF4ea6d331978403E00B7",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xF516fFEA18E6523E99352975Ae4403954103d2d0",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x30fAA68Fb3c1CC4d1D61E62AA5A0B327c6a0628C",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x4265794E503a80566627ACe3D78dF9D53C3261A6",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x11DacDa898604F09375A0803914F447703642112",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xE9A11e9DEcB1C58ccbA2B5FBCB718E3bD8def547",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xE1444cBCaf599bEA5bCd795bF0CaB2D04925404E",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x6244742c1367796152b67674122297b432Eb2d09",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xDAc242E6c0cB627B33156b76b11b08EE9c9F89a8",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x47D1d1cD660269D7d565D3DD37a40a954091990b",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xdfe1530Df7Bc63cdf877A51822bB7Cfc035B4Ee1",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x69A3B7F6Dff649760c007795Ea3B0e76299d0c71",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x3e2134f127D5d78884fB9039d4b28167a6bcb2fB",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x5ECF74b7a6B2B876b4480C904b62A962Dd08e8A5",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x33bb1CA5B6EC4Cee643c906ED397509a86125Dc8",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x052746843Ad99A4FdaE7b93e76fb333B85a94797",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x9F27B27B777b93fDD123c6f74bC995fc37C5EBe7",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x23B9Bec7bBAC21D85EEB4C72120FD736dD040E72",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xE89aCA4Ee99EE90A83cD27Cc8Ae84900F1d6F1Ed",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x48d615A667Bec8a956d4bcd33ca2A94C111D9d14",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x9ef99343F0C0C3eD80c33072892F4EaE6Fe79Fc0",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xd4D529c465F5f24fF7CF231fDdFc9a0C6b2adbC0",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x55365E4001b90be99DF91183d2b9fee524e44B14",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xC98b041eEdE4B0974f2b37b33Cd82eB1F8760F15",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x37B24BB6BdB6B537F85C7C0cdb93a655dF3508Ef",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xc1819432AB0Ac64c660Bb926e7924FC3b454D919",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x9FA44d7e375874E3650907423D8965bB50809bD4",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x427a69353Dd6838941Dbb1f70022C63847b43dF8",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x0755494392F5E8fEf032BBE3d2360f73F1453c94",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x1A3e9Ac448ff51031a34D9D2E48BaEde557558c0",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x8658c9424681F7Ed5A6325f6F53F3A792a2220f0",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xA1Fb79228833C6E3B4810e22ce76e1A43235E808",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xC62Ad24d3e8098606e953D18d2417802fa8De3EE",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x8f04072297C69f92aA7318616005f572a01D788A",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xae98bC68dB280B09D5E9BeeaA6683dafA43606B3",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x4D0B23eAb88D5D9FBe718Dafb04b8F133BD2Cd26",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xBa91206046DfDC6fBC14c76B9FA66e9320BE0318",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xD7Acfc66c24d2e2A3BCA4bc38Fe23352A7E21A0B",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x202fA92358B944025a52C4Ef6FC530864983b744",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xb63e0d71268A4cD47676518961FdD87c7D4C9Df6",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x910317FEF70CAeD8447fFC0Fbcc1971893F0d431",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xCC170F2E8057Ba712B303Fb48EE90E5B9c7b98ed",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x8813317e058F863385c9267B97524C56ff462A0c",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x13eB840d2ea5efE9e7e266e87bB22E140529AD95",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x581D85f4Af51cCf22845E3D03a62e491366B1Db2",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xFe4E22Cef6290B0768CBe066c3F0ce11cc01Db48",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x2487C5A23BB7Cb82AfdAb40f537d2111e9670023",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xFda084c3F2e27aC4EA7ED5d61045F83541422d41",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x99BB4a2E051316E9D7659A538ab6033a134D2A78",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0xFc3656951725c8Df6c1a3F4F1262fC4B1BfDa897",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x9ee3571417558426B1bD8237a29Bad9A4bB25e29",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x583A47570A9EA305Ce8A03E0CD25a4D1688c102b",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x19aEF6b9Fcc9827A3d8D2575B5e528d5260198C9",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x200C0771A07859d0f9915a307a00B713949866eD",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x96604B7777D27fab0e1F6564EeEBDc4DF3540400",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x1FD31e6fd0E117c09a07670C37B8BD614Fa6Ed2e",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  },
+  {
+    "contract_address": "0x56FbB92900cc305f79C92c02f0D035cb898Fe4B1",
+    "contract_type": "router",
+    "dex_name": "uniswap_v3",
+    "abi": null
+  }
+]

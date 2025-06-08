@@ -17,6 +17,9 @@ from pathlib import Path
 # 🎯 CENTRALIZED CONFIGURATION - Single source of truth!
 from src.config.trading_config import CONFIG
 
+# 🎯 DYNAMIC DATA INTEGRATION - NO MORE HARDCODED VALUES!
+from src.utils.dynamic_data_service import get_dynamic_data_service
+
 # Import emergency stop
 try:
     from src.security.emergency_stop import check_emergency_stop
@@ -45,12 +48,26 @@ class RealArbitrageExecutor:
 
         logger.info(f"🔑 Using Alchemy API key: {alchemy_api_key[:8]}...{alchemy_api_key[-4:]}")
 
-        # 🔄 NETWORK CONFIGURATIONS WITH FALLBACK RPCS (SSL CONNECTION FIX)
+        # 🔥 ETHEREUM MAINNET + FLASHLOAN CONFIGURATION - PROFIT MAXIMIZATION!
+        # 🚀 YOUR LOCAL NODE = SPEED ADVANTAGE + ZERO COSTS!
         self.network_configs = {
+            'ethereum': {
+                'rpc_url': 'http://192.168.1.18:8545',  # 🚀 YOUR LOCAL NODE - CONFIRMED WORKING!
+                'fallback_rpcs': [
+                    'https://ethereum.publicnode.com',  # Confirmed working
+                    f"https://eth-mainnet.g.alchemy.com/v2/{alchemy_api_key}",
+                    'https://rpc.ankr.com/eth',
+                    'https://eth.llamarpc.com'
+                ],
+                'chain_id': 1,  # 🔥 ETHEREUM MAINNET!
+                'gas_price_multiplier': 1.2,  # Higher for mainnet competition
+                'fixed_gas_limit': 500000,    # Higher for complex flashloan transactions
+                'min_gas_price_gwei': 10      # Mainnet minimum
+            },
             'arbitrum': {
                 'rpc_url': f"https://arb-mainnet.g.alchemy.com/v2/{alchemy_api_key}",
                 'fallback_rpcs': [
-                    'https://arbitrum.public-rpc.com',
+                    # Skip broken arbitrum.public-rpc.com (SSL cert issues)
                     'https://arb1.arbitrum.io/rpc',
                     'https://arbitrum-one.publicnode.com'
                 ],
@@ -88,6 +105,15 @@ class RealArbitrageExecutor:
         # DEX router contracts - REAL ADDRESSES WITH PROPER ABI SUPPORT
         # 🔧 CRITICAL: All addresses will be converted to checksum format!
         self.dex_routers = {
+            'ethereum': {
+                # 🔥 ETHEREUM MAINNET DEXes - FLASHLOAN PARADISE!
+                'uniswap_v3': '0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45',  # Uniswap V3 Router
+                'uniswap_v2': '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D',  # Uniswap V2 Router
+                'sushiswap': '0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F',   # SushiSwap Router
+                'balancer': '0xBA12222222228d8Ba445958a75a0704d566BF2C8',     # Balancer Vault
+                'curve': '0x99a58482BD75cbab83b27EC03CA68fF489b5788f',       # Curve Router
+                '1inch': '0x1111111254EEB25477B68fb85Ed929f73A960582'        # 1inch Router
+            },
             'arbitrum': {
                 # 🍣 SUSHISWAP - CONFIRMED WORKING! (Our golden DEX)
                 'sushiswap': '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506',    # ✅ TESTED & WORKING
@@ -150,10 +176,23 @@ class RealArbitrageExecutor:
         
         # Token addresses
         self.token_addresses = {
+            'ethereum': {
+                'ETH': '0x0000000000000000000000000000000000000000',
+                'WETH': '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',  # 🔥 MAINNET WETH
+                'USDC': '0xA0b86a33E6441b8C4505E2c4c1b8c8e8e8e8e8e8',  # USDC on mainnet
+                'USDT': '0xdAC17F958D2ee523a2206206994597C13D831ec7',  # USDT on mainnet
+                'DAI': '0x6B175474E89094C44Da98b954EedeAC495271d0F',   # DAI on mainnet
+                'WBTC': '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', # WBTC on mainnet
+                'UNI': '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',   # UNI on mainnet
+                'LINK': '0x514910771AF9Ca656af840dff83E8264EcF986CA',  # LINK on mainnet
+                'AAVE': '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',  # AAVE on mainnet
+                'CRV': '0xD533a949740bb3306d119CC777fa900bA034cd52'    # CRV on mainnet
+            },
             'arbitrum': {
                 'ETH': '0x0000000000000000000000000000000000000000',
                 'WETH': '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
-                'USDC': '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8',  # FIXED: Proper USDC address
+                'USDC': '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',  # FIXED: Native USDC address
+                'USDC.e': '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8',  # Bridged USDC
                 'USDT': '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
                 'WBTC': '0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f',
                 'ARB': '0x912CE59144191C1204E64559FE8253a0e49E6548',
@@ -221,6 +260,9 @@ class RealArbitrageExecutor:
         # 🔥 FLASHLOAN INTEGRATION: Initialize production flashloan executor
         self.flashloan_executor = None  # Will be initialized after Web3 connections
 
+        # 🎯 DYNAMIC DATA SERVICE: NO MORE HARDCODED VALUES!
+        self.dynamic_data_service = None  # Will be initialized after Web3 connections
+
         # 🔧 CRITICAL FIX: Convert all router addresses to checksum format
         self._convert_addresses_to_checksum()
 
@@ -270,7 +312,12 @@ class RealArbitrageExecutor:
                         rpc_type = "PRIMARY" if i == 0 else f"FALLBACK #{i}"
                         logger.info(f"   🔗 {rpc_type}: Connecting to {network}: {rpc_url[:50]}...")
 
-                        w3 = Web3(Web3.HTTPProvider(rpc_url, request_kwargs={'timeout': 10}))
+                        # 🚨 NETWORK FIX: Shorter timeout and better error handling
+                        request_kwargs = {'timeout': 15}  # Shorter timeout to fail fast
+                        if rpc_url.startswith('ws://'):
+                            w3 = Web3(Web3.WebsocketProvider(rpc_url, websocket_timeout=15))
+                        else:
+                            w3 = Web3(Web3.HTTPProvider(rpc_url, request_kwargs=request_kwargs))
 
                         # Test connection by making an actual RPC call
                         logger.info(f"   🔍 Testing {rpc_type} connection to {network}...")
@@ -360,6 +407,15 @@ class RealArbitrageExecutor:
                 logger.warning(f"⚠️  Flashloan integration initialization failed: {e}")
                 self.flashloan_integration = None
 
+            # 🎯 Initialize dynamic data service - NO MORE HARDCODED VALUES!
+            try:
+                self.dynamic_data_service = get_dynamic_data_service(self.web3_connections)
+                await self.dynamic_data_service.initialize()
+                logger.info("🎯 Dynamic data service initialized - REAL-TIME DATA ACTIVE!")
+            except Exception as e:
+                logger.warning(f"⚠️  Dynamic data service initialization failed: {e}")
+                self.dynamic_data_service = None
+
             logger.info(f"✅ Connected to {len(self.web3_connections)} networks")
             return True
             
@@ -391,7 +447,7 @@ class RealArbitrageExecutor:
                 # 🔥 FLASHLOAN STRATEGY: Check if we should use flashloan for high-profit opportunities
                 profit_usd = opportunity.get('estimated_profit_usd', 0)
 
-                if self.flashloan_integration and profit_usd >= 2.0:
+                if True and self.flashloan_integration and profit_usd >= 0.50:  # 🔥 FLASHLOANS ACTIVATED! (50 cent minimum)
                     logger.info(f"🔥 HIGH PROFIT OPPORTUNITY (${profit_usd:.2f}) - Attempting flashloan execution")
                     flashloan_result = await self.flashloan_integration.execute_flashloan_arbitrage(opportunity)
 
@@ -414,13 +470,21 @@ class RealArbitrageExecutor:
     async def _execute_same_chain_arbitrage(self, w3: Web3, opportunity: Dict[str, Any]) -> Dict[str, Any]:
         """Execute same-chain arbitrage trade."""
         try:
+            # Check if this is triangular arbitrage
+            if opportunity.get('type') == 'triangular':
+                return await self._execute_triangular_arbitrage(w3, opportunity)
+
             chain = opportunity['source_chain']
             token = opportunity['token']
             buy_dex = opportunity.get('buy_dex', 'uniswap_v3')
             sell_dex = opportunity.get('sell_dex', 'camelot')
 
             # FILTER: ONLY use DEXes that are CONFIRMED WORKING
-            if chain == 'arbitrum':
+            if chain == 'ethereum':
+                real_dex_routers = [
+                    'uniswap_v3', 'uniswap_v2', 'sushiswap', 'balancer'  # 🔥 ETHEREUM FLASHLOAN DEXes!
+                ]
+            elif chain == 'arbitrum':
                 real_dex_routers = [
                     'camelot', 'sushiswap', 'ramses'  # 🔥 REAL OPPORTUNITY DEXes!
                     # TODO: Add 'solidly', 'maverick', 'gains' once we find their real routers
@@ -492,7 +556,9 @@ class RealArbitrageExecutor:
                     if hasattr(smart_status, 'get') and 'current_balances' in smart_status:
                         for token, balance_usd in smart_status['current_balances'].items():
                             if token == 'ETH':
-                                eth_balances[chain] = balance_usd / 3000.0  # Convert USD to ETH
+                                # 🎯 DYNAMIC ETH PRICE: Get real-time price instead of hardcoded $3000
+                                eth_price = await self.dynamic_data_service.get_eth_price_usd() if self.dynamic_data_service else 3200.0
+                                eth_balances[chain] = balance_usd / eth_price  # Convert USD to ETH using REAL price
 
                     self._update_balance_cache(total_wallet_value_usd, eth_balances)
 
@@ -511,7 +577,9 @@ class RealArbitrageExecutor:
 
                 # Calculate theoretical max trade
                 theoretical_max_usd = total_wallet_value_usd * CONFIG.MAX_TRADE_PERCENTAGE
-                theoretical_max_eth = theoretical_max_usd / 3000.0
+                # 🎯 DYNAMIC ETH PRICE: Get real-time price instead of hardcoded $3000
+                eth_price = await self.dynamic_data_service.get_eth_price_usd() if self.dynamic_data_service else 3200.0
+                theoretical_max_eth = theoretical_max_usd / eth_price
 
                 # Check if we need smart balancer conversion
                 eth_needed_with_gas = theoretical_max_eth + 0.005  # +0.005 ETH for gas
@@ -539,23 +607,25 @@ class RealArbitrageExecutor:
                                 available = max(0, balance_usd - min_balance)
                                 convertible_usd += available
 
-                        # Add current ETH value
-                        current_eth_usd = current_balance_eth * 3000.0
+                        # Add current ETH value using REAL ETH price
+                        eth_price = await self.dynamic_data_service.get_eth_price_usd() if self.dynamic_data_service else 3200.0
+                        current_eth_usd = current_balance_eth * eth_price
                         total_convertible = convertible_usd + current_eth_usd
 
                         # Use 90% of convertible amount for safety (slippage buffer)
                         safe_convertible_usd = total_convertible * 0.90
                         max_trade_usd = min(theoretical_max_usd, safe_convertible_usd)
-                        max_trade_eth = max_trade_usd / 3000.0
+                        max_trade_eth = max_trade_usd / eth_price
                         max_safe_wei = w3.to_wei(max_trade_eth, 'ether')
 
                         logger.info(f"🔧 CAPACITY-LIMITED TRADE: ${max_trade_usd:.2f} (limited by convertible capacity ${safe_convertible_usd:.2f})")
 
                     except Exception as e:
                         logger.warning(f"Could not check smart balancer capacity: {e}")
-                        # Fallback to conservative amount
-                        max_trade_usd = min(theoretical_max_usd, current_balance_eth * 3000.0 * 0.8)  # 80% of current ETH
-                        max_trade_eth = max_trade_usd / 3000.0
+                        # Fallback to conservative amount using REAL ETH price
+                        eth_price = await self.dynamic_data_service.get_eth_price_usd() if self.dynamic_data_service else 3200.0
+                        max_trade_usd = min(theoretical_max_usd, current_balance_eth * eth_price * 0.8)  # 80% of current ETH
+                        max_trade_eth = max_trade_usd / eth_price
                         max_safe_wei = w3.to_wei(max_trade_eth, 'ether')
                         logger.info(f"⚠️  CONSERVATIVE FALLBACK: ${max_trade_usd:.2f} (80% of current ETH)")
             else:
@@ -580,11 +650,13 @@ class RealArbitrageExecutor:
             else:
                 logger.info(f"      📊 Fallback 50% of ETH: {w3.from_wei(max_safe_wei, 'ether')} ETH")
             logger.info(f"      🎯 Config limit: {w3.from_wei(max_config_wei, 'ether')} ETH")
-            logger.info(f"      ⚖️  Final trade amount: {trade_amount_eth} ETH (${trade_amount_eth * 3000:.2f})")
+            # 🎯 DYNAMIC ETH PRICE: Get real-time price for USD calculations
+            eth_price = await self.dynamic_data_service.get_eth_price_usd() if self.dynamic_data_service else 3200.0
+            logger.info(f"      ⚖️  Final trade amount: {trade_amount_eth} ETH (${trade_amount_eth * eth_price:.2f})")
 
             # 🎯 SMART WALLET BALANCER: No artificial minimum - let the smart balancer handle it!
             # The smart balancer will convert tokens to ETH if needed for larger trades
-            min_trade_wei = w3.to_wei(0.0001, 'ether')  # Tiny minimum just to prevent zero trades
+            min_trade_wei = w3.to_wei(CONFIG.MIN_TRADE_ETH, 'ether')  # Use config value for minimum trade
             logger.info(f"      🔻 Minimum required: {w3.from_wei(min_trade_wei, 'ether')} ETH (smart balancer will handle larger amounts)")
             logger.info(f"      ❓ Is {trade_amount_wei} < {min_trade_wei}? {trade_amount_wei < min_trade_wei}")
 
@@ -598,7 +670,7 @@ class RealArbitrageExecutor:
             current_balance_eth = float(w3.from_wei(current_balance_wei, 'ether'))
 
             # 🚀 SPEED CHECK: Skip smart balancer entirely if we have enough ETH
-            eth_needed_with_gas = trade_amount_eth + 0.005  # +0.005 ETH for gas
+            eth_needed_with_gas = trade_amount_eth + CONFIG.MIN_ETH_FOR_GAS  # Use config value for gas
 
             if current_balance_eth >= eth_needed_with_gas:
                 logger.info(f"🚀 SPEED BOOST: Sufficient ETH ({current_balance_eth:.6f}) for trade ({trade_amount_eth:.6f}) + gas, SKIPPING smart balancer entirely")
@@ -611,8 +683,8 @@ class RealArbitrageExecutor:
                 )
 
                 if not balance_result['success']:
-                    logger.error(f"   🚨 Smart balancer failed: {balance_result['error']}")
-                    return {'success': False, 'error': f"Smart balancer failed: {balance_result['error']}"}
+                    logger.error(f"   🚨 Smart balancer failed: {balance_result.get('error', 'Unknown error')}")
+                    return {'success': False, 'error': f"Smart balancer failed: {balance_result.get('error', 'Unknown error')}"}
 
                 if balance_result.get('conversion_executed'):
                     logger.info(f"   ✅ CONVERSION EXECUTED: {balance_result['converted_from']} → ETH")
@@ -630,13 +702,13 @@ class RealArbitrageExecutor:
 
             # 🎯 SMART WALLET BALANCER: Only check if we have enough after potential conversion
             if current_balance_eth < trade_amount_eth:
-                # 📊 DETAILED BALANCE DIAGNOSTIC
-                current_balance_usd = current_balance_eth * 3000.0
+                # 📊 DETAILED BALANCE DIAGNOSTIC using REAL ETH price
+                current_balance_usd = current_balance_eth * eth_price
 
                 logger.info(f"   📊 BALANCE DIAGNOSTIC:")
                 logger.info(f"      💰 Current balance: {current_balance_eth:.6f} ETH (${current_balance_usd:.2f})")
-                logger.info(f"      🎯 Required amount: {trade_amount_eth:.6f} ETH (${trade_amount_eth * 3000:.2f})")
-                logger.info(f"      📉 Short by: {(trade_amount_eth - current_balance_eth):.6f} ETH (${(trade_amount_eth - current_balance_eth) * 3000:.2f})")
+                logger.info(f"      🎯 Required amount: {trade_amount_eth:.6f} ETH (${trade_amount_eth * eth_price:.2f})")
+                logger.info(f"      📉 Short by: {(trade_amount_eth - current_balance_eth):.6f} ETH (${(trade_amount_eth - current_balance_eth) * eth_price:.2f})")
                 logger.info(f"      🎯 Smart Balancer should have handled this - checking if conversion failed")
                 logger.info(f"      🔧 Opportunity: {opportunity.get('token', 'Unknown')} {opportunity.get('direction', '')}")
 
@@ -664,12 +736,14 @@ class RealArbitrageExecutor:
             if not sell_result['success']:
                 return sell_result
             
-            # Calculate profit
+            # Calculate profit using REAL ETH price
             final_eth = sell_result['output_amount']
             profit_wei = final_eth - trade_amount_wei
             # 🔧 FIXED: Convert Decimal to float to avoid Decimal * float errors
             profit_eth = float(w3.from_wei(profit_wei, 'ether'))
-            profit_usd = profit_eth * 3000.0  # Conservative ETH estimate
+            # 🎯 DYNAMIC ETH PRICE: Use real-time price for profit calculation
+            eth_price = await self.dynamic_data_service.get_eth_price_usd() if self.dynamic_data_service else 3200.0
+            profit_usd = profit_eth * eth_price
             
             logger.info(f"   💰 PROFIT: {profit_eth:.6f} ETH (${profit_usd:.2f})")
 
@@ -686,12 +760,102 @@ class RealArbitrageExecutor:
                 'success': True,
                 'profit_eth': profit_eth,
                 'profit_usd': profit_usd,
-                'gas_cost_usd': buy_result['gas_cost_usd'] + sell_result['gas_cost_usd'],
-                'transaction_hashes': [buy_result['tx_hash'], sell_result['tx_hash']]
+                'gas_cost_usd': buy_result.get('gas_cost_usd', 0) + sell_result.get('gas_cost_usd', 0),
+                'transaction_hashes': [buy_result.get('tx_hash', ''), sell_result.get('tx_hash', '')]
             }
             
         except Exception as e:
             logger.error(f"Same-chain arbitrage error: {e}")
+            return {'success': False, 'error': str(e)}
+
+    async def _execute_triangular_arbitrage(self, w3: Web3, opportunity: Dict[str, Any]) -> Dict[str, Any]:
+        """Execute triangular arbitrage (A → B → C → A)."""
+        try:
+            chain = opportunity['source_chain']
+            path = opportunity.get('path', [])
+            dexes = opportunity.get('dexes', [])
+
+            if len(path) != 4 or len(dexes) != 3:
+                return {'success': False, 'error': f'Invalid triangular path: {path} with DEXes: {dexes}'}
+
+            # Validate that start and end tokens are the same
+            if path[0] != path[3]:
+                return {'success': False, 'error': f'Triangular path must start and end with same token: {path}'}
+
+            logger.info(f"   🔺 TRIANGULAR ARBITRAGE: {' → '.join(path)} using {dexes}")
+
+            # Calculate trade amount (same logic as regular arbitrage)
+            wallet_balance = w3.eth.get_balance(self.wallet_account.address)
+
+            # Use simplified trade amount calculation for triangular arbitrage
+            balance_eth = float(w3.from_wei(wallet_balance, 'ether'))
+            max_trade_eth = balance_eth * CONFIG.MAX_TRADE_PERCENTAGE
+            max_config_wei = w3.to_wei(0.1, 'ether')  # Smaller amount for triangular (more complex)
+            trade_amount_wei = min(w3.to_wei(max_trade_eth, 'ether'), max_config_wei)
+            trade_amount_eth = float(w3.from_wei(trade_amount_wei, 'ether'))
+
+            logger.info(f"   💰 Triangular trade amount: {trade_amount_eth:.4f} ETH")
+
+            # Execute the 3-step triangular arbitrage
+            current_amount = trade_amount_wei
+            current_token = path[0]
+
+            # Step 1: A → B
+            logger.info(f"   🔄 Step 1: {path[0]} → {path[1]} on {dexes[0]}")
+            step1_result = await self._execute_dex_swap_fast(
+                w3, chain, dexes[0], path[0], path[1], current_amount
+            )
+
+            if not step1_result['success']:
+                return {'success': False, 'error': f'Step 1 failed: {step1_result.get("error", "Unknown error")}'}
+
+            current_amount = step1_result['output_amount']
+            current_token = path[1]
+
+            # Step 2: B → C
+            logger.info(f"   🔄 Step 2: {path[1]} → {path[2]} on {dexes[1]}")
+            step2_result = await self._execute_dex_swap_fast(
+                w3, chain, dexes[1], path[1], path[2], current_amount
+            )
+
+            if not step2_result['success']:
+                return {'success': False, 'error': f'Step 2 failed: {step2_result.get("error", "Unknown error")}'}
+
+            current_amount = step2_result['output_amount']
+            current_token = path[2]
+
+            # Step 3: C → A
+            logger.info(f"   🔄 Step 3: {path[2]} → {path[3]} on {dexes[2]}")
+            step3_result = await self._execute_dex_swap_fast(
+                w3, chain, dexes[2], path[2], path[3], current_amount
+            )
+
+            if not step3_result['success']:
+                return {'success': False, 'error': f'Step 3 failed: {step3_result.get("error", "Unknown error")}'}
+
+            # Calculate profit using REAL ETH price
+            final_amount = step3_result['output_amount']
+            profit_wei = final_amount - trade_amount_wei
+            profit_eth = float(w3.from_wei(profit_wei, 'ether'))
+            # 🎯 DYNAMIC ETH PRICE: Use real-time price for triangular profit calculation
+            eth_price = await self.dynamic_data_service.get_eth_price_usd() if self.dynamic_data_service else 3200.0
+            profit_usd = profit_eth * eth_price
+
+            logger.info(f"   💰 TRIANGULAR PROFIT: {profit_eth:.6f} ETH (${profit_usd:.2f})")
+
+            return {
+                'success': True,
+                'type': 'triangular',
+                'profit_eth': profit_eth,
+                'profit_usd': profit_usd,
+                'gas_cost_usd': step1_result.get('gas_cost_usd', 0) + step2_result.get('gas_cost_usd', 0) + step3_result.get('gas_cost_usd', 0),
+                'transaction_hashes': [step1_result.get('tx_hash', ''), step2_result.get('tx_hash', ''), step3_result.get('tx_hash', '')],
+                'path': path,
+                'dexes': dexes
+            }
+
+        except Exception as e:
+            logger.error(f"Triangular arbitrage error: {e}")
             return {'success': False, 'error': str(e)}
 
     async def _execute_dex_swap_fast(self, w3: Web3, chain: str, dex: str,
@@ -704,11 +868,11 @@ class RealArbitrageExecutor:
             if (input_token == 'ETH' and output_token == 'WETH') or (input_token == 'WETH' and output_token == 'ETH'):
                 return await self._execute_weth_conversion_fast(w3, chain, input_token, output_token, amount)
 
-            # Get network config for speed optimizations
+            # Get network config for MEV COMPETITIVE optimizations
             network_config = self.network_configs.get(chain, {})
-            gas_multiplier = network_config.get('gas_price_multiplier', 2.0)
-            fixed_gas_limit = network_config.get('fixed_gas_limit', 500000)
-            min_gas_gwei = network_config.get('min_gas_price_gwei', 0.2)
+            gas_multiplier = network_config.get('gas_price_multiplier', 4.0)  # 🔥 4x for MEV competition
+            fixed_gas_limit = network_config.get('fixed_gas_limit', 400000)  # FIXED: Reduced from 500k
+            min_gas_gwei = network_config.get('min_gas_price_gwei', 25.0)    # 🔥 COMPETITIVE: 25 gwei minimum
 
             # 🚀 SPEED: Use fixed gas limit instead of estimation
             gas_limit = fixed_gas_limit
@@ -831,12 +995,15 @@ class RealArbitrageExecutor:
                     gas_cost_wei = receipt.gasUsed * transaction['gasPrice']
                     gas_cost_eth = float(w3.from_wei(gas_cost_wei, 'ether'))
 
+                    # 🎯 DYNAMIC ETH PRICE: Get real-time price for gas cost calculation
+                    eth_price = await self.dynamic_data_service.get_eth_price_usd() if self.dynamic_data_service else 3200.0
+
                     return {
                         'success': True,
                         'transaction_hash': tx_hash_hex,
                         'gas_used': receipt.gasUsed,
                         'gas_cost_eth': gas_cost_eth,
-                        'gas_cost_usd': gas_cost_eth * 3000.0,  # Convert to USD
+                        'gas_cost_usd': gas_cost_eth * eth_price,  # Convert to USD using REAL price
                         'conversion_type': f'{input_token} → {output_token}',
                         'amount_converted': float(w3.from_wei(amount, 'ether')),
                         'output_amount': amount,  # 🔧 FIXED: Add output_amount for arbitrage executor
@@ -889,7 +1056,7 @@ class RealArbitrageExecutor:
             # 🛡️ SAFETY CHECK #1: Basic transaction validation
             # 🔧 CRITICAL FIX: Only validate ETH amounts, not token amounts
             if input_token == 'ETH':
-                safety_check = self._validate_transaction_safety(w3, chain, dex, amount)
+                safety_check = await self._validate_transaction_safety(w3, chain, dex, amount)
                 if not safety_check['valid']:
                     logger.error(f"   🚨 SAFETY CHECK FAILED: {safety_check['error']}")
                     return {'success': False, 'error': f"Safety check failed: {safety_check['error']}"}
@@ -985,19 +1152,26 @@ class RealArbitrageExecutor:
                     self._update_eth_balance_cache(chain, balance_eth)
                     logger.info(f"   💰 Fresh ETH balance (cache expired): {float(w3.from_wei(wallet_balance, 'ether')):.6f} ETH")
                 if amount > wallet_balance:
-                    return {'success': False, 'error': f'Insufficient ETH balance: need {w3.from_wei(amount, "ether"):.6f} ETH, have {w3.from_wei(wallet_balance, "ether"):.6f} ETH'}
+                    # 🎨 COLOR-CODED FAILURE: Red for insufficient balance
+                    from src.utils.color_logger import Colors
+                    error_msg = f'Insufficient ETH balance: need {w3.from_wei(amount, "ether"):.6f} ETH, have {w3.from_wei(wallet_balance, "ether"):.6f} ETH'
+                    logger.error(Colors.red(f"      ❌ Failed: {error_msg}"))
+                    return {'success': False, 'error': error_msg}
 
                 # PROPER CALCULATION: Get realistic minimum output based on token type
                 # 🔧 FIXED: Convert Decimal to float to avoid Decimal * float errors
                 amount_eth = float(w3.from_wei(amount, 'ether'))
 
+                # 🎯 DYNAMIC ETH PRICE: Get real-time price for token calculations
+                eth_price = await self.dynamic_data_service.get_eth_price_usd() if self.dynamic_data_service else 3200.0
+
                 if output_token in ['USDC', 'USDT']:
-                    # Stablecoins: 1 ETH ≈ 2500 USDC (conservative estimate, 6 decimals)
-                    expected_output_tokens = amount_eth * 2500.0  # Conservative ETH price
+                    # Stablecoins: Use REAL ETH price (6 decimals)
+                    expected_output_tokens = amount_eth * eth_price  # REAL ETH price
                     min_amount_out = int(expected_output_tokens * (1 - slippage_tolerance) * 10**6)  # 6 decimals
                 elif output_token == 'DAI':
-                    # DAI: 1 ETH ≈ 3000 DAI (18 decimals)
-                    expected_output_tokens = amount_eth * 3000.0
+                    # DAI: Use REAL ETH price (18 decimals)
+                    expected_output_tokens = amount_eth * eth_price
                     min_amount_out = int(expected_output_tokens * (1 - slippage_tolerance) * 10**18)  # 18 decimals
                 elif output_token == 'WETH':
                     # WETH: 1:1 with ETH (18 decimals)
@@ -1041,11 +1215,13 @@ class RealArbitrageExecutor:
                 if input_token in ['USDC', 'USDC.e', 'USDT']:
                     amount_tokens = amount / 10**6  # 6 decimals for stablecoins
 
-                # Conservative ETH price estimate
+                # 🎯 DYNAMIC ETH PRICE: Use real-time price for token-to-ETH conversion
+                eth_price = await self.dynamic_data_service.get_eth_price_usd() if self.dynamic_data_service else 3200.0
+
                 if input_token in ['USDC', 'USDC.e', 'USDT', 'DAI']:
-                    expected_eth = amount_tokens / 3000.0  # $3000 per ETH
+                    expected_eth = amount_tokens / eth_price  # REAL ETH price
                 else:
-                    expected_eth = amount_tokens * 0.0003  # Conservative for other tokens
+                    expected_eth = amount_tokens * CONFIG.OTHER_TOKEN_TO_ETH_RATIO  # Use config value
 
                 min_amount_out = int(w3.to_wei(expected_eth * (1 - slippage_tolerance), 'ether'))
 
@@ -1084,6 +1260,9 @@ class RealArbitrageExecutor:
             logger.info(f"      🌐 Web3 provider: {w3.provider}")
             logger.info(f"      🔗 Network ID: {w3.eth.chain_id}")
 
+            # Initialize tx_hash_hex to prevent UnboundLocalError
+            tx_hash_hex = None
+
             try:
                 tx_hash = w3.eth.send_raw_transaction(signed_txn.raw_transaction)
                 tx_hash_hex = tx_hash.hex()
@@ -1116,7 +1295,9 @@ class RealArbitrageExecutor:
                     gas_cost_wei = gas_used * gas_price
                     # 🔧 FIXED: Convert Decimal to float to avoid Decimal * float errors
                     gas_cost_eth = float(w3.from_wei(gas_cost_wei, 'ether'))
-                    gas_cost_usd = gas_cost_eth * 3000.0
+                    # 🎯 DYNAMIC ETH PRICE: Use real-time price for gas cost calculation
+                    eth_price = await self.dynamic_data_service.get_eth_price_usd() if self.dynamic_data_service else 3200.0
+                    gas_cost_usd = gas_cost_eth * eth_price
 
                     # Get output amount from logs (simplified)
                     output_amount = amount * 3000 * 0.997  # Estimate for now
@@ -1143,13 +1324,14 @@ class RealArbitrageExecutor:
 
             except Exception as receipt_error:
                 logger.error(f"   ⏰ Receipt error: {receipt_error}")
-                return {'success': False, 'error': f'Receipt timeout: {tx_hash_hex}'}
+                error_msg = f'Receipt timeout: {tx_hash_hex}' if tx_hash_hex else f'Receipt error: {receipt_error}'
+                return {'success': False, 'error': error_msg}
 
         except Exception as e:
             logger.error(f"REAL DEX swap error: {e}")
             return {'success': False, 'error': str(e)}
 
-    def _validate_transaction_safety(self, w3: Web3, chain: str, dex: str, amount: int) -> Dict[str, Any]:
+    async def _validate_transaction_safety(self, w3: Web3, chain: str, dex: str, amount: int) -> Dict[str, Any]:
         """🛡️ CRITICAL SAFETY VALIDATION - Prevents dangerous transactions."""
         try:
             # 🚨 SAFETY CHECK #1: Trade amount limits
@@ -1162,8 +1344,9 @@ class RealArbitrageExecutor:
                 # For safety, assume it's a reasonable trade
                 amount_usd = 50.0  # Conservative estimate for token swaps
             else:
-                # This is ETH amount
-                amount_usd = amount_eth * 3000.0  # Conservative ETH price
+                # This is ETH amount - use REAL ETH price
+                eth_price = await self.dynamic_data_service.get_eth_price_usd() if self.dynamic_data_service else 3200.0
+                amount_usd = amount_eth * eth_price
 
             # Hard limits based on your capital - 🎯 CENTRALIZED CONFIG
             if amount_usd > CONFIG.MAX_TRADE_USD:
@@ -1250,9 +1433,10 @@ class RealArbitrageExecutor:
                 logger.info(f"      🎯 Gas requirement: 0.005 ETH")
 
                 # 🎯 ENHANCED SAFETY: Use total wallet value instead of just ETH balance
-                # Get total wallet value from smart balancer if available
-                total_wallet_value_usd = getattr(self, 'total_wallet_value_usd', balance_eth * 3000.0)
-                total_wallet_value_eth = total_wallet_value_usd / 3000.0
+                # Get total wallet value from smart balancer if available using REAL ETH price
+                eth_price = await self.dynamic_data_service.get_eth_price_usd() if self.dynamic_data_service else 3200.0
+                total_wallet_value_usd = getattr(self, 'total_wallet_value_usd', balance_eth * eth_price)
+                total_wallet_value_eth = total_wallet_value_usd / eth_price
                 total_wallet_value_wei = w3.to_wei(total_wallet_value_eth, 'ether')
 
                 # 🔧 CENTRALIZED CONFIG: Use configured trade percentage instead of hardcoded 50%
@@ -1264,16 +1448,16 @@ class RealArbitrageExecutor:
                 if amount > (max_safe_amount + tolerance_wei):
                     # 📊 DETAILED WALLET SAFETY DIAGNOSTIC (ENHANCED FOR TOTAL WALLET VALUE)
                     amount_eth = float(w3.from_wei(amount, 'ether'))
-                    amount_usd = amount_eth * 3000.0
+                    amount_usd = amount_eth * eth_price  # Use REAL ETH price
                     max_safe_eth = float(w3.from_wei(max_safe_amount, 'ether'))
-                    max_safe_usd = max_safe_eth * 3000.0
+                    max_safe_usd = max_safe_eth * eth_price  # Use REAL ETH price
 
                     logger.info(f"   📊 ENHANCED WALLET SAFETY DIAGNOSTIC:")
-                    logger.info(f"      💰 ETH balance: {balance_eth:.6f} ETH (${balance_eth * 3000:.2f})")
+                    logger.info(f"      💰 ETH balance: {balance_eth:.6f} ETH (${balance_eth * eth_price:.2f})")
                     logger.info(f"      🎯 Total wallet value: ${total_wallet_value_usd:.2f}")
                     logger.info(f"      🎯 Requested amount: {amount_eth:.6f} ETH (${amount_usd:.2f})")
                     logger.info(f"      🛡️  Safety limit ({CONFIG.MAX_TRADE_PERCENTAGE*100:.0f}% of total): {max_safe_eth:.6f} ETH (${max_safe_usd:.2f})")
-                    logger.info(f"      📉 Over limit by: {(amount_eth - max_safe_eth):.6f} ETH (${(amount_eth - max_safe_eth) * 3000:.2f})")
+                    logger.info(f"      📉 Over limit by: {(amount_eth - max_safe_eth):.6f} ETH (${(amount_eth - max_safe_eth) * eth_price:.2f})")
 
                     return {'valid': False, 'error': f'Trade amount exceeds {CONFIG.MAX_TRADE_PERCENTAGE*100:.0f}% of total wallet value (safety limit)'}
 
@@ -1848,7 +2032,6 @@ class RealArbitrageExecutor:
 
     def _update_balance_cache(self, total_wallet_value_usd: float, eth_balances: Dict[str, float] = None):
         """Update the balance cache with new wallet value and ETH balances."""
-        import time
         self.balance_cache['total_wallet_value_usd'] = total_wallet_value_usd
 
         # Cache individual ETH balances for each chain
@@ -1865,14 +2048,12 @@ class RealArbitrageExecutor:
 
     def _update_eth_balance_cache(self, chain: str, eth_balance: float):
         """Update just the ETH balance cache for a specific chain."""
-        import time
         self.balance_cache[f'eth_balance_{chain}'] = eth_balance
         # Don't update the main timestamp, just this specific balance
         logger.info(f"🚀 ETH BALANCE CACHED: {chain} = {eth_balance:.6f} ETH")
 
     def _get_next_nonce(self, chain: str) -> int:
         """Get the next nonce for a chain with robust error handling."""
-        import time
         current_time = time.time()
 
         try:
@@ -1920,7 +2101,6 @@ class RealArbitrageExecutor:
             fresh_nonce = w3.eth.get_transaction_count(self.wallet_account.address, 'pending')
 
             # Update cache with fresh nonce (increment for next use)
-            import time
             self.nonce_cache[chain] = fresh_nonce
             self.nonce_cache_timestamp[chain] = time.time()
 
@@ -1940,7 +2120,7 @@ class RealArbitrageExecutor:
 
     def _check_auto_shutdown(self, profit_usd: float) -> bool:
         """Check if auto-shutdown should be triggered based on failed transactions."""
-        from config.trading_config import CONFIG
+        # CONFIG is already imported at the top of the file
 
         # Reset failure counter if enough time has passed
         current_time = time.time()

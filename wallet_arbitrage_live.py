@@ -83,8 +83,8 @@ async def main():
             'daily_loss_limit_percentage': CONFIG.MAX_DAILY_LOSS_PERCENTAGE,  # 🎯 CENTRALIZED CONFIG
             'max_concurrent_trades': CONFIG.MAX_CONCURRENT_TRADES,  # 🎯 CENTRALIZED CONFIG
 
-            # DEX settings - 🎯 CENTRALIZED CONFIG
-            'allowed_dexes': ['sushiswap', 'camelot'],  # Only working DEXes
+            # DEX settings - 🎯 PHASE 1 EXPANSION: 21x MORE OPPORTUNITIES!
+            'allowed_dexes': ['sushiswap', 'camelot', 'uniswap_v3', 'traderjoe', 'aerodrome', 'baseswap', 'velodrome'],  # Phase 1: High-priority DEXes
             'safe_tokens': CONFIG.TARGET_TOKENS  # 🎯 CENTRALIZED CONFIG (your held tokens)
         }
         

@@ -1,0 +1,119 @@
+{
+  "discovery_time": "2025-06-07T15:14:25.641261",
+  "ethereum_node": "http://192.168.1.18:8545",
+  "total_checked": 16,
+  "total_verified": 15,
+  "dexes": [],
+  "protocols": {
+    "uniswap_v2": [
+      {
+        "name": "Uniswap V2 Router",
+        "address": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+        "type": "router",
+        "has_abi": false
+      },
+      {
+        "name": "Uniswap V2 Factory",
+        "address": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+        "type": "factory",
+        "has_abi": false
+      }
+    ],
+    "uniswap_v3": [
+      {
+        "name": "Uniswap V3 Router",
+        "address": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
+        "type": "router",
+        "has_abi": false
+      },
+      {
+        "name": "Uniswap V3 Factory",
+        "address": "0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "type": "factory",
+        "has_abi": false
+      },
+      {
+        "name": "Uniswap V3 Router V2",
+        "address": "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45",
+        "type": "router",
+        "has_abi": false
+      }
+    ],
+    "sushiswap": [
+      {
+        "name": "SushiSwap Router",
+        "address": "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F",
+        "type": "router",
+        "has_abi": false
+      },
+      {
+        "name": "SushiSwap Factory",
+        "address": "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac",
+        "type": "factory",
+        "has_abi": false
+      }
+    ],
+    "balancer": [
+      {
+        "name": "Balancer Vault",
+        "address": "0xBA12222222228d8Ba445958a75a0704d566BF2C8",
+        "type": "vault",
+        "has_abi": false
+      }
+    ],
+    "curve": [
+      {
+        "name": "Curve Registry",
+        "address": "0x90E00ACe148ca3b23Ac1bC8C240C2a7Dd9c2d7f5",
+        "type": "registry",
+        "has_abi": false
+      },
+      {
+        "name": "Curve Router",
+        "address": "0x99a58482BD75cbab83b27EC03CA68fF489b5788f",
+        "type": "router",
+        "has_abi": false
+      }
+    ],
+    "1inch": [
+      {
+        "name": "1inch V5 Router",
+        "address": "0x1111111254EEB25477B68fb85Ed929f73A960582",
+        "type": "router",
+        "has_abi": false
+      }
+    ],
+    "pancakeswap": [
+      {
+        "name": "PancakeSwap Router",
+        "address": "0xEfF92A263d31888d860bD50809A8D171709b7b1c",
+        "type": "router",
+        "has_abi": false
+      }
+    ],
+    "shibaswap": [
+      {
+        "name": "ShibaSwap Router",
+        "address": "0x03f7724180AA6b939894B5Ca4314783B0b36b329",
+        "type": "router",
+        "has_abi": false
+      }
+    ],
+    "fraxswap": [
+      {
+        "name": "Fraxswap Router",
+        "address": "0xC14d550632db8592D1243Edc8B95b0Ad06703867",
+        "type": "router",
+        "has_abi": false
+      }
+    ],
+    "kyber": [
+      {
+        "name": "Kyber Router",
+        "address": "0x6131B5fae19EA4f9D964eAc0408E4408b66337b5",
+        "type": "router",
+        "has_abi": false
+      }
+    ]
+  }
+}

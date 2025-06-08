@@ -259,8 +259,9 @@ class CrossChainMEVEngine:
             if not best_bridge:
                 return None
             
-            # Calculate costs and net profit
-            trade_amount = 10000  # $10K trade size
+            # Calculate costs and net profit based on ACTUAL WALLET BALANCE
+            from src.config.trading_config import CONFIG
+            trade_amount = CONFIG.MAX_TRADE_USD  # 🚨 FIXED: Use actual wallet balance (~$343)
             
             gross_profit = trade_amount * (profit_percentage / 100)
             bridge_fee = trade_amount * (best_bridge['fee_percentage'] / 100)

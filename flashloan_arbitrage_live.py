@@ -73,7 +73,7 @@ async def main():
 
             # Flashloan settings - 🎯 CENTRALIZED CONFIG
             'flashloan_enabled': True,  # 🔥 ENABLE FLASHLOANS!
-            'flashloan_provider': 'balancer',  # Start with 0% fees
+            'flashloan_provider': 'aave',  # Use our DEPLOYED contract (not broken balancer!)
             'min_profit_usd': CONFIG.MIN_PROFIT_USD,      # 🎯 CENTRALIZED CONFIG ($0.25 filter!)
             'min_profit_percentage': CONFIG.MIN_PROFIT_PERCENTAGE,  # 🎯 CENTRALIZED CONFIG
             'max_trade_percentage': 100,  # 🔥 UNLIMITED CAPITAL!
@@ -85,8 +85,8 @@ async def main():
             'flashloan_safety_margin': 1.05,  # 5% safety margin
             'gas_price_multiplier': 1.2,  # Priority gas for flashloans
 
-            # DEX settings - 🎯 CENTRALIZED CONFIG
-            'allowed_dexes': ['sushiswap', 'camelot', 'uniswap_v3'],  # Flashloan-compatible DEXes
+            # DEX settings - 🎯 PHASE 1 EXPANSION: 21x MORE OPPORTUNITIES!
+            'allowed_dexes': ['sushiswap', 'camelot', 'uniswap_v3', 'traderjoe', 'aerodrome', 'baseswap', 'velodrome'],  # Phase 1: High-priority DEXes
             'safe_tokens': CONFIG.TARGET_TOKENS  # 🎯 CENTRALIZED CONFIG (your held tokens)
         }
         

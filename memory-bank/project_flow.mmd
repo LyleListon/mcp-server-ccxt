@@ -1,0 +1,87 @@
+// [MermaidChart: a72c1084-702a-474c-b145-9ae8efa4880d]
+
+    %% External Data Sources
+    A[🌐 External Data Sources] --> A1[Ethereum Node<br/>192.168.1.18:8546]
+    A --> A2[Alchemy API<br/>Multi-chain RPC]
+    A --> A3[CoinGecko API<br/>GECKO_KEY]
+    A --> A4[DEX Contracts<br/>SushiSwap, Aerodrome, etc.]
+
+    %% Price Feeds Layer
+    A1 --> B[📊 Real DEX Price Fetcher]
+    A2 --> B
+    A4 --> B
+    B --> B1[Real Price Feeds<br/>Direct Contract Calls]
+    B1 --> B2[Price Aggregation<br/>Multi-DEX Comparison]
+
+    %% Opportunity Detection
+    B2 --> C[🎯 Arbitrage Detection Engine]
+    C --> C1[Cross-Chain Opportunities<br/>Arbitrum ↔ Base ↔ Optimism]
+    C --> C2[Same-Chain Opportunities<br/>DEX vs DEX]
+    C1 --> C3[Profit Calculation<br/>$10+ minimum threshold]
+    C2 --> C3
+
+    %% Master Control System
+    C3 --> D[🧠 Master Arbitrage System<br/>spy_enhanced_arbitrage.py]
+    D --> D1[🔒 Execution Lock<br/>Prevents Scan Interruption]
+    D --> D2[Opportunity Filtering<br/>2.0% minimum profit]
+    D --> D3[Capital Allocation<br/>$809 wallet management]
+
+    %% Execution Path
+    D1 --> E[⚡ Real DEX Executor]
+    E --> E1[Token Address Lookup<br/>15+ tokens across chains]
+    E1 --> E2[Balance Verification<br/>Real blockchain queries]
+    E2 --> E3[Transaction Building<br/>Real contract calls]
+    E3 --> E4[Trade Execution<br/>Actual blockchain submission]
+
+    %% Cross-Chain Bridge
+    E4 --> F[🌉 Cross-Chain Executor]
+    F --> F1[Bridge Selection<br/>Optimal route finder]
+    F1 --> F2[Cross-Chain Transfer<br/>Token bridging]
+    F2 --> F3[Destination Trade<br/>Complete arbitrage]
+
+    %% Wallet Management
+    E --> G[💰 Smart Wallet Balancer]
+    G --> G1[Multi-Chain Balances<br/>Arbitrum, Base, Optimism]
+    G1 --> G2[Just-in-Time Conversion<br/>USDC/USDT → ETH as needed]
+    G2 --> G3[Gas Management<br/>Dynamic gas pricing]
+
+    %% Memory & Learning
+    E4 --> H[🧠 MCP Learning System]
+    F3 --> H
+    H --> H1[Memory Server<br/>Trade pattern storage]
+    H --> H2[Knowledge Graph<br/>Token relationships]
+    H --> H3[Performance Analytics<br/>Success rate tracking]
+
+    %% Monitoring & Safety
+    D --> I[🛡️ Safety Systems]
+    I --> I1[Circuit Breakers<br/>5 loss limit, 10% daily limit]
+    I --> I2[Error Recovery<br/>Graceful failure handling]
+    I --> I3[Performance Monitoring<br/>Real-time metrics]
+
+    %% Configuration Management
+    J[⚙️ Configuration Layer] --> D
+    J --> J1[Trading Config<br/>Profit thresholds, risk limits]
+    J --> J2[Token Addresses<br/>Multi-chain token mapping]
+    J --> J3[DEX Configurations<br/>Router addresses, ABIs]
+    J --> J4[Environment Variables<br/>API keys, private keys]
+
+    %% Results & Feedback
+    E4 --> K[📈 Results Processing]
+    F3 --> K
+    K --> K1[Profit Calculation<br/>Real blockchain analysis]
+    K1 --> K2[Performance Metrics<br/>Success rate, profit tracking]
+    K2 --> K3[System Optimization<br/>Continuous improvement]
+    K3 --> D
+
+    %% Styling
+    classDef external fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef core fill:#f3e5f5,stroke:#4a148c,stroke-width:3px
+    classDef execution fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef safety fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef memory fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+
+    class A,A1,A2,A3,A4 external
+    class D,D1,D2,D3 core
+    class E,E1,E2,E3,E4,F,F1,F2,F3,G,G1,G2,G3 execution
+    class I,I1,I2,I3,K,K1,K2,K3 safety
+    class H,H1,H2,H3 memory

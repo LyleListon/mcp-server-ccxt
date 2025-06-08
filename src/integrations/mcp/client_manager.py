@@ -226,17 +226,65 @@ class MCPClientManager:
             opportunity = pattern_data.get('opportunity', {})
             result = pattern_data.get('result', {})
 
-            # Prepare trade data for DexMind - use correct field names
+            # Handle triangular arbitrage differently
+            if opportunity.get('type') == 'triangular':
+                path = opportunity.get('path', [])
+                dexes = opportunity.get('dexes', [])
+                if len(path) >= 4:
+                    # For triangular arbitrage, use the full path description
+                    tokenA = f"TRIANGULAR_{path[0]}"
+                    tokenB = f"{'→'.join(path)}"
+                    # Use the DEX sequence for dexA/dexB
+                    dexA = f"{'→'.join(dexes[:2])}" if len(dexes) >= 2 else 'triangular'
+                    dexB = f"{'→'.join(dexes[1:])}" if len(dexes) >= 2 else 'triangular'
+                else:
+                    tokenA = 'TRIANGULAR'
+                    tokenB = 'UNKNOWN_PATH'
+                    dexA = 'triangular'
+                    dexB = 'triangular'
+            else:
+                # Extract token information from multiple possible field structures
+                # Try different field name patterns used by different parts of the system
+                tokenA_raw = (opportunity.get('base_token') or
+                             opportunity.get('token') or
+                             opportunity.get('input_token') or
+                             opportunity.get('token_in') or
+                             'UNKNOWN')
+
+                tokenB_raw = (opportunity.get('quote_token') or
+                             opportunity.get('output_token') or
+                             opportunity.get('token_out') or
+                             opportunity.get('target_token') or
+                             'USDC')  # Default to USDC for arbitrage pairs
+
+                # Resolve addresses to symbols
+                tokenA = self._resolve_token_symbol(tokenA_raw)
+                tokenB = self._resolve_token_symbol(tokenB_raw)
+
+                # Extract DEX information for regular arbitrage
+                dexA = (opportunity.get('buy_dex') or
+                       opportunity.get('dex_buy') or
+                       opportunity.get('source_dex') or
+                       'unknown')
+
+                dexB = (opportunity.get('sell_dex') or
+                       opportunity.get('dex_sell') or
+                       opportunity.get('target_dex') or
+                       'unknown')
+
+
+
+            # Prepare trade data for DexMind - FIXED field extraction
             trade_data = {
-                'tokenA': opportunity.get('base_token', 'UNKNOWN'),
-                'tokenB': opportunity.get('quote_token', 'UNKNOWN'),
-                'dexA': opportunity.get('buy_dex', 'unknown'),
-                'dexB': opportunity.get('sell_dex', 'unknown'),
-                'chain': 'ethereum',  # Default to ethereum for now
+                'tokenA': tokenA,
+                'tokenB': tokenB,
+                'dexA': dexA,
+                'dexB': dexB,
+                'chain': opportunity.get('chain', 'ethereum'),
                 'priceA': opportunity.get('buy_price', 0),
                 'priceB': opportunity.get('sell_price', 0),
                 'profitUSD': result.get('profit', 0),
-                'gasSpentUSD': result.get('gas_cost', 0.01),  # Estimate if not provided
+                'gasSpentUSD': result.get('gas_cost', 0.01),
                 'wasExecuted': result.get('success', False)
             }
 
@@ -258,11 +306,32 @@ class MCPClientManager:
             opportunity = pattern_data.get('opportunity', {})
             result = pattern_data.get('result', {})
 
-            # Create memory content - use correct field names
-            base_token = opportunity.get('base_token', 'UNKNOWN')
-            quote_token = opportunity.get('quote_token', 'UNKNOWN')
-            buy_dex = opportunity.get('buy_dex', 'unknown')
-            sell_dex = opportunity.get('sell_dex', 'unknown')
+            # Extract token information using same logic as DexMind storage
+            base_token_raw = (opportunity.get('base_token') or
+                             opportunity.get('token') or
+                             opportunity.get('input_token') or
+                             opportunity.get('token_in') or
+                             'UNKNOWN')
+
+            quote_token_raw = (opportunity.get('quote_token') or
+                              opportunity.get('output_token') or
+                              opportunity.get('token_out') or
+                              opportunity.get('target_token') or
+                              'USDC')
+
+            # Resolve addresses to symbols
+            base_token = self._resolve_token_symbol(base_token_raw)
+            quote_token = self._resolve_token_symbol(quote_token_raw)
+
+            buy_dex = (opportunity.get('buy_dex') or
+                      opportunity.get('dex_buy') or
+                      opportunity.get('source_dex') or
+                      'unknown')
+
+            sell_dex = (opportunity.get('sell_dex') or
+                       opportunity.get('dex_sell') or
+                       opportunity.get('target_dex') or
+                       'unknown')
             profit = result.get('profit', 0)
             success = result.get('success', False)
 
@@ -297,10 +366,32 @@ class MCPClientManager:
             opportunity = pattern_data.get('opportunity', {})
             result = pattern_data.get('result', {})
 
-            base_token = opportunity.get('base_token', 'UNKNOWN')
-            quote_token = opportunity.get('quote_token', 'UNKNOWN')
-            buy_dex = opportunity.get('buy_dex', 'unknown')
-            sell_dex = opportunity.get('sell_dex', 'unknown')
+            # Extract token information using same logic as other storage methods
+            base_token_raw = (opportunity.get('base_token') or
+                             opportunity.get('token') or
+                             opportunity.get('input_token') or
+                             opportunity.get('token_in') or
+                             'UNKNOWN')
+
+            quote_token_raw = (opportunity.get('quote_token') or
+                              opportunity.get('output_token') or
+                              opportunity.get('token_out') or
+                              opportunity.get('target_token') or
+                              'USDC')
+
+            # Resolve addresses to symbols
+            base_token = self._resolve_token_symbol(base_token_raw)
+            quote_token = self._resolve_token_symbol(quote_token_raw)
+
+            buy_dex = (opportunity.get('buy_dex') or
+                      opportunity.get('dex_buy') or
+                      opportunity.get('source_dex') or
+                      'unknown')
+
+            sell_dex = (opportunity.get('sell_dex') or
+                       opportunity.get('dex_sell') or
+                       opportunity.get('target_dex') or
+                       'unknown')
             profit = result.get('profit', 0)
             success = result.get('success', False)
 
@@ -492,6 +583,53 @@ class MCPClientManager:
 
         self.connected = False
         logger.info("All MCP connections closed")
+
+    def _resolve_token_symbol(self, token_identifier: str) -> str:
+        """Resolve token address to symbol or return the identifier if it's already a symbol.
+
+        Args:
+            token_identifier: Token address or symbol
+
+        Returns:
+            Token symbol
+        """
+        if not token_identifier or token_identifier == 'UNKNOWN':
+            return 'UNKNOWN'
+
+        # If it's already a symbol (short string, no 0x prefix), return as-is
+        if len(token_identifier) < 10 and not token_identifier.startswith('0x'):
+            return token_identifier.upper()
+
+        # Common Ethereum token address mappings
+        address_to_symbol = {
+            '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2': 'WETH',  # WETH
+            '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48': 'USDC',  # USDC
+            '0xdAC17F958D2ee523a2206206994597C13D831ec7': 'USDT',  # USDT
+            '0x6B175474E89094C44Da98b954EedeAC495271d0F': 'DAI',   # DAI
+            '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599': 'WBTC',  # WBTC
+            '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984': 'UNI',   # UNI
+            '0x514910771AF9Ca656af840dff83E8264EcF986CA': 'LINK',  # LINK
+            '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9': 'AAVE',  # AAVE
+            '0xD533a949740bb3306d119CC777fa900bA034cd52': 'CRV',   # CRV
+            # Add Arbitrum addresses
+            '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1': 'WETH',  # WETH on Arbitrum
+            '0xaf88d065e77c8cC2239327C5EDb3A432268e5831': 'USDC',  # USDC on Arbitrum
+            '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8': 'USDC.e', # USDC.e on Arbitrum
+            '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9': 'USDT',  # USDT on Arbitrum
+            '0x912CE59144191C1204E64559FE8253a0e49E6548': 'ARB',   # ARB token
+        }
+
+        # Check if it's a known address
+        symbol = address_to_symbol.get(token_identifier.lower())
+        if symbol:
+            return symbol
+
+        # If unknown address, return last 6 characters for identification
+        if token_identifier.startswith('0x') and len(token_identifier) == 42:
+            return f"TOKEN_{token_identifier[-6:].upper()}"
+
+        # Fallback
+        return token_identifier.upper()[:10]  # Truncate long identifiers
 
     async def _call_mcp_tool(self, server_name: str, tool_name: str, arguments: Dict[str, Any]) -> Any:
         """Call a tool on an MCP server.

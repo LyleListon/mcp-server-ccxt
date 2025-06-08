@@ -132,11 +132,11 @@ class AaveFlashLoan:
         # Gas estimates for flash loan + arbitrage
         gas_estimates = {
             'ethereum': {'gas_limit': 500000, 'gas_price_gwei': 20, 'cost_usd': 50},
-            'arbitrum': {'gas_limit': 800000, 'gas_price_gwei': 0.1, 'cost_usd': 5},
-            'optimism': {'gas_limit': 600000, 'gas_price_gwei': 0.001, 'cost_usd': 3},
+            'arbitrum': {'gas_limit': 800000, 'gas_price_gwei': 1.0, 'cost_usd': 5},  # Fixed: 1.0 gwei minimum
+            'optimism': {'gas_limit': 600000, 'gas_price_gwei': 0.01, 'cost_usd': 3},  # Fixed: 0.01 gwei minimum
             'polygon': {'gas_limit': 600000, 'gas_price_gwei': 30, 'cost_usd': 8},
             'avalanche': {'gas_limit': 500000, 'gas_price_gwei': 25, 'cost_usd': 6},
-            'base': {'gas_limit': 400000, 'gas_price_gwei': 0.001, 'cost_usd': 2}
+            'base': {'gas_limit': 400000, 'gas_price_gwei': 0.01, 'cost_usd': 2}  # Fixed: 0.01 gwei minimum
         }
         
         return gas_estimates.get(network, {'gas_limit': 500000, 'gas_price_gwei': 20, 'cost_usd': 25})
@@ -299,6 +299,30 @@ class AaveFlashLoan:
     def get_supported_tokens(self, network: str) -> List[str]:
         """Get list of tokens supported for flash loans on a network."""
         return list(self.token_addresses.get(network, {}).keys())
+
+    async def execute_flashloan_arbitrage(self, opportunity: Dict[str, Any], web3: Web3, account) -> Dict[str, Any]:
+        """Execute REAL flashloan arbitrage using our deployed contract."""
+        try:
+            logger.info("⚡ EXECUTING REAL AAVE FLASHLOAN!")
+
+            # Use our flashloan integration for actual execution
+            from .flashloan_integration import FlashloanIntegration
+
+            # Create web3 connections dict
+            web3_connections = {
+                'arbitrum': web3,
+                'optimism': web3,  # Could be different connections
+                'base': web3
+            }
+
+            integration = FlashloanIntegration(account, web3_connections)
+            result = await integration.execute_flashloan_arbitrage(opportunity)
+
+            return result
+
+        except Exception as e:
+            logger.error(f"❌ Aave flashloan execution error: {e}")
+            return {'success': False, 'error': str(e)}
 
     def get_flash_loan_summary(self) -> Dict[str, Any]:
         """Get summary of flash loan capabilities."""

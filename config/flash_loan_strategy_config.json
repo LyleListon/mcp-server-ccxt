@@ -113,7 +113,7 @@
       "preferred": true,
       "rpc_url": "https://arb1.arbitrum.io/rpc",
       "chain_id": 42161,
-      "gas_price_gwei": 0.1,
+      "gas_price_gwei": 1.0,
       "flash_loan_support": true,
       "priority": 1
     },
@@ -122,7 +122,7 @@
       "preferred": true,
       "rpc_url": "https://mainnet.base.org",
       "chain_id": 8453,
-      "gas_price_gwei": 0.05,
+      "gas_price_gwei": 0.5,
       "flash_loan_support": true,
       "priority": 2
     },
@@ -131,7 +131,7 @@
       "preferred": false,
       "rpc_url": "https://mainnet.optimism.io",
       "chain_id": 10,
-      "gas_price_gwei": 0.001,
+      "gas_price_gwei": 0.5,
       "flash_loan_support": true,
       "priority": 3
     }

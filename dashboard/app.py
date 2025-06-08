@@ -216,62 +216,77 @@ def broadcast_update():
         'timestamp': datetime.now().isoformat()
     })
 
-def simulate_data_updates():
-    """Simulate trading data updates for testing."""
-    import random
+def read_live_data_updates():
+    """Read live data from WSL2 file bridge."""
     import time
-    
+
+    file_path = r"C:\temp\mayarbi_dashboard_data.json"
+    last_update_count = 0
+
     while True:
         try:
-            # Simulate scan update
-            dashboard_data.live_metrics['current_scan'] += 1
-            dashboard_data.trading_stats['total_scans'] += 1
-            
-            # Simulate gas price
-            dashboard_data.live_metrics['gas_price_gwei'] = random.uniform(15, 45)
-            
-            # Simulate opportunity
-            if random.random() < 0.3:  # 30% chance of opportunity
-                opportunity = {
-                    'token': random.choice(['ETH', 'USDC', 'USDT', 'WBTC']),
-                    'source_chain': random.choice(['arbitrum', 'base', 'optimism']),
-                    'target_chain': random.choice(['arbitrum', 'base', 'optimism']),
-                    'profit_percentage': random.uniform(0.1, 0.5),
-                    'dex': random.choice(dashboard_data.dex_list[:5])
-                }
-                update_opportunity_data(opportunity)
-                
-                # Simulate trade execution
-                if random.random() < 0.7:  # 70% execution rate
-                    trade = {
-                        'success': random.random() < 0.85,  # 85% success rate
-                        'net_profit_usd': random.uniform(-2, 15),
-                        'costs_usd': random.uniform(0.5, 3),
-                        'execution_time': random.uniform(2, 8)
-                    }
-                    update_trading_stats(trade)
-                    dashboard_data.recent_trades.append({
-                        **trade,
-                        'timestamp': datetime.now().isoformat(),
-                        'opportunity': opportunity
-                    })
-            
-            # Update uptime
-            dashboard_data.live_metrics['uptime_seconds'] += 5
-            
-            # Broadcast update
-            broadcast_update()
-            
-            time.sleep(5)  # Update every 5 seconds
-            
+            # Check if file exists
+            if os.path.exists(file_path):
+                try:
+                    with open(file_path, 'r') as f:
+                        data = json.load(f)
+
+                    # Check if this is new data
+                    current_update_count = data.get('update_count', 0)
+                    if current_update_count > last_update_count:
+                        last_update_count = current_update_count
+
+                        # Update dashboard with live data
+                        if 'trading_stats' in data:
+                            ts = data['trading_stats']
+                            dashboard_data.trading_stats.update({
+                                'session_profit': float(ts.get('session_profit', 0)),
+                                'total_trades': int(ts.get('total_trades', 0)),
+                                'success_rate': float(ts.get('success_rate', '0%').replace('%', '')),
+                                'wallet_balance': float(ts.get('wallet_balance', '$0').replace('$', ''))
+                            })
+
+                        if 'system_status' in data:
+                            ss = data['system_status']
+                            dashboard_data.live_metrics.update({
+                                'system_status': 'connected' if 'Connected' in ss.get('wsl2_bot', '') else 'connecting',
+                                'last_update': ss.get('last_update', 'Unknown')
+                            })
+
+                        if 'network_performance' in data:
+                            np = data['network_performance']
+                            for network in ['arbitrum', 'base', 'optimism']:
+                                if network in np:
+                                    opps_text = np[network]
+                                    # Extract number from "X opportunities"
+                                    opps = int(opps_text.split()[0]) if opps_text.split()[0].isdigit() else 0
+                                    dashboard_data.network_performance[network]['opportunities'] = opps
+
+                        # Broadcast update to clients
+                        broadcast_update()
+                        logger.info(f"📊 Live data updated from WSL2 (#{current_update_count})")
+
+                except json.JSONDecodeError:
+                    logger.warning("⚠️ Invalid JSON in data file")
+                except Exception as e:
+                    logger.error(f"❌ Error reading data file: {e}")
+            else:
+                # File doesn't exist yet - bot hasn't written data
+                dashboard_data.live_metrics['system_status'] = 'waiting_for_bot'
+
+            time.sleep(2)  # Check every 2 seconds
+
         except Exception as e:
-            logger.error(f"Data simulation error: {e}")
+            logger.error(f"❌ Data reader error: {e}")
             time.sleep(5)
 
 if __name__ == '__main__':
-    # Start data simulation in background
-    data_thread = threading.Thread(target=simulate_data_updates, daemon=True)
+    # Start live data reader in background (WSL2 → Windows file bridge)
+    data_thread = threading.Thread(target=read_live_data_updates, daemon=True)
     data_thread.start()
-    
-    logger.info("🚀 Starting MayArbi Dashboard on http://localhost:5000")
-    socketio.run(app, host='0.0.0.0', port=5000, debug=False)
+
+    # Use port 9999 for Windows dashboard
+    port = 9999
+    logger.info(f"🚀 Starting MayArbi Dashboard on http://localhost:{port}")
+    logger.info(f"📁 Reading live data from: C:\\temp\\mayarbi_dashboard_data.json")
+    socketio.run(app, host='0.0.0.0', port=port, debug=False)

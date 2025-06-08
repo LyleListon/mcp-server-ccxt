@@ -27,18 +27,18 @@ class TradingConfig:
     """
     
     # ============================================================================
-    # 💰 PROFIT THRESHOLDS
+    # 💰 PROFIT THRESHOLDS - NO MORE GUARANTEED LOSSES!
     # ============================================================================
-    MIN_PROFIT_USD: float = 0.25           # 🎯 UPDATED: $0.25 minimum to capture more opportunities
-    MIN_PROFIT_PERCENTAGE: float = 0.1     # 0.1% minimum profit margin
-    TARGET_PROFIT_USD: float = 3.00        # Sweet spot for 7.4s execution
-    LARGE_PROFIT_USD: float = 10.00        # Low competition zone
+    MIN_PROFIT_USD: float = 10.00          # 🎯 RAISED: $10 minimum - NO MORE PENNY TRADES!
+    MIN_PROFIT_PERCENTAGE: float = 2.0     # 🚨 RAISED: 2.0% minimum - BEAT THE 750% COST RATIO!
+    TARGET_PROFIT_USD: float = 25.00       # Sweet spot for profitable execution
+    LARGE_PROFIT_USD: float = 50.00        # High-profit zone
     
     # ============================================================================
     # 💼 POSITION SIZING (75% of wallet strategy)
     # ============================================================================
-    MAX_TRADE_PERCENTAGE: float = 0.75     # 75% of total wallet value (~$343)
-    TOTAL_CAPITAL_USD: float = 872.0       # Current wallet value
+    MAX_TRADE_PERCENTAGE: float = 0.75     # 75% of total wallet value (~$572)
+    TOTAL_CAPITAL_USD: float = 763.00      # 🚨 UPDATED: Current wallet value $763
     MIN_TRADE_USD: float = 10.0            # Minimum viable trade size
     RESERVE_PERCENTAGE: float = 0.15       # Keep 15% in reserve
 
@@ -48,12 +48,12 @@ class TradingConfig:
         return self.TOTAL_CAPITAL_USD * self.MAX_TRADE_PERCENTAGE
     
     # ============================================================================
-    # ⛽ GAS & EXECUTION SETTINGS
+    # ⛽ MEV COMPETITIVE GAS SETTINGS - BEAT OTHER BOTS! 🔥
     # ============================================================================
-    GAS_PRICE_MULTIPLIER: float = 2.0      # 2x gas for priority inclusion
-    MAX_GAS_PRICE_GWEI: float = 50.0       # Maximum gas price willing to pay
-    MIN_GAS_PRICE_GWEI: float = 0.2        # Minimum gas price (Arbitrum)
-    FIXED_GAS_LIMIT: int = 500000          # Skip gas estimation for speed
+    GAS_PRICE_MULTIPLIER: float = 4.0      # AGGRESSIVE: 4x gas to BEAT competitors
+    MAX_GAS_PRICE_GWEI: float = 300.0      # MAXIMUM: Willing to pay up to 300 gwei for MEV
+    MIN_GAS_PRICE_GWEI: float = 25.0       # COMPETITIVE: Start above typical users (was 15.0)
+    FIXED_GAS_LIMIT: int = 400000          # Skip gas estimation for speed
     EXECUTION_TIMEOUT_SECONDS: int = 30    # Maximum execution time
     
     # ============================================================================
@@ -67,9 +67,9 @@ class TradingConfig:
     # ============================================================================
     # ⏱️ TIMING & SCANNING
     # ============================================================================
-    SCAN_INTERVAL_SECONDS: float = 2.0     # Scan every 2 seconds
+    SCAN_INTERVAL_SECONDS: float = 0.5     # SPEED BOOST: Scan every 0.5 seconds
     OPPORTUNITY_MAX_AGE_SECONDS: float = 15.0  # Opportunities expire after 15s
-    MAX_EXECUTION_TIME_SECONDS: float = 7.5    # Target: beat current 7.4s
+    MAX_EXECUTION_TIME_SECONDS: float = 3.0    # SPEED BOOST: Ultra-fast 3s execution target
     RETRY_ATTEMPTS: int = 3                # Number of retry attempts
     RETRY_DELAY_SECONDS: float = 1.0       # Delay between retries
     
@@ -77,16 +77,24 @@ class TradingConfig:
     # 🌐 NETWORK PREFERENCES
     # ============================================================================
     PREFERRED_NETWORKS: List[str] = field(default_factory=lambda: [
-        "arbitrum",     # Primary network (lowest gas)
-        "base",         # Secondary network
-        "optimism"      # Tertiary network
+        "ethereum",     # 🔥 PRIMARY: Your local node + flashloans!
+        "arbitrum",     # Secondary network (lowest gas)
+        "base",         # Tertiary network
+        "optimism"      # Quaternary network
     ])
 
     NETWORK_CONFIGS: Dict[str, Dict[str, Any]] = field(default_factory=lambda: {
+        'ethereum': {
+            'chain_id': 1,
+            'gas_multiplier': 1.2,  # Conservative for mainnet
+            'min_gas_gwei': 15.0,   # Mainnet minimum
+            'priority_fee_gwei': 2.0,
+            'flashloan_enabled': True  # 🔥 FLASHLOANS AVAILABLE!
+        },
         'arbitrum': {
             'chain_id': 42161,
             'gas_multiplier': 2.0,
-            'min_gas_gwei': 0.2,
+            'min_gas_gwei': 1.0,  # Fixed: 1.0 gwei minimum for current network conditions
             'priority_fee_gwei': 1.5
         },
         'base': {
@@ -98,7 +106,7 @@ class TradingConfig:
         'optimism': {
             'chain_id': 10,
             'gas_multiplier': 1.8,
-            'min_gas_gwei': 0.3,
+            'min_gas_gwei': 0.5,  # Fixed: 0.5 gwei minimum for current network conditions
             'priority_fee_gwei': 1.2
         }
     })
@@ -108,8 +116,8 @@ class TradingConfig:
     # ============================================================================
     TARGET_TOKENS: List[str] = field(default_factory=lambda: [
         "ETH", "WETH",      # Your primary holdings
-        "USDC", "USDT",     # Your stablecoins
-        "DAI"               # Additional stablecoin
+        "USDC", "USDC.e",   # Your stablecoins (USDC.e is your MAJOR holding!)
+        "USDT", "DAI"       # Additional stablecoins
     ])
     
     # ============================================================================
@@ -125,6 +133,13 @@ class TradingConfig:
     # ============================================================================
     MIN_LIQUIDITY_USD: float = 50000       # Minimum pool liquidity
     MIN_VOLUME_24H_USD: float = 100000     # Minimum 24h volume
+
+    # ============================================================================
+    # 🎯 TOKEN CONVERSION RATIOS - NO MORE HARDCODED VALUES!
+    # ============================================================================
+    OTHER_TOKEN_TO_ETH_RATIO: float = 0.0003  # Conservative ratio for unknown tokens
+    MIN_ETH_FOR_GAS: float = 0.005          # Minimum ETH needed for gas
+    MIN_TRADE_ETH: float = 0.0001           # Minimum trade amount in ETH
     
     # ============================================================================
     # 🚨 CIRCUIT BREAKER SETTINGS
@@ -137,10 +152,10 @@ class TradingConfig:
     FAILED_TRANSACTION_RESET_HOURS: int = 1  # Reset failure counter every hour
 
     # ============================================================================
-    # 🔥 FLASHLOAN CONFIGURATION
+    # 🔥 FLASHLOAN CONFIGURATION - PROFITABLE TRADES ONLY!
     # ============================================================================
     ENABLE_FLASHLOANS: bool = True          # Enable flashloan arbitrage
-    MIN_FLASHLOAN_PROFIT_USD: float = 2.0   # Minimum profit to trigger flashloan
+    MIN_FLASHLOAN_PROFIT_USD: float = 50.0  # 🎯 RAISED: $50 minimum flashloan profit - NO MORE LOSSES!
     PREFERRED_FLASHLOAN_PROVIDER: str = "balancer"  # balancer (0% fees) > dydx (0% fees) > aave (0.09% fees)
     MAX_FLASHLOAN_AMOUNT_USD: float = 100000.0  # $100K max flashloan size
     FLASHLOAN_GAS_MULTIPLIER: float = 1.5   # Extra gas for flashloan complexity
@@ -177,19 +192,26 @@ class TradingConfig:
         return config
     
     # ============================================================================
-    # 📊 CALCULATED PROPERTIES
+    # 📊 DYNAMIC CALCULATED PROPERTIES (NO MORE HARDCODED $3000!)
     # ============================================================================
-    @property
-    def max_trade_amount_eth(self) -> float:
-        """Calculate max trade amount in ETH (assuming $3000/ETH)."""
-        eth_price = 3000.0  # TODO: Get from price feed
+    async def get_max_trade_amount_eth(self, dynamic_data_service) -> float:
+        """Calculate max trade amount in ETH using REAL ETH price."""
+        eth_price = await dynamic_data_service.get_eth_price_usd()
         return self.MAX_TRADE_USD / eth_price
-    
-    @property
-    def daily_loss_limit_eth(self) -> float:
-        """Calculate daily loss limit in ETH."""
-        eth_price = 3000.0  # TODO: Get from price feed
+
+    async def get_daily_loss_limit_eth(self, dynamic_data_service) -> float:
+        """Calculate daily loss limit in ETH using REAL ETH price."""
+        eth_price = await dynamic_data_service.get_eth_price_usd()
         return self.DAILY_LOSS_LIMIT_USD / eth_price
+
+    async def get_current_wallet_value_usd(self, dynamic_data_service, wallet_address: str) -> float:
+        """Get REAL-TIME wallet value instead of hardcoded $763."""
+        return await dynamic_data_service.get_total_wallet_value_usd(wallet_address)
+
+    async def get_dynamic_max_trade_usd(self, dynamic_data_service, wallet_address: str) -> float:
+        """Calculate max trade USD based on REAL wallet value."""
+        real_wallet_value = await self.get_current_wallet_value_usd(dynamic_data_service, wallet_address)
+        return real_wallet_value * self.MAX_TRADE_PERCENTAGE
     
     # ============================================================================
     # 🔧 UTILITY METHODS

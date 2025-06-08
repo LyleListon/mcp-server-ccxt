@@ -285,7 +285,7 @@ class ProductionFlashloanExecutor:
                 'profit_usd': net_profit,
                 'flashloan_fee_usd': flashloan_fee,
                 'gas_cost_usd': gas_cost_usd,
-                'transaction_hash': '0x' + 'a' * 64,  # Placeholder
+                'transaction_hash': tx_hash.hex() if 'tx_hash' in locals() else None,
                 'provider': 'Aave V3',
                 'fee_percentage': 0.09
             }

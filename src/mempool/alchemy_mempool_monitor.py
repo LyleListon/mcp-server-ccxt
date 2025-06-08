@@ -59,9 +59,9 @@ class AlchemyMempoolMonitor:
 
         self.networks = config.get('networks', ['arbitrum', 'base', 'optimism'])
 
-        # Mempool monitoring settings
-        self.min_transaction_value = config.get('min_mempool_tx_value', 10000)  # $10K+
-        self.max_gas_price_gwei = config.get('max_gas_price_gwei', 100)
+        # Mempool monitoring settings - 🎯 OPTIMIZED FOR YOUR ARBITRAGE SCALE!
+        self.min_transaction_value = config.get('min_mempool_tx_value', 100)  # $100+ (much more realistic!)
+        self.max_gas_price_gwei = config.get('max_gas_price_gwei', 50)  # Lower gas limit for L2s
         self.opportunity_callbacks = []
 
         # Network endpoints
@@ -161,49 +161,103 @@ class AlchemyMempoolMonitor:
             logger.error(f"Network {network} mempool monitor failed: {e}")
     
     async def _get_pending_transactions(self, network: str, endpoint: str) -> List[PendingTransaction]:
-        """Get pending transactions from Alchemy."""
+        """Get pending transactions from Alchemy using proper mempool API."""
         try:
-            # PROPER FIX: Use correct Alchemy Enhanced API methods
             logger.info(f"   🔍 Fetching pending transactions for {network}...")
 
-            # Method 1: Try Alchemy's enhanced pending transactions
+            # 🚀 ALCHEMY FREE TIER COMPATIBLE - Use alchemy_pendingTransactions
             payload = {
                 "jsonrpc": "2.0",
-                "method": "alchemy_getAssetTransfers",
+                "method": "alchemy_pendingTransactions",
                 "params": [{
-                    "fromBlock": "pending",
-                    "toBlock": "pending",
-                    "category": ["external", "internal", "erc20", "erc721", "erc1155"],
-                    "maxCount": "0x64",  # 100 transactions max
-                    "excludeZeroValue": True
+                    "hashesOnly": False,
+                    "fromAddress": None,
+                    "toAddress": None
                 }],
                 "id": 1
             }
-            
+
             # Make async request
             import aiohttp
             async with aiohttp.ClientSession() as session:
                 async with session.post(endpoint, json=payload) as response:
                     if response.status == 200:
                         data = await response.json()
-                        
-                        if 'result' in data:
+
+                        if 'result' in data and 'pending' in data['result']:
                             pending_txs = []
-                            for tx_data in data['result']['transactions'][:50]:  # Limit to 50 most recent
+                            pending_pool = data['result']['pending']
+
+                            # Extract transactions from pending pool
+                            tx_count = 0
+                            for address, nonce_txs in pending_pool.items():
+                                if tx_count >= 50:  # Limit to 50 transactions
+                                    break
+
+                                for nonce, tx_data in nonce_txs.items():
+                                    if tx_count >= 50:
+                                        break
+
+                                    tx = self._parse_transaction(tx_data)
+                                    if tx and self._is_relevant_transaction(tx):
+                                        pending_txs.append(tx)
+                                        tx_count += 1
+
+                            logger.debug(f"📊 {network}: Found {len(pending_txs)} relevant pending transactions")
+                            return pending_txs
+                        else:
+                            logger.debug(f"📊 {network}: No pending transactions found")
+                    else:
+                        logger.warning(f"Alchemy API error: {response.status}")
+
+                        # 🔄 FALLBACK: Try alternative method
+                        return await self._get_pending_transactions_fallback(network, endpoint)
+
+            return []
+
+        except Exception as e:
+            logger.error(f"Pending transactions fetch error: {e}")
+            # Try fallback method
+            return await self._get_pending_transactions_fallback(network, endpoint)
+
+    async def _get_pending_transactions_fallback(self, network: str, endpoint: str) -> List[PendingTransaction]:
+        """Fallback method using eth_getBlockByNumber with pending."""
+        try:
+            logger.debug(f"🔄 Using fallback method for {network} mempool...")
+
+            payload = {
+                "jsonrpc": "2.0",
+                "method": "eth_getBlockByNumber",
+                "params": ["pending", True],  # Get pending block with full transactions
+                "id": 1
+            }
+
+            import aiohttp
+            async with aiohttp.ClientSession() as session:
+                async with session.post(endpoint, json=payload) as response:
+                    if response.status == 200:
+                        data = await response.json()
+
+                        if 'result' in data and data['result'] and 'transactions' in data['result']:
+                            pending_txs = []
+                            transactions = data['result']['transactions'][:50]  # Limit to 50
+
+                            for tx_data in transactions:
                                 tx = self._parse_transaction(tx_data)
                                 if tx and self._is_relevant_transaction(tx):
                                     pending_txs.append(tx)
-                            
+
+                            logger.debug(f"📊 {network} fallback: Found {len(pending_txs)} relevant transactions")
                             return pending_txs
                     else:
-                        logger.warning(f"Alchemy API error: {response.status}")
-            
+                        logger.warning(f"Fallback API error: {response.status}")
+
             return []
-            
+
         except Exception as e:
-            logger.error(f"Pending transactions fetch error: {e}")
+            logger.error(f"Fallback pending transactions error: {e}")
             return []
-    
+
     def _parse_transaction(self, tx_data: Dict[str, Any]) -> Optional[PendingTransaction]:
         """Parse transaction data."""
         try:
@@ -224,20 +278,48 @@ class AlchemyMempoolMonitor:
     def _is_relevant_transaction(self, tx: PendingTransaction) -> bool:
         """Check if transaction is relevant for arbitrage."""
         try:
-            # Filter by transaction value
-            if tx.value < self.min_transaction_value / 2500:  # Assuming ETH = $2500
+            # 🎯 OPTIMIZED FILTERS FOR YOUR ARBITRAGE SCALE!
+
+            # Filter by transaction value (much lower threshold!)
+            eth_price = 3500  # Approximate ETH price
+            min_value_eth = self.min_transaction_value / eth_price  # $100 / $3500 = ~0.03 ETH
+            if tx.value < min_value_eth:
                 return False
-            
+
             # Filter by gas price (avoid extremely high gas)
             if tx.gas_price > self.max_gas_price_gwei:
                 return False
-            
-            # Check if it's a DEX interaction
+
+            # Check if it's a DEX interaction (has input data)
             if len(tx.input_data) < 10:  # Simple transfers
                 return False
-            
-            return True
-            
+
+            # 🎯 ADDITIONAL FILTERS: Look for DEX-related transactions
+            # Check if transaction is to known DEX contracts
+            dex_addresses = set()
+            for network_dexes in self.dex_contracts.values():
+                dex_addresses.update(network_dexes.values())
+
+            if tx.to_address.lower() in [addr.lower() for addr in dex_addresses]:
+                logger.debug(f"🎯 Found DEX transaction: {tx.hash[:10]}... to {tx.to_address}")
+                return True
+
+            # Check for swap-like function signatures in input data
+            swap_signatures = [
+                '0x38ed1739',  # swapExactTokensForTokens
+                '0x8803dbee',  # swapTokensForExactTokens
+                '0x7ff36ab5',  # swapExactETHForTokens
+                '0x18cbafe5',  # swapExactTokensForETH
+                '0x414bf389',  # swapExactTokensForTokensSupportingFeeOnTransferTokens
+            ]
+
+            for sig in swap_signatures:
+                if tx.input_data.startswith(sig):
+                    logger.debug(f"🎯 Found swap transaction: {tx.hash[:10]}... with signature {sig}")
+                    return True
+
+            return False
+
         except Exception as e:
             logger.error(f"Transaction relevance check error: {e}")
             return False
@@ -276,18 +358,18 @@ class AlchemyMempoolMonitor:
     
     async def _is_large_swap(self, tx: PendingTransaction) -> bool:
         """Check if transaction is a large swap."""
-        # Simplified: check transaction value and gas usage
-        return tx.value > 10 and tx.gas_limit > 200000  # $25K+ swap
-    
+        # 🎯 OPTIMIZED FOR YOUR SCALE: Much lower thresholds!
+        return tx.value > 0.1 and tx.gas_limit > 150000  # ~$350+ swap (realistic!)
+
     async def _is_sandwich_attack(self, tx: PendingTransaction) -> bool:
         """Check if transaction is part of a sandwich attack."""
-        # Simplified: check for suspicious gas pricing patterns
-        return tx.gas_price > 50  # High gas price (potential front-runner)
-    
+        # Check for suspicious gas pricing patterns on L2s
+        return tx.gas_price > 20  # High gas price for L2 (potential front-runner)
+
     async def _is_arbitrage_setup(self, tx: PendingTransaction) -> bool:
         """Check if transaction creates arbitrage opportunity."""
-        # Simplified: check for medium-large swaps
-        return 5 < tx.value < 50 and tx.gas_limit > 150000
+        # 🎯 PERFECT FOR YOUR ARBITRAGE RANGE: $35-$1750 swaps
+        return 0.01 < tx.value < 0.5 and tx.gas_limit > 100000  # Much more realistic range!
     
     async def _create_front_run_opportunity(self, network: str, tx: PendingTransaction) -> Optional[MempoolOpportunity]:
         """Create front-running opportunity."""

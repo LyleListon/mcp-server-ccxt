@@ -1,0 +1,72 @@
+---
+id: 9c9215be-10ac-4d94-b1d7-fe7cec1df134
+---
+requirementDiagram
+    requirement system "Arbitrage System" {
+        id: SYS-001
+        text: The system shall identify and execute profitable arbitrage opportunities
+        risk: low
+        verifymethod: test
+    }
+    
+    requirement profit "Profit Maximization" {
+        id: REQ-001
+        text: The system shall maximize net profit after gas costs and fees
+        risk: medium
+        verifymethod: analysis
+    }
+    
+    requirement safety "Safety Measures" {
+        id: REQ-002
+        text: The system shall implement protections against financial loss
+        risk: high
+        verifymethod: inspection
+    }
+    
+    requirement dex "DEX Integration" {
+        id: REQ-003
+        text: The system shall support multiple decentralized exchanges
+        risk: low
+        verifymethod: demonstration
+    }
+    
+    requirement flash "Flash Loan Support" {
+        id: REQ-004
+        text: The system shall leverage flash loans for capital efficiency
+        risk: medium
+        verifymethod: test
+    }
+    
+    requirement mev "MEV Protection" {
+        id: REQ-005
+        text: The system shall implement protection against MEV attacks
+        risk: high
+        verifymethod: test
+    }
+    
+    requirement monitoring "Monitoring Capabilities" {
+        id: REQ-006
+        text: The system shall provide real-time monitoring of operations
+        risk: medium
+        verifymethod: demonstration
+    }
+    
+    element test_flashloan "Flash Loan Test" {
+        type: test
+        docref: run_flash_loan_test.bat
+    }
+    
+    element test_mev "MEV Protection Test" {
+        type: test
+        docref: run_flashbots_test.bat
+    }
+    
+    system - profit
+    system - safety
+    system - dex
+    system - flash
+    system - mev
+    system - monitoring
+    
+    flash - test_flashloan
+    mev - test_mev

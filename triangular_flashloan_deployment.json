@@ -1,0 +1,20 @@
+{
+  "network": "arbitrum",
+  "chain_id": 42161,
+  "contract_address": "0x0B644D3629210Eb71a036D76dE2a3E1fc731C3e9",
+  "transaction_hash": "4f4ee8861b25433b3c1ceeb0f759676c7efeb66bb1baf156ca33dfb9ca69ce50",
+  "deployer_address": "0x55e701F8f224Dfd080924cf30FFDa42aff6467B1",
+  "deployment_timestamp": 1749333824,
+  "gas_used": 1624439,
+  "deployment_cost_eth": 0.000019,
+  "aave_address_provider": "0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb",
+  "contract_version": "TRIANGULAR_v1.0",
+  "fixes_applied": [
+    "Proper triangular arbitrage support (A→B→C→A)",
+    "IDENTICAL_ADDRESSES error fixed",
+    "Three-step swap execution",
+    "Enhanced slippage protection",
+    "Comprehensive error handling",
+    "Emergency functions"
+  ]
+}
