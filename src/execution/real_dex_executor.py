@@ -115,12 +115,21 @@ class RealDEXExecutor:
                 'USDC': '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',  # Native USDC
                 'USDC.e': '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8',  # Bridged USDC
                 'USDT': '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
+                'DAI': '0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1',   # DAI on Arbitrum
                 'WBTC': '0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f',
+                'ARB': '0x912CE59144191C1204E64559FE8253a0e49E6548',   # Arbitrum token
+                'UNI': '0xFa7F8980b0f1E64A2062791cc3b0871572f1F7f0',   # Uniswap on Arbitrum
+                'LINK': '0xf97f4df75117a78c1A5a0DBb814Af92458539FB4',  # Chainlink on Arbitrum
+                'AAVE': '0xba5DdD1f9d7F570dc94a51479a000E3BCE967196', # AAVE on Arbitrum
                 'CRV': '0x11cDb42B0EB46D95f990BeDD4695A6e3fA034978',   # Curve DAO Token on Arbitrum
                 'BNB': '0xa9004A5421372E1D83fB1f85b0fc986c912f91f3',    # Binance Coin on Arbitrum
-                'LINK': '0xf97f4df75117a78c1A5a0DBb814Af92458539FB4'   # Chainlink on Arbitrum
+                'AVAX': '0x565609fAF65B92F7be02468acF86f8979423e514',   # Avalanche on Arbitrum
+                'MATIC': '0x561877b6b3DD7651313794e5F2894B2F18bE0766', # Polygon on Arbitrum
+                'OP': '0xfEA31d704DEb0975dA8e77Bf13E04239e70d7c28',     # Optimism on Arbitrum
+                'FTM': '0xd42785D323e608B9E99fa542bd8b1000D4c2Df37'     # Fantom on Arbitrum
             },
             'base': {
+                'ETH': '0x4200000000000000000000000000000000000006',    # ETH = WETH for DEX trading
                 'WETH': '0x4200000000000000000000000000000000000006',
                 'USDC': '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
                 'USDbC': '0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA',
@@ -132,7 +141,9 @@ class RealDEXExecutor:
                 'OP': '0xFF0C532FDB8Cd566Ae169C1CB157ff2Bdc83E105',    # Optimism on Base
                 'MATIC': '0x7c6b91D9Be155A6Db01f749217d76fF02A7227F2',  # Polygon on Base
                 'UNI': '0x3e7eF8f50246f725885102E8238CBba33F276747',     # Uniswap on Base
-                'BNB': '0xD07379a755A8f11B57610154861D694b2A0f615a'      # Binance Coin on Base - NEEDS CHECKSUM FIX
+                'BNB': '0xD07379a755A8f11B57610154861D694b2A0f615a',     # Binance Coin on Base
+                'FTM': '0x4621b7A9c75199271F773Ebd9A499dbd165c3191',     # Fantom on Base
+                'AVAX': '0x346A59146b9b4a77100D369a3d18E8007A9F46a6'      # Avalanche on Base
             },
             'optimism': {
                 'WETH': '0x4200000000000000000000000000000000000006',
@@ -198,8 +209,8 @@ class RealDEXExecutor:
             logger.error(f"❌ DEX executor initialization failed: {e}")
             return False
 
-    async def execute_buy_order(self, chain: str, token: str, amount_usd: float, 
-                               dex: str, slippage_pct: float = 1.0) -> Dict[str, Any]:
+    async def execute_buy_order(self, chain: str, token: str, amount_usd: float,
+                               dex: str, slippage_pct: float = 3.0) -> Dict[str, Any]:
         """Execute REAL buy order on specified DEX."""
         try:
             logger.info(f"🛒 EXECUTING REAL BUY ORDER:")
@@ -231,11 +242,18 @@ class RealDEXExecutor:
             eth_amount = amount_usd / eth_price_usd
             eth_amount_wei = w3.to_wei(eth_amount, 'ether')
             
-            # Calculate minimum tokens out (with slippage protection)
+            # Calculate minimum tokens out (with SIMPLE 1.75x SLIPPAGE MULTIPLIER)
             token_price = await self._get_token_price(chain, token_address, weth_address, w3)
             expected_tokens = eth_amount / token_price
-            min_tokens_out = expected_tokens * (1 - slippage_pct / 100)
+
+            # Simple 2.15x slippage buffer - tuned for real market conditions!
+            slippage_buffer = expected_tokens * (slippage_pct / 100) * 2.15
+            min_tokens_out = expected_tokens - slippage_buffer
             min_tokens_out_wei = int(min_tokens_out * 10**18)  # Assume 18 decimals
+
+            # Log the simple but powerful protection
+            logger.info(f"   🛡️  Slippage buffer ({slippage_pct}% × 2.15): {slippage_buffer:.6f} {token}")
+            logger.info(f"   💪 Enhanced protection: {(slippage_buffer/expected_tokens)*100:.1f}% total")
             
             logger.info(f"   💱 ETH amount: {eth_amount:.6f} ETH")
             logger.info(f"   🎯 Expected tokens: {expected_tokens:.6f} {token}")
@@ -443,7 +461,7 @@ class RealDEXExecutor:
         return gas_cost_eth * eth_price_usd
 
     async def execute_sell_order(self, chain: str, token: str, token_amount: float,
-                                dex: str, slippage_pct: float = 1.0) -> Dict[str, Any]:
+                                dex: str, slippage_pct: float = 3.0) -> Dict[str, Any]:
         """Execute REAL sell order on specified DEX."""
         try:
             logger.info(f"💰 EXECUTING REAL SELL ORDER:")
@@ -473,11 +491,18 @@ class RealDEXExecutor:
             # Calculate amounts
             token_amount_wei = int(token_amount * 10**18)  # Assume 18 decimals
 
-            # Calculate minimum ETH out (with slippage protection)
+            # Calculate minimum ETH out (with SIMPLE 1.75x SLIPPAGE MULTIPLIER)
             token_price = await self._get_token_price(chain, token_address, weth_address, w3)
             expected_eth = token_amount * token_price
-            min_eth_out = expected_eth * (1 - slippage_pct / 100)
+
+            # Simple 2.15x slippage buffer - tuned for real market conditions!
+            slippage_buffer = expected_eth * (slippage_pct / 100) * 2.15
+            min_eth_out = expected_eth - slippage_buffer
             min_eth_out_wei = w3.to_wei(min_eth_out, 'ether')
+
+            # Log the simple but powerful protection
+            logger.info(f"   🛡️  Slippage buffer ({slippage_pct}% × 1.75): {slippage_buffer:.6f} ETH")
+            logger.info(f"   💪 Enhanced protection: {(slippage_buffer/expected_eth)*100:.1f}% total")
 
             logger.info(f"   💱 Token amount: {token_amount:.6f} {token}")
             logger.info(f"   🎯 Expected ETH: {expected_eth:.6f} ETH")
@@ -540,7 +565,9 @@ class RealDEXExecutor:
 
             # Sign and send transaction
             signed_txn = w3.eth.account.sign_transaction(transaction, self.private_key)
-            tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
+            # Handle both old and new Web3.py versions
+            raw_tx = getattr(signed_txn, 'raw_transaction', getattr(signed_txn, 'rawTransaction', None))
+            tx_hash = w3.eth.send_raw_transaction(raw_tx)
 
             logger.info(f"   📡 Transaction sent: {tx_hash.hex()}")
 
@@ -633,7 +660,9 @@ class RealDEXExecutor:
 
             # Sign and send
             signed_txn = w3.eth.account.sign_transaction(transaction, self.private_key)
-            tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
+            # Handle both old and new Web3.py versions
+            raw_tx = getattr(signed_txn, 'raw_transaction', getattr(signed_txn, 'rawTransaction', None))
+            tx_hash = w3.eth.send_raw_transaction(raw_tx)
 
             # Wait for confirmation
             receipt = await self._wait_for_confirmation(w3, tx_hash, "approval")

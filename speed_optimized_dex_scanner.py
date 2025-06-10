@@ -144,19 +144,20 @@ class SpeedOptimizedDEXScanner:
         dexes_found = 0
         bots_found = 0
         
-        # Prepare database
-        conn = sqlite3.connect(self.db_file)
-        c = conn.cursor()
-        self._create_tables(c)
+        # SURVIVAL MODE: Skip database setup for speed
+        # conn = sqlite3.connect(self.db_file)
+        # c = conn.cursor()
+        # self._create_tables(c)
         
-        # Create parallel tasks for block scanning
+        # SURVIVAL MODE: Skip database operations for speed
+        # Create parallel tasks for block scanning (no database writes)
         block_tasks = []
         batch_size = 5  # Process 5 blocks in parallel
-        
+
         for i in range(start_block, end_block, batch_size):
             batch_end = min(i + batch_size, end_block)
             task = asyncio.create_task(
-                self._scan_block_batch(i, batch_end, c)
+                self._scan_block_batch_no_db(i, batch_end)
             )
             block_tasks.append(task)
         
@@ -171,8 +172,9 @@ class SpeedOptimizedDEXScanner:
                 dexes_found += result.get('dexes', 0)
                 bots_found += result.get('bots', 0)
         
-        conn.commit()
-        conn.close()
+        # SURVIVAL MODE: No database operations
+        # conn.commit()
+        # conn.close()
         
         scan_time = time.time() - scan_start
         blocks_processed = end_block - start_block

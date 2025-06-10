@@ -262,57 +262,22 @@ class DataFusionEngine:
             # In real implementation, this would call the actual MCP server
             logger.debug(f"Fetching {request.data_type} from {source.server_id}")
             
-            # Simulate different response times and data
-            await asyncio.sleep(0.1 + (source.priority * 0.05))  # Simulate latency
-            
-            # Mock data based on server type and capability
-            mock_data = self._generate_mock_data(source, request)
-            
+            # TODO: Implement real MCP server communication
+            # For now, return None to avoid mock data contamination
+            logger.warning(f"Real MCP communication not implemented for {source.server_id}")
+
             # Update source metrics
             source.latency_ms = (datetime.now() - start_time).total_seconds() * 1000
             source.last_updated = datetime.now()
-            
-            return mock_data
+
+            return None  # No mock data - implement real MCP communication
             
         except Exception as e:
             logger.error(f"Error fetching from {source.server_id}: {e}")
             return None
 
-    def _generate_mock_data(self, source: DataSource, request: FusionRequest) -> Dict[str, Any]:
-        """Generate mock data for testing purposes."""
-        base_data = {
-            'source': source.server_id,
-            'timestamp': datetime.now().isoformat(),
-            'data_type': request.data_type
-        }
-        
-        # Generate different data based on capability
-        if source.capability == 'arbitrage_memory':
-            base_data.update({
-                'profitable_patterns': [
-                    {'pair': 'ETH/USDC', 'success_rate': 0.75, 'avg_profit': 12.5},
-                    {'pair': 'USDT/USDC', 'success_rate': 0.85, 'avg_profit': 3.2}
-                ],
-                'total_trades': 150,
-                'success_rate': 0.78
-            })
-        elif source.capability == 'exchange_data':
-            base_data.update({
-                'prices': {
-                    'ETH/USDC': 2565.50 + (hash(source.server_id) % 10 - 5) * 0.1,
-                    'USDT/USDC': 1.0001 + (hash(source.server_id) % 10 - 5) * 0.00001
-                },
-                'volumes': {'ETH/USDC': 1250000, 'USDT/USDC': 850000}
-            })
-        elif source.capability == 'general_memory':
-            base_data.update({
-                'memories': [
-                    {'content': 'Market volatility increased', 'confidence': 0.8},
-                    {'content': 'ETH showing bullish trend', 'confidence': 0.7}
-                ]
-            })
-        
-        return base_data
+    # Mock data generation function removed to eliminate contamination
+    # Real MCP server communication should be implemented instead
 
     def _fuse_collected_data(self, source_data: List[Tuple[DataSource, Any]], 
                            request: FusionRequest) -> FusedData:

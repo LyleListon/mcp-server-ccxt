@@ -1,0 +1,11 @@
+lighthouse beacon_node \
+    --network mainnet \
+    --datadir /path/to/lighthouse/data \
+    --http \
+    --http-address 0.0.0.0 \
+    --http-port 5052 \
+    --metrics \
+    --metrics-address 0.0.0.0 \
+    --execution-endpoint http://localhost:8551 \
+    --execution-jwt /path/to/jwt.hex \
+    --checkpoint-sync-url https://mainnet.checkpoint.sigp.io

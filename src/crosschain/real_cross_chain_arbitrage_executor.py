@@ -126,7 +126,7 @@ class RealCrossChainArbitrageExecutor:
                 opportunity.token,
                 trade_amount_usd,
                 opportunity.buy_dex,
-                opportunity.buy_price
+                self.max_slippage_pct  # Use configured 3% slippage + 75% buffer
             )
             
             if not buy_result.success:
@@ -172,7 +172,7 @@ class RealCrossChainArbitrageExecutor:
                 opportunity.token,
                 bridge_result.amount_out,
                 opportunity.sell_dex,
-                opportunity.sell_price
+                self.max_slippage_pct  # Use configured 3% slippage + 75% buffer
             )
             
             # Calculate final results

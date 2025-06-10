@@ -100,8 +100,8 @@ class StablecoinAdapter(BaseDEX):
                             'dex': self.name,
                             'price': price,
                             'deviation_from_peg': deviation,
-                            'liquidity': 10000000,  # High stablecoin liquidity
-                            'volume_24h_usd': 100000000,
+                            'liquidity': None,  # Real liquidity data not available from price APIs
+                            'volume_24h_usd': None,  # Real volume data not available from price APIs
                             'last_updated': datetime.now().isoformat()
                         }
                         pairs.append(pair)
@@ -271,8 +271,9 @@ class StablecoinAdapter(BaseDEX):
             return None
     
     async def get_liquidity(self, base_token: str, quote_token: str) -> Optional[float]:
-        """Get liquidity for stablecoin pairs (typically very high)."""
-        return 10000000.0  # $10M liquidity for stablecoins
+        """Get liquidity for stablecoin pairs (real data not available from price APIs)."""
+        logger.warning(f"Liquidity data not available for {base_token}/{quote_token} from stablecoin API")
+        return None  # Real liquidity requires DEX-specific queries
     
     async def get_quote(self, base_token: str, quote_token: str, amount: float) -> Optional[Dict[str, Any]]:
         """Get a quote for stablecoin swap."""

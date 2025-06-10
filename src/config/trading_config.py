@@ -59,8 +59,8 @@ class TradingConfig:
     # ============================================================================
     # 📊 SLIPPAGE & RISK MANAGEMENT
     # ============================================================================
-    MAX_SLIPPAGE_PERCENTAGE: float = 5.0   # 5% maximum slippage
-    DEFAULT_SLIPPAGE: float = 1.0          # 1% default slippage
+    MAX_SLIPPAGE_PERCENTAGE: float = 8.0   # 8% maximum slippage (increased for volatile markets)
+    DEFAULT_SLIPPAGE: float = 3.0          # 3% default slippage (increased from 1%)
     MAX_PRICE_IMPACT: float = 0.5          # 0.5% maximum price impact
     MAX_RISK_SCORE: int = 50               # Maximum acceptable risk score
     

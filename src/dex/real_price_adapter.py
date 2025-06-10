@@ -120,8 +120,8 @@ class RealPriceAdapter(BaseDEX):
                             'quote_token': quote_token,
                             'dex': self.name,
                             'price': price,
-                            'liquidity': 1000000,  # Mock high liquidity
-                            'volume_24h_usd': 10000000,  # Mock volume
+                            'liquidity': None,  # Real liquidity data not available from price APIs
+                            'volume_24h_usd': None,  # Real volume data not available from price APIs
                             'last_updated': datetime.now().isoformat()
                         }
                         pairs.append(pair)
@@ -251,8 +251,9 @@ class RealPriceAdapter(BaseDEX):
             return None
     
     async def get_liquidity(self, base_token: str, quote_token: str) -> Optional[float]:
-        """Get liquidity for a token pair (mock high liquidity)."""
-        return 1000000.0  # $1M mock liquidity
+        """Get liquidity for a token pair (real liquidity data not available from price APIs)."""
+        logger.warning(f"Liquidity data not available for {base_token}/{quote_token} from price API")
+        return None  # Real liquidity requires DEX-specific queries
     
     async def get_quote(self, base_token: str, quote_token: str, amount: float) -> Optional[Dict[str, Any]]:
         """Get a quote for swapping tokens."""
@@ -269,8 +270,8 @@ class RealPriceAdapter(BaseDEX):
                 'input_amount': amount,
                 'expected_output': expected_output,
                 'price': price,
-                'slippage_estimate': 0.1,  # 0.1% mock slippage
-                'gas_estimate': 150000,  # Mock gas estimate
+                'slippage_estimate': None,  # Real slippage requires DEX-specific calculation
+                'gas_estimate': None,  # Real gas estimate requires DEX-specific calculation
                 'fee_percentage': 0.0,  # No fees for price APIs
                 'timestamp': datetime.now().isoformat()
             }

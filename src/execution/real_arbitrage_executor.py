@@ -52,9 +52,9 @@ class RealArbitrageExecutor:
         # 🚀 YOUR LOCAL NODE = SPEED ADVANTAGE + ZERO COSTS!
         self.network_configs = {
             'ethereum': {
-                'rpc_url': 'http://192.168.1.18:8545',  # 🚀 YOUR LOCAL NODE - CONFIRMED WORKING!
+                'rpc_url': 'https://ethereum.publicnode.com',  # 🚀 TEMPORARY: Use public RPC until your node syncs
                 'fallback_rpcs': [
-                    'https://ethereum.publicnode.com',  # Confirmed working
+                    'http://192.168.1.18:8545',  # Your node (when synced)
                     f"https://eth-mainnet.g.alchemy.com/v2/{alchemy_api_key}",
                     'https://rpc.ankr.com/eth',
                     'https://eth.llamarpc.com'
@@ -394,18 +394,55 @@ class RealArbitrageExecutor:
                 else:
                     logger.warning("⚠️  MULTICALL DISABLED: Will use slow fallback balance checking")
 
+                # 🔥 STARTUP BALANCE CHECK: Ensure minimum ETH for gas BEFORE trading starts
+                logger.info("🔍 STARTUP: Checking ETH balance and auto-converting if needed...")
+                startup_balance_result = await self.smart_wallet_manager.ensure_sufficient_eth_for_trade(
+                    required_eth_amount=0.001,  # Small amount to trigger conversion if needed
+                    chain='arbitrum'
+                )
+
+                if startup_balance_result['success']:
+                    logger.info("✅ STARTUP: ETH balance sufficient for trading")
+                else:
+                    logger.warning(f"⚠️  STARTUP: ETH balance issue: {startup_balance_result.get('error', 'Unknown')}")
+                    logger.info("🔄 STARTUP: Will attempt conversions during first trade")
+
             except Exception as e:
                 logger.warning(f"⚠️  Smart Wallet Manager initialization failed: {e}")
                 self.smart_wallet_manager = None
 
-            # 🔥 Initialize flashloan integration
+            # 🔥 Initialize ENHANCED flashloan system with gas management, profitability, and safety buffers
             try:
-                from src.flashloan.flashloan_integration import FlashloanIntegration
-                self.flashloan_integration = FlashloanIntegration(self.wallet_account, self.web3_connections)
-                logger.info("🔥 Flashloan integration initialized")
+                from src.flashloan.enhanced_flashloan_system import EnhancedFlashloanSystem
+                self.enhanced_flashloan_system = EnhancedFlashloanSystem(
+                    self.web3_connections,
+                    self.wallet_account,
+                    self.smart_wallet_manager
+                )
+
+                # Initialize the enhanced system
+                flashloan_ready = await self.enhanced_flashloan_system.initialize()
+
+                if flashloan_ready:
+                    logger.info("🔥 ENHANCED FLASHLOAN SYSTEM READY!")
+                    logger.info("   ✅ Gas reserves managed")
+                    logger.info("   ✅ Real profitability calculation")
+                    logger.info("   ✅ Capital safety buffers active")
+
+                    # Get system status
+                    system_status = await self.enhanced_flashloan_system.get_system_status()
+                    total_capital = system_status.get('available_trading_capital_usd', 0)
+                    possible_flashloans = system_status.get('total_possible_flashloans', 0)
+
+                    logger.info(f"   💰 Available trading capital: ${total_capital:.2f}")
+                    logger.info(f"   🔥 Possible flashloans: {possible_flashloans}")
+                else:
+                    logger.warning("⚠️  Enhanced flashloan system initialization failed")
+                    self.enhanced_flashloan_system = None
+
             except Exception as e:
-                logger.warning(f"⚠️  Flashloan integration initialization failed: {e}")
-                self.flashloan_integration = None
+                logger.warning(f"⚠️  Enhanced flashloan system initialization failed: {e}")
+                self.enhanced_flashloan_system = None
 
             # 🎯 Initialize dynamic data service - NO MORE HARDCODED VALUES!
             try:
@@ -444,19 +481,25 @@ class RealArbitrageExecutor:
             
             # For same-chain arbitrage
             if source_chain == target_chain:
-                # 🔥 FLASHLOAN STRATEGY: Check if we should use flashloan for high-profit opportunities
+                # 🔥 ENHANCED FLASHLOAN STRATEGY: Use comprehensive system with gas management, profitability, and safety
                 profit_usd = opportunity.get('estimated_profit_usd', 0)
 
-                if True and self.flashloan_integration and profit_usd >= 0.50:  # 🔥 FLASHLOANS ACTIVATED! (50 cent minimum)
-                    logger.info(f"🔥 HIGH PROFIT OPPORTUNITY (${profit_usd:.2f}) - Attempting flashloan execution")
-                    flashloan_result = await self.flashloan_integration.execute_flashloan_arbitrage(opportunity)
+                if self.enhanced_flashloan_system and profit_usd >= 0.50:  # 🔥 ENHANCED FLASHLOANS ACTIVATED!
+                    logger.info(f"🔥 EVALUATING FLASHLOAN OPPORTUNITY (${profit_usd:.2f})")
+
+                    # Use enhanced system for comprehensive evaluation and execution
+                    flashloan_result = await self.enhanced_flashloan_system.execute_flashloan_arbitrage(opportunity)
 
                     if flashloan_result.get('success'):
-                        logger.info("🔥 FLASHLOAN ARBITRAGE SUCCESSFUL!")
+                        actual_profit = flashloan_result.get('profit_usd', 0)
+                        logger.info(f"🔥 ENHANCED FLASHLOAN SUCCESS! Profit: ${actual_profit:.2f}")
                         return flashloan_result
                     else:
-                        logger.warning(f"⚠️ Flashloan failed: {flashloan_result.get('error', 'Unknown error')}")
-                        logger.info("🛡️ Falling back to standard execution...")
+                        error_msg = flashloan_result.get('error', 'Unknown error')
+                        logger.warning(f"⚠️ Enhanced flashloan evaluation failed: {error_msg}")
+                        logger.info("🛡️ Falling back to standard wallet execution...")
+                elif self.enhanced_flashloan_system:
+                    logger.info(f"💡 Profit ${profit_usd:.2f} below flashloan threshold ($0.50) - using wallet funds")
 
                 # Standard execution (fallback or for smaller opportunities)
                 return await self._execute_same_chain_arbitrage(w3, opportunity)
@@ -507,8 +550,9 @@ class RealArbitrageExecutor:
 
             # FILTER: Only execute trades on tokens with GUARANTEED liquidity
             common_tokens = [
-                'WETH', 'USDC', 'USDT', 'DAI'           # ONLY high-liquidity pairs for first success
-                # Removed: WBTC, AVAX, etc. - these might not have direct ETH pairs
+                'WETH', 'USDC', 'USDT', 'DAI',          # High-liquidity stablecoins and ETH
+                'AVAX', 'MATIC', 'OP', 'BNB'            # Major L1 tokens with good liquidity
+                # Note: These tokens have confirmed contract addresses and liquidity
             ]
 
             if token not in common_tokens:
@@ -635,10 +679,26 @@ class RealArbitrageExecutor:
                 max_safe_wei = w3.to_wei(max_trade_eth, 'ether')
                 logger.info(f"⚠️  FALLBACK: Using {CONFIG.MAX_TRADE_PERCENTAGE*100:.0f}% of ETH balance only ({max_trade_eth:.6f} ETH)")
 
-            # Apply config limit
+            # Apply config limit with dynamic slippage buffer (your brilliant idea!)
             max_config_wei = w3.to_wei(0.25, 'ether')  # Increased from 0.025 to 0.25 ETH (~$750)
-            trade_amount_wei = min(max_safe_wei, max_config_wei)
-            trade_amount_eth = float(w3.from_wei(trade_amount_wei, 'ether'))
+
+            # Calculate dynamic slippage buffer before finalizing trade amount
+            if self.enhanced_flashloan_system:
+                preliminary_trade_eth = float(w3.from_wei(min(max_safe_wei, max_config_wei), 'ether'))
+                trade_amount_usd = preliminary_trade_eth * 3200  # Estimate USD value
+                buffer_usd = self.enhanced_flashloan_system.safety_buffer._calculate_dynamic_slippage_buffer(trade_amount_usd)
+                buffer_eth = buffer_usd / 3200  # Convert buffer back to ETH
+
+                # Reduce trade size to account for slippage buffer
+                adjusted_trade_eth = preliminary_trade_eth - buffer_eth
+                trade_amount_wei = w3.to_wei(max(adjusted_trade_eth, 0.01), 'ether')  # Min 0.01 ETH
+                trade_amount_eth = float(w3.from_wei(trade_amount_wei, 'ether'))
+
+                logger.info(f"   💰 Dynamic slippage buffer: ${buffer_usd:.2f} ({buffer_eth:.4f} ETH)")
+                logger.info(f"   🎯 Trade size with buffer: {trade_amount_eth:.4f} ETH (was {preliminary_trade_eth:.4f} ETH)")
+            else:
+                trade_amount_wei = min(max_safe_wei, max_config_wei)
+                trade_amount_eth = float(w3.from_wei(trade_amount_wei, 'ether'))
 
             # 🔍 DEBUG: Log the enhanced trade amount calculation
             logger.info(f"   🔍 ENHANCED TRADE AMOUNT DEBUG:")

@@ -391,7 +391,7 @@ class MasterArbitrageSystem:
                 logger.info("💰 Setting REAL wallet value...")
 
                 # Use your ACTUAL wallet value instead of fake blockchain queries
-                real_wallet_value = 765.56  # Your actual wallet value
+                real_wallet_value = 3656.0  # Your actual wallet value
 
                 # Update executor with REAL wallet value
                 if hasattr(self.executor, 'total_wallet_value_usd'):
@@ -472,8 +472,8 @@ class MasterArbitrageSystem:
                     # 💰 SHOW OPTIMIZED TRADE AMOUNT: Display the dollar amount that will be used
                     if hasattr(self, 'executor') and self.executor:
                         try:
-                            # Get REAL wallet value (should be 765.56)
-                            real_wallet_value = getattr(self.executor, 'total_wallet_value_usd', 765.56)
+                            # Get REAL wallet value (should be 3656.0)
+                            real_wallet_value = getattr(self.executor, 'total_wallet_value_usd', 3656.0)
                             wallet_value = real_wallet_value
 
                             # 🔧 OPTIMIZED TRADE SIZING: Use smaller amounts to reduce slippage
@@ -488,7 +488,7 @@ class MasterArbitrageSystem:
 
                         except Exception as e:
                             # Use your ACTUAL wallet value with optimization
-                            wallet_value = 765.56
+                            wallet_value = 3656.0
                             trade_amount_usd = wallet_value * 0.25  # 25% for slippage optimization
                             logger.info(f"   💰 OPTIMIZED Trade amount: ${trade_amount_usd:.2f} (25% of ${wallet_value:.2f} wallet - SLIPPAGE OPTIMIZED)")
 
@@ -997,8 +997,8 @@ class MasterArbitrageSystem:
                 try:
                     from src.config.trading_config import CONFIG
 
-                    # Get REAL wallet value (should be set to 765.56)
-                    real_wallet_value = getattr(self.executor, 'total_wallet_value_usd', 765.56)
+                    # Get REAL wallet value (should be set to 3656.0)
+                    real_wallet_value = getattr(self.executor, 'total_wallet_value_usd', 3656.0)
                     wallet_value = real_wallet_value
                     logger.info(f"      💰 REAL wallet value: ${wallet_value:.2f}")
 
@@ -1016,12 +1016,12 @@ class MasterArbitrageSystem:
 
                 except Exception as e:
                     # Use your ACTUAL wallet value as fallback
-                    wallet_value = 765.56
+                    wallet_value = 3656.0
                     wallet_based_trade_size = wallet_value * 0.25  # 25% for slippage optimization
                     logger.warning(f"      ⚠️  Config error, using ACTUAL wallet: ${wallet_value:.2f} (25% = ${wallet_based_trade_size:.2f})")
             else:
                 # Use your ACTUAL wallet value
-                wallet_value = 765.56
+                wallet_value = 3656.0
                 wallet_based_trade_size = wallet_value * 0.25  # 25% for slippage optimization
                 logger.warning(f"      ⚠️  No executor, using ACTUAL wallet: ${wallet_value:.2f} (25% = ${wallet_based_trade_size:.2f})")
 
@@ -1805,10 +1805,10 @@ class MasterArbitrageSystem:
             # Get total available capital using centralized config
             if hasattr(self, 'executor') and self.executor:
                 from config.trading_config import CONFIG
-                wallet_value = getattr(self.executor, 'total_wallet_value_usd', 458.31)
+                wallet_value = getattr(self.executor, 'total_wallet_value_usd', 3656.0)
                 total_capital = wallet_value * CONFIG.MAX_TRADE_PERCENTAGE
             else:
-                total_capital = 343.73  # Fallback: 75% of $458.31 wallet
+                total_capital = 2742.0  # Fallback: 75% of $3656.0 wallet
 
             # Split capital equally among parallel trades
             num_trades = len(opportunities)

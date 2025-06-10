@@ -1,6 +1,154 @@
 # System Patterns
 
-## 🎉 LATEST: EXECUTION LOCK PATTERN (December 2024)
+## 🔧 LATEST SYSTEM PATTERNS: CONFIGURATION OVERRIDE ANTI-PATTERN FIXED (June 2025)
+
+### 🐛 Configuration Override Anti-Pattern (FIXED)
+**CRITICAL ANTI-PATTERN**: Hardcoded config values overriding interactive user input
+
+#### The Anti-Pattern
+```python
+# BAD: Hardcoded override ignores user choice
+config = {
+    'trading_mode': 'flashloan',  # 🐛 OVERRIDES USER INPUT!
+}
+
+# User prompt becomes meaningless
+choice = input("Switch to FLASHLOAN-ONLY mode? (y/n): ")
+# User choice ignored due to hardcoded config!
+```
+
+#### The Fix Applied
+```python
+# GOOD: Let interactive prompt control the mode
+config = {
+    # 'trading_mode': 'flashloan',  # ✅ REMOVED: Let user choose!
+}
+
+# Now user choice is respected
+choice = input("Switch to FLASHLOAN-ONLY mode? (y/n): ")
+if choice == 'y':
+    return 'flashloan'  # ✅ Actually works now!
+```
+
+#### Lessons Learned
+- **Never override user input** with hardcoded config values
+- **Interactive prompts must control behavior**, not be decorative
+- **Config inheritance order matters**: User input > Interactive prompts > Default config
+- **Test user flows end-to-end** to catch override conflicts
+
+### 🏪 DEX Chain Mapping Pattern (ENHANCED)
+**PATTERN**: Consistent DEX-to-chain mapping across all system components
+
+#### The Problem
+```python
+# DEX configured for one chain but used on another
+'swapbased': {  # Configured for Base
+    'router': '0x1CCbDD1Ae3b2686b7584c0c5b3F0d6F8C0b8c8c8'
+}
+
+# But system tries to use on Arbitrum
+opportunity = "USDC swapbased→traderjoe on arbitrum"  # 🐛 WRONG CHAIN!
+```
+
+#### The Solution Applied
+```python
+# CONSISTENT MAPPING: All components know SwapBased = Base
+# master_arbitrage_system.py
+'swapbased': 'base',
+
+# enhanced_cross_dex_detector.py  
+'swapbased': 'base',
+
+# flashloan_integration.py
+'base': {
+    'swapbased': '0x1CCbDD1Ae3b2686b7584c0c5b3F0d6F8C0b8c8c8'
+}
+```
+
+#### Pattern Benefits
+- **Prevents "Unknown DEX" errors** from chain mismatches
+- **Eliminates contract execution failures** from wrong addresses
+- **Enables proper cross-chain arbitrage** routing
+- **Maintains consistency** across all system components
+
+## 🏆 LATEST: PROFESSIONAL REPOSITORY ARCHITECTURE (December 2024)
+
+### Multi-Branch Showcase Pattern
+**BREAKTHROUGH**: Organized 7 months of development into professional GitHub showcase demonstrating institutional-grade capabilities.
+
+#### Repository Organization Pattern ✅
+```
+📁 LyleListon/mcp-server-ccxt - LEGENDARY SHOWCASE
+├── 🌿 main (original codebase)
+├── 🌿 backup-before-organization (complete backup)
+├── 🌿 feature/core-foundation (planning & architecture)
+├── 🌿 feature/speed-optimizations (13x performance improvement)
+├── 🌿 feature/real-execution (simulation → real profits)
+├── 🌿 feature/mev-strategies (institutional MEV empire)
+├── 🌿 feature/cross-chain (8-network dominance)
+├── 🌿 feature/security-systems (stealth & protection)
+└── 🌿 feature/infrastructure (enterprise deployment)
+```
+
+#### Documentation Excellence Pattern
+- **Showcase Documents**: Each branch tells specific technical achievement story
+- **Business Value Demonstration**: Clear ROI and competitive advantages
+- **Professional Presentation**: Investment-ready documentation standards
+- **Technical Narrative**: Evolution from basic to advanced capabilities
+
+### Dashboard Architecture Pattern
+**DISCOVERY**: Existing dashboards are AMAZING - professional-grade monitoring systems!
+
+#### Multi-Tier Dashboard Pattern ✅
+```
+📊 Dashboard Ecosystem
+├── 🎛️ Main Dashboard (dashboard/app.py)
+│   ├── Real-time Flask web interface
+│   ├── WebSocket live updates
+│   ├── Multi-network monitoring
+│   └── Professional UI/UX
+├── 👑 MEV Empire Dashboard (mev_empire_dashboard.py)
+│   ├── Advanced strategy monitoring
+│   ├── System performance metrics
+│   ├── Dynamic settings control
+│   └── Emergency stop controls
+└── 🌉 Data Bridge (dashboard_data_bridge.py)
+    ├── Real trading data integration
+    ├── SQLite persistence layer
+    ├── Cross-platform file bridge
+    └── Live metric updates
+```
+
+#### Data Integration Pattern
+```
+Trading Systems → Data Bridge → Dashboard Files → Web Interface → User
+     ↓              ↓              ↓              ↓
+  Real Trades → SQLite DB → JSON Files → WebSocket → Live Updates
+```
+
+### Transaction Bundling Architecture
+**DISCOVERY**: Already have sophisticated institutional-grade bundling capabilities!
+
+#### Advanced Bundle Patterns ✅
+```
+🎭 Stealth Bundle Pattern:
+[Decoy Tx] → [Your MEV Tx] → [Decoy Tx] → [Profit Tx]
+
+⚡ Flashloan Bundle Pattern:
+[Borrow] → [Arbitrage 1] → [Arbitrage 2] → [Arbitrage 3] → [Repay]
+
+🌉 Cross-Chain Bundle Pattern:
+Chain A: [Setup] → [Bridge Initiate]
+Chain B: [Bridge Receive] → [Arbitrage] → [Bridge Back]
+```
+
+#### Bundle Optimization Patterns
+- **Atomic Execution**: All transactions succeed or all fail together
+- **MEV Protection**: Private mempool submission until inclusion
+- **Gas Coordination**: Same gas price across all bundle transactions
+- **Profit Multiplication**: Combine multiple opportunities for maximum value
+
+## 🎉 PREVIOUS: EXECUTION LOCK PATTERN (December 2024)
 
 ### Critical Threading Conflict Resolution
 **BREAKTHROUGH**: Implemented execution lock to prevent scan interruption during trade execution.
@@ -72,7 +220,7 @@ COST_RATIO = 750%               # $7.50 costs per $1 profit
 
 #### The Optimized Pattern For Profits ✅
 ```python
-# PROFIT-FOCUSED CONFIGURATION (GUARANTEED PROFITS)
+# PROFIT-FOCUSED CONFIGURATION
 MIN_PROFIT_PERCENTAGE = 2.0     # 2.0% profit margins (20x increase)
 MIN_PROFIT_USD = 10.00          # $10.00 minimum profit (100x increase)
 TRADE_SIZE_PERCENTAGE = 0.25    # 25% of wallet (low slippage)

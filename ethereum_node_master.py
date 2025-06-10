@@ -4,7 +4,7 @@
 Your MEV Empire Command Center
 
 Strategies:
-1. 💰 Liquidation Bot (guaranteed profits)
+1. Liquidation Bot (high probability opportunities)
 2. ⚡ Flashloan Arbitrage (your system + node power)  
 3. 🎯 Frontrun Frontrunners (your brilliant idea!)
 4. 🌉 Cross-Chain Arbitrage (coming soon)

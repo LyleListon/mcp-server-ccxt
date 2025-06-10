@@ -432,7 +432,7 @@ class MemoryEnhancedCrossChainMEV:
                                 self.capital -= result.get("loss", 0)
 
                             # Small delay between trades
-                            await asyncio.sleep(2)
+                            # Removed simulation delay for performance
                         else:
                             logger.warning("⚠️ Insufficient capital for trading")
                             break
@@ -447,11 +447,11 @@ class MemoryEnhancedCrossChainMEV:
                     )
 
                 # Wait before next scan
-                await asyncio.sleep(30)  # Scan every 30 seconds
+                # Removed scan delay - continuous scanning for max performance
 
             except Exception as e:
                 logger.error(f"❌ Error in monitoring loop: {e}")
-                await asyncio.sleep(60)  # Wait longer on error
+                # Removed error delay - immediate retry for max responsiveness
 
     async def get_performance_summary(self) -> Dict[str, Any]:
         """Get comprehensive performance summary"""

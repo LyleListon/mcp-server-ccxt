@@ -67,7 +67,7 @@ class CrossChainOpportunityDetector:
         while True:
             try:
                 await self._scan_for_opportunities(price_aggregator)
-                await asyncio.sleep(self.scan_interval_seconds)
+                # Removed scan interval delay for maximum opportunity detection speed
                 
             except Exception as e:
                 logger.error(f"Detection error: {e}")
