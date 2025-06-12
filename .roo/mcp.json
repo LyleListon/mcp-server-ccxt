@@ -50,9 +50,9 @@
       "command": "/home/lylepaul78/Documents/augment-projects/MayArbi/mcp-memory-service/start-mcp-memory-service.sh",
       "args": [],
       "env": {},
-      "description": "Vector memory storage and retrieval",
+      "description": "Vector memory storage and retrieval (DISABLED - indentation errors)",
       "type": "memory",
-      "required": true
+      "required": false
     },
     "MCP-CCXT-Server": {
       "command": "/home/lylepaul78/Documents/augment-projects/MayArbi/mcp-server-ccxt/.venv/bin/python",
@@ -90,7 +90,7 @@
       "command": "/home/lylepaul78/Documents/augment-projects/MayArbi/github-mcp-server/start-github-mcp.sh",
       "args": [],
       "env": {
-        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+        "GITHUB_TOKEN": "ghp_328kkiEIF0SvWUL0RjGGcsTZE6N4iN2mjAch"
       },
       "description": "Official GitHub MCP server for repository operations",
       "type": "github",

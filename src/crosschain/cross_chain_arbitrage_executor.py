@@ -328,7 +328,7 @@ class CrossChainArbitrageExecutor:
                 token=token,
                 amount_usd=amount_usd,
                 dex='sushiswap',  # Default DEX
-                slippage_pct=1.0
+                slippage_pct=3.0  # Use 3% default slippage
             )
 
             if buy_result['success']:
@@ -457,7 +457,7 @@ class CrossChainArbitrageExecutor:
                 token=token,
                 token_amount=amount,
                 dex='sushiswap',  # Default DEX
-                slippage_pct=1.0
+                slippage_pct=3.0  # Use 3% default slippage
             )
 
             if sell_result['success']:

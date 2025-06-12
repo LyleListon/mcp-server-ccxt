@@ -316,26 +316,23 @@ class EthereumFlashloanArbitrage:
         return profitable_opportunities
     
     async def _get_token_prices(self, token_a: str, token_b: str) -> Dict[str, float]:
-        """Get token prices from all DEXes"""
-        
+        """Get REAL token prices from DEX contracts - NO SIMULATION!"""
+
         prices = {}
-        
-        # For demo, simulate price fetching
-        # In reality, you'd call each DEX's contract
-        
+
         try:
-            # Simulate different prices on different DEXes
-            base_price = 3800.0 if token_a == 'WETH' and token_b == 'USDC' else 1.0
-            
-            prices['uniswap_v2'] = base_price * (1 + 0.001)  # Slightly higher
-            prices['uniswap_v3'] = base_price * (1 - 0.0005) # Slightly lower
-            prices['sushiswap'] = base_price * (1 + 0.0008)
-            prices['balancer'] = base_price * (1 - 0.0012)
-            prices['curve'] = base_price * (1 + 0.0003)
-            
+            # TODO: Implement REAL price fetching from DEX contracts
+            # This should call actual DEX smart contracts, not simulate prices
+            logger.error(f"🚨 REAL PRICE FETCHING NOT IMPLEMENTED for {token_a}/{token_b}")
+            logger.error("   Must implement actual DEX contract calls")
+
+            # Return empty dict - no fake prices!
+            return {}
+
         except Exception as e:
-            logger.debug(f"❌ Error getting prices for {token_a}/{token_b}: {e}")
-        
+            logger.error(f"❌ Error getting REAL prices for {token_a}/{token_b}: {e}")
+            return {}
+
         return prices
     
     def _calculate_arbitrage(self, token_a: str, token_b: str, prices: Dict[str, float]) -> List[EthereumArbitrageOpportunity]:

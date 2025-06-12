@@ -92,7 +92,7 @@ class RealArbitrageExecutor:
         # Execution settings
         self.execution_settings = {
             'max_gas_price_gwei': 50,
-            'slippage_tolerance': 0.5,  # 0.5%
+            'slippage_tolerance': 6.0,  # 6.0% (increased from 0.5%)
             'deadline_minutes': 10,
             'min_profit_usd': 0.50,  # 50 cents minimum
             'max_trade_size_usd': 5000

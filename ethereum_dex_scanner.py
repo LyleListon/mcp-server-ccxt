@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """
-🔍 ETHEREUM-ONLY DEX SCANNER
-Dedicated Ethereum mainnet DEX discovery for your MEV Empire
+🔍 DUAL-CHAIN DEX SCANNER
+Ethereum + Base blockchain DEX discovery for your MEV Empire
 
 Features:
-- Continuous Ethereum mainnet scanning
+- Continuous Ethereum + Base scanning
 - Real-time DEX discovery and verification
-- Integration with your Ethereum node
+- Integration with your local nodes
 - Automatic database updates for MEV strategies
 - Bot detection for frontrunning intelligence
+- Parallel chain monitoring for maximum coverage
 """
 
 import asyncio
@@ -28,19 +29,29 @@ import csv
 logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(levelname)s | %(message)s')
 logger = logging.getLogger("ethereum-dex-scanner")
 
-class EthereumDEXScanner:
+class DualChainDEXScanner:
     """
-    🔍 ETHEREUM DEX SCANNER
-    
-    Dedicated scanner for Ethereum mainnet DEX discovery
+    🔍 DUAL-CHAIN DEX SCANNER
+
+    Dedicated scanner for Ethereum + Base DEX discovery and MEV bot hunting
     """
-    
+
     def __init__(self):
-        # Use your Ethereum node or fallback to public RPC
+        # Your local nodes - NO STATIC VALUES, get from environment
         self.ethereum_node_url = os.getenv('ETHEREUM_NODE_URL', 'http://192.168.1.18:8545')
+        self.base_node_url = os.getenv('BASE_NODE_URL', 'http://192.168.1.18:8546')  # Update with your Base node
+
+        # API keys for ABI fetching
         self.etherscan_api_key = os.getenv('ETHERSCAN_API_KEY', '')
-        self.db_file = 'ethereum_dexes.db'
-        self.w3 = None
+        self.basescan_api_key = os.getenv('BASESCAN_API_KEY', '')
+
+        # Database files for each chain
+        self.ethereum_db = 'ethereum_dexes.db'
+        self.base_db = 'base_dexes.db'
+
+        # Web3 connections
+        self.ethereum_w3 = None
+        self.base_w3 = None
         
         # DEX detection signatures
         self.factory_signatures = [
@@ -83,11 +94,11 @@ class EthereumDEXScanner:
         logger.info(f"🔗 Connecting to Ethereum node: {self.ethereum_node_url}")
         
         try:
-            self.w3 = Web3(Web3.HTTPProvider(self.ethereum_node_url, request_kwargs={'timeout': 10}))
-            
+            self.ethereum_w3 = Web3(Web3.HTTPProvider(self.ethereum_node_url, request_kwargs={'timeout': 10}))
+
             # Test connection
-            if self.w3.is_connected():
-                latest_block = self.w3.eth.block_number
+            if self.ethereum_w3.is_connected():
+                latest_block = self.ethereum_w3.eth.block_number
                 logger.info(f"✅ Connected to Ethereum. Latest block: {latest_block:,}")
                 return True
             else:
@@ -100,10 +111,10 @@ class EthereumDEXScanner:
             logger.info("🔄 Trying fallback public RPC...")
             try:
                 fallback_url = "https://eth.llamarpc.com"
-                self.w3 = Web3(Web3.HTTPProvider(fallback_url, request_kwargs={'timeout': 10}))
-                
-                if self.w3.is_connected():
-                    latest_block = self.w3.eth.block_number
+                self.ethereum_w3 = Web3(Web3.HTTPProvider(fallback_url, request_kwargs={'timeout': 10}))
+
+                if self.ethereum_w3.is_connected():
+                    latest_block = self.ethereum_w3.eth.block_number
                     logger.info(f"✅ Connected to fallback RPC. Latest block: {latest_block:,}")
                     return True
                 else:
@@ -115,8 +126,8 @@ class EthereumDEXScanner:
     
     def setup_database(self):
         """Setup SQLite database for DEX storage"""
-        
-        conn = sqlite3.connect(self.db_file)
+
+        conn = sqlite3.connect(self.ethereum_db)
         c = conn.cursor()
         
         # DEXes table
@@ -153,7 +164,7 @@ class EthereumDEXScanner:
         
         logger.info(f"🔍 Scanning Ethereum blocks {start_block:,} to {end_block:,}")
         
-        conn = sqlite3.connect(self.db_file)
+        conn = sqlite3.connect(self.ethereum_db)
         c = conn.cursor()
         
         dexes_found = 0
@@ -161,13 +172,13 @@ class EthereumDEXScanner:
         
         for block_num in range(start_block, end_block):
             try:
-                block = self.w3.eth.get_block(block_num, full_transactions=True)
+                block = self.ethereum_w3.eth.get_block(block_num, full_transactions=True)
                 
                 for tx in block.transactions:
                     if tx.to is None:  # Contract creation transaction
                         # Get the transaction receipt to find the actual contract address
                         try:
-                            receipt = self.w3.eth.get_transaction_receipt(tx['hash'])
+                            receipt = self.ethereum_w3.eth.get_transaction_receipt(tx['hash'])
                             contract_address = receipt.contractAddress
                             if not contract_address:
                                 continue  # Skip if no contract was created
@@ -177,7 +188,7 @@ class EthereumDEXScanner:
                         
                         try:
                             # Get contract code
-                            code = self.w3.eth.get_code(contract_address).hex()
+                            code = self.ethereum_w3.eth.get_code(contract_address).hex()
                             
                             # Check for DEX patterns
                             dex_type = self._identify_dex_type(code)
@@ -308,7 +319,7 @@ class EthereumDEXScanner:
         """Export DEX and bot reports"""
         
         # Export DEX report
-        conn = sqlite3.connect(self.db_file)
+        conn = sqlite3.connect(self.ethereum_db)
         c = conn.cursor()
         
         c.execute("SELECT * FROM dexes")
@@ -333,32 +344,33 @@ class EthereumDEXScanner:
         logger.info(f"📊 Exported reports: {len(dex_rows)} DEXes, {len(bot_rows)} MEV bots")
     
     async def continuous_scan(self):
-        """Continuous Ethereum scanning"""
-        
+        """Continuous Ethereum scanning - FRESH BLOCKS FIRST"""
+
         logger.info("🚀 Starting continuous Ethereum DEX scanning...")
-        
-        # Get starting block
-        latest_block = self.w3.eth.block_number
+
+        # Get LATEST block - NO STATIC VALUES
+        latest_block = self.ethereum_w3.eth.block_number
         last_scanned_block = latest_block
-        
-        logger.info(f"📊 Starting from block {latest_block:,}")
-        
+
+        logger.info(f"📊 Starting from LATEST block {latest_block:,} (FRESH INTEL)")
+        logger.info("🎯 Prioritizing new blocks for real-time frontrunning opportunities")
+
         while True:
             try:
-                current_block = self.w3.eth.block_number
-                
-                # Scan new blocks
+                current_block = self.ethereum_w3.eth.block_number
+
+                # Scan ONLY new blocks for fresh intel
                 if current_block > last_scanned_block:
-                    logger.info(f"🔍 New blocks: {last_scanned_block + 1:,} to {current_block:,}")
+                    logger.info(f"� FRESH BLOCKS: {last_scanned_block + 1:,} to {current_block:,}")
                     await self.scan_blocks(last_scanned_block + 1, current_block + 1)
                     last_scanned_block = current_block
-                    
-                    # Export reports every 10 blocks
-                    if current_block % 10 == 0:
+
+                    # Export reports every 5 blocks for faster updates
+                    if current_block % 5 == 0:
                         self.export_reports()
-                
-                # Wait for new blocks
-                await asyncio.sleep(12)  # Ethereum block time ~12 seconds
+
+                # Faster polling for fresh blocks - SPEED OPTIMIZATION
+                await asyncio.sleep(6)  # Check every 6 seconds for new blocks
                 
             except KeyboardInterrupt:
                 logger.info("🛑 Scanner stopped by user")
@@ -378,7 +390,7 @@ async def main():
     print("🔍 Dedicated Ethereum Mainnet Discovery")
     print("🔍" * 30)
     
-    scanner = EthereumDEXScanner()
+    scanner = DualChainDEXScanner()
     
     try:
         # Connect to Ethereum

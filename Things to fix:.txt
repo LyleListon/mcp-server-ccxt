@@ -1,0 +1,92 @@
+Things to fix:
+
+O |    Route: base → arbitrum
+23:40:08 | INFO |    Profit: 1.77% ($10.14)
+23:40:08 | INFO |    DEXs: baseswap → ramses
+23:40:08 | INFO |    Bridge time: ~2 min
+23:40:08 | INFO | ⏰ Scan #3 - 23:40:08
+23:40:08 | INFO | 🔍 Fetching real prices from sushiswap on arbitrum
+23:40:08 | INFO | 🔍 Fetching real prices from uniswap_v3 on arbitrum
+23:40:08 | INFO | ✅ Fetched 1 real prices from arbitrum
+
+It looks like we found an opportunity, went do do the bridge for the trade
+  and then gave up on it and started searching for a new opportunity.
+
+----
+
+
+23:42:55 | INFO |    💰 REAL ETH price: $2680.40
+23:42:55 | INFO |    🛡️  Slippage buffer (3.0% × 2.15): 5.730857 CRV
+23:42:55 | INFO |    💪 Enhanced protection: 6.4% total
+23:42:55 | INFO |    💱 ETH amount: 0.088850 ETH
+23:42:55 | INFO |    🎯 Expected tokens: 88.850493 CRV
+23:42:55 | INFO |    🛡️  Min tokens out: 83.119636 CRV
+
+Eth amount -- .083 ETH
+Tokens needed -- 88.85 CRV
+Min token out (Not really sure what this is) 83.11
+the conversion is way off and we never seem to be taking as many tokes with us as we need.
+
+-----
+
+|    ⚠️  Price $371513157157487968256.00 outside reasonable range from https://eth.llamarpc.com
+00:05:42 | INFO |    🔗 Trying RPC: https://rpc.ankr.com/eth
+00:05:43 | WARNING |    ❌ RPC not connected: https://rpc.ankr.com/eth
+00:05:43 | INFO |    🔗 Trying RPC: https://ethereum.publicnode.com
+00:05:43 | INFO |    ✅ Connected to https://ethereum.publicnode.
+
+-----
+
+   💪 Enhanced protection: 6.4% total
+00:08:10 | INFO |    💱 ETH amount: 0.095804 ETH
+00:08:10 | INFO |    🎯 Expected tokens: 95.803738 AAVE
+00:08:10 | INFO |    🛡️  Min tokens out: 89.983324 AAVE
+
+-----
+
+    💪 Enhanced protection: 6.5% total
+00:08:09 | INFO |    💱 ETH amount: 0.076846 ETH
+00:08:09 | INFO |    🎯 Expected tokens: 76.846218 USDT
+00:08:09 | INFO |    🛡️  Min tokens out: 71.889637 USDT
+
+-----
+
+:13:39 | INFO | Calling store_penny_trade on dexmind with args: {'tokenA': 'UNKNOWN', 'tokenB': 'USDC', 'dexA': 'unknown', 'dexB': 'unknown', 'chain': 'ethereum', 'priceA': 0, 'priceB': 0, 'profitUSD': 0, 'gasSpentUSD': 0.01, 'wasExecuted': True}
+00:13:39 | INFO | Stored trade in DexMind: UNKNOWN/USDC
+00:13:39 | INFO | Calling store_memory on memory_service with args: {'content': 'Arbitrage pattern: UNKNOWN/USDC between unknown and unknown. Profit: $0.00, Success: True', 'metadata': {'tags': 'arbitrage,UNKNOWN,USDC,unknown,unknown', 'type': 'arbitrage_pattern'}}
+00:13:39 | INFO | Stored pattern in memory service: UNKNOWN/USDC
+00:13:39 | INFO | Calling create_entities on knowledge_graph with args: {'entities': [{'name'
+
+-----
+
+ ETH amount: 0.080542 ETH
+00:15:04 | INFO |    🎯 Expected tokens: 80.541727 ARB
+00:15:04 | INFO |    🛡️  Min tokens out: 75.346786 ARB
+00:15:04 | INFO |    ⛽ Gas estimate: 176,950
+00:15:04 | INFO |    ⛽ Gas price: 0.0 gwei
+00:15:04 | INFO | 🚀 REAL EXECUTION MODE ACTIVE
+00:15:04 | INFO |    💰 Trading: 0.080542 ETH for ARB
+00:15:04 | WARNING |    ⛽ Would use gas: 176,950 at 0.0 gwei
+00:15:04 | WARNING |    🎯 Expected tokens: 80.541727
+00:15:04 | WARNING |    🛡️  Set ENABLE_REAL_TRANSACTIONS=true to execute actual trades
+00:15:04 | INFO |    📡 REAL Transaction sent: b72d49a11015d7045c728b52856c77cf14a0405abfb7121a2a73d9fa52597d23
+00:15:04 | INFO |    ⏳ Waiting for confirmation...
+
+----
+
+ Slippage buffer (3.0% × 2.15): 4.852292 AVAX
+00:18:47 | INFO |    💪 Enhanced protection: 6.4% total
+00:18:47 | INFO |    💱 ETH amount: 0.075229 ETH
+00:18:47 | INFO |    🎯 Expected tokens: 75.229337 AVAX
+00:18:47 | INFO |    🛡️  Min tokens out: 70.377045 AVAX
+^\timeout: the monitored command dumpe
+
+-----
+
+ 💰 REAL ETH price (CoinGecko): $2690.35
+00:58:00 | INFO |    🛡️  Slippage buffer (3.0% + 1% safety): 3.356844 BNB
+00:58:00 | INFO |    💪 Total protection: 4.0%
+00:58:00 | INFO |    💱 ETH amount: 0.083921 ETH
+00:58:00 | INFO |    🎯 Expected tokens: 83.921095 BNB
+00:58:00 | INFO |    🛡️  Min tokens out: 80.564252 BNB
+00:58:00 | ERROR | ❌ Buy order failed: {'code': -32000, 'm

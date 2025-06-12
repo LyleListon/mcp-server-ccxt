@@ -29,20 +29,11 @@ try:
     BOT_AVAILABLE = True
 except ImportError:
     BOT_AVAILABLE = False
-    print("Warning: Enhanced arbitrage bot not available. Running memory tests only.")
+    print("🚨 ERROR: Enhanced arbitrage bot not available - NO MOCK CLASSES!")
+    print("   Real implementation required - no fake data allowed")
 
-    # Create mock classes for testing
-    class EnhancedArbitrageBot:
-        def __init__(self, config_path=None):
-            pass
-        async def execute_arbitrage(self, opportunity):
-            return {"success": True, "profit": 10.5, "gas_cost": 2.1}
-
-    class ArbitrageOpportunity:
-        def __init__(self):
-            self.token_symbol = "ETH"
-            self.dex_a = "uniswap"
-            self.dex_b = "sushiswap"
+    # NO MOCK CLASSES - FAIL FAST IF DEPENDENCIES MISSING
+    raise ImportError("Required arbitrage bot components not available - cannot use mock data")
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

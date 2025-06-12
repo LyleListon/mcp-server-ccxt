@@ -295,8 +295,10 @@ class GasPriceOracle:
                     self.gas_cache['eth_price'] = (eth_price, datetime.now())
                     return eth_price
             
-            # Fallback price
-            return 2500.0
+            # NO FALLBACKS! FAIL LOUDLY IF NO REAL DATA
+            error_msg = "❌ FAILED TO GET REAL ETH PRICE FOR GAS CALCULATIONS - NO FAKE DATA ALLOWED!"
+            logger.error(error_msg)
+            raise Exception(error_msg)
             
         except Exception as e:
             logger.debug(f"Error fetching ETH price: {e}")

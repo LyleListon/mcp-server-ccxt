@@ -93,10 +93,10 @@ class DynamicDataService:
                 logger.warning(f"Price source {source} failed: {e}")
                 continue
         
-        # Fallback to reasonable estimate if all sources fail
-        fallback_price = 3200.0  # Conservative estimate
-        logger.warning(f"⚠️ All price sources failed, using fallback: ${fallback_price}")
-        return fallback_price
+        # NO FALLBACKS! FAIL LOUDLY IF NO REAL DATA
+        error_msg = "❌ ALL ETH PRICE SOURCES FAILED - NO FAKE DATA ALLOWED!"
+        logger.error(error_msg)
+        raise Exception(error_msg)
     
     async def get_token_price_usd(self, token_symbol: str) -> float:
         """Get real-time token price in USD."""
@@ -129,18 +129,10 @@ class DynamicDataService:
         except Exception as e:
             logger.warning(f"Failed to get {token_symbol} price: {e}")
         
-        # Fallback prices
-        fallbacks = {
-            'WETH': 3200.0,
-            'USDC': 1.0,
-            'USDT': 1.0,
-            'DAI': 1.0,
-            'UNI': 12.0,
-            'LINK': 20.0,
-            'AAVE': 300.0
-        }
-        
-        return fallbacks.get(token_symbol.upper(), 1.0)
+        # NO FALLBACKS! FAIL LOUDLY IF NO REAL DATA
+        error_msg = f"❌ FAILED TO GET REAL PRICE FOR {token_symbol} - NO FAKE DATA ALLOWED!"
+        logger.error(error_msg)
+        raise Exception(error_msg)
     
     # ============================================================================
     # ⛽ REAL-TIME GAS DATA (NO MORE FIXED GAS!)
@@ -318,9 +310,25 @@ class DynamicDataService:
                     
                     total_value += eth_value
                     logger.info(f"💰 {chain}: {eth_balance:.6f} ETH (${eth_value:.2f})")
-                    
-                    # TODO: Add token balances (USDC, USDT, etc.)
-                    # This requires token contract calls for each token
+
+                    # 🚀 GET ALL TOKEN BALANCES (USDC, USDT, WETH, etc.)
+                    try:
+                        # Use smart wallet manager to get all token balances
+                        from src.wallet.smart_wallet_manager import SmartWalletManager
+                        smart_wallet = SmartWalletManager(self.web3_connections)
+
+                        # Get all token balances for this chain
+                        token_balances = await smart_wallet.get_real_balances(wallet_address, chain)
+
+                        # Add token values to total (excluding ETH which we already counted)
+                        for token_symbol, balance_usd in token_balances.items():
+                            if token_symbol != 'ETH':  # Don't double-count ETH
+                                total_value += balance_usd
+                                logger.info(f"💰 {chain}: ${balance_usd:.2f} {token_symbol}")
+
+                    except Exception as token_error:
+                        logger.warning(f"Could not get token balances for {chain}: {token_error}")
+                        # Continue with just ETH balance
                     
                 except Exception as e:
                     logger.warning(f"Failed to get balance on {chain}: {e}")

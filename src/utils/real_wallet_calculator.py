@@ -214,22 +214,13 @@ class RealWalletCalculator:
             return 0.0
 
     async def update_token_prices(self) -> bool:
-        """Update token prices from real API (placeholder for now)."""
+        """Update token prices from real API - NO FAKE DATA ALLOWED!"""
         try:
-            # TODO: Implement real price fetching from CoinGecko/CoinMarketCap
-            # For now, use reasonable estimates
-            self.token_prices_usd.update({
-                'ETH': 3800.0,   # Current ETH price
-                'WETH': 3800.0,  # Same as ETH
-                'USDC': 1.0,     # Stable
-                'USDC.e': 1.0,   # Stable
-                'USDbC': 1.0,    # Stable
-                'USDT': 1.0      # Stable
-            })
-            
-            logger.info("💰 Token prices updated")
-            return True
-            
+            # NO HARDCODED PRICES! MUST GET REAL DATA
+            error_msg = "❌ REAL PRICE FETCHING NOT IMPLEMENTED - NO FAKE DATA ALLOWED!"
+            logger.error(error_msg)
+            raise Exception(error_msg)
+
         except Exception as e:
             logger.error(f"❌ Price update error: {e}")
             return False

@@ -184,10 +184,16 @@ class CrossChainOpportunityDetector:
         
         return [opp for opp in opportunities if opp is not None]
     
-    def _create_opportunity(self, token: str, buy_chain: str, sell_chain: str, 
+    def _create_opportunity(self, token: str, buy_chain: str, sell_chain: str,
                           buy_price: float, sell_price: float, chains_data: Dict) -> Optional[CrossChainOpportunity]:
         """Create a cross-chain opportunity if profitable."""
         try:
+            # 🎯 FILTER BY TARGET TOKENS ONLY - Don't trade unwanted tokens!
+            target_tokens = ["ETH", "WETH", "USDC", "USDC.e", "USDT", "DAI", "PEPE"]
+            if token.upper() not in [t.upper() for t in target_tokens]:
+                logger.debug(f"🚫 SKIPPING {token} - Not in target tokens list")
+                return None
+
             if buy_price >= sell_price:
                 return None
             
@@ -303,28 +309,31 @@ class CrossChainOpportunityDetector:
         try:
             # Add to active opportunities
             self.active_opportunities.append(opportunity)
-            
+
             # Clean up old opportunities
             cutoff_time = datetime.now() - timedelta(minutes=self.opportunity_timeout_minutes)
             self.active_opportunities = [
-                opp for opp in self.active_opportunities 
+                opp for opp in self.active_opportunities
                 if opp.timestamp > cutoff_time
             ]
-            
-            # Notify callbacks
-            for callback in self.opportunity_callbacks:
-                try:
-                    await callback(opportunity)
-                except Exception as e:
-                    logger.error(f"Opportunity callback error: {e}")
-            
+
             logger.info(f"🎯 CROSS-CHAIN OPPORTUNITY DETECTED:")
             logger.info(f"   Token: {opportunity.token}")
             logger.info(f"   Route: {opportunity.buy_chain} → {opportunity.sell_chain}")
             logger.info(f"   Profit: {opportunity.profit_pct:.2f}% (${opportunity.profit_usd:.2f})")
             logger.info(f"   DEXs: {opportunity.buy_dex} → {opportunity.sell_dex}")
             logger.info(f"   Bridge time: ~{opportunity.estimated_bridge_time_minutes} min")
-            
+
+            # 🚀 EXECUTE THE OPPORTUNITY IMMEDIATELY!
+            logger.info(f"🚀 EXECUTING CROSS-CHAIN ARBITRAGE...")
+
+            # Notify callbacks (including execution)
+            for callback in self.opportunity_callbacks:
+                try:
+                    await callback(opportunity)
+                except Exception as e:
+                    logger.error(f"Opportunity callback error: {e}")
+
         except Exception as e:
             logger.error(f"Opportunity processing error: {e}")
     

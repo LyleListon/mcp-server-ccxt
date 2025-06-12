@@ -378,18 +378,15 @@ class EnhancedArbitrageEngine:
             }
 
     async def _simulate_execution(self, opportunity: Dict[str, Any]) -> Dict[str, Any]:
-        """Simulate opportunity execution for testing."""
-        logger.info(f"Simulating execution of opportunity {opportunity.get('id')}")
+        """NO SIMULATION ALLOWED - REAL EXECUTION ONLY!"""
+        logger.error(f"🚨 SIMULATION DISABLED for opportunity {opportunity.get('id')}")
+        logger.error("   Real execution must be implemented - no mock data!")
 
-        # Simulate execution delay
-        await asyncio.sleep(0.1)
-
-        # Simulate success based on enhanced profit score
-        enhanced_score = opportunity.get('enhanced_profit_score', 0)
-        success_probability = min(enhanced_score / 10, 0.9)  # Cap at 90%
-
-        import random
-        success = random.random() < success_probability
+        return {
+            'success': False,
+            'error': 'Simulation disabled - real execution required',
+            'timestamp': datetime.now().isoformat()
+        }
 
         result = {
             'success': success,

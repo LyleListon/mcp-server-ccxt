@@ -224,22 +224,15 @@ class AlchemySDKFeeds:
     async def _get_eth_price_sdk(self, chain: str) -> float:
         """Get ETH price using Alchemy SDK enhanced APIs."""
         try:
-            # Base ETH price (would come from Alchemy price APIs)
-            base_eth_price = 2500.0
-            
-            # L2-specific price adjustments
-            l2_adjustments = {
-                'arbitrum': 0.9995,   # Slight discount
-                'base': 1.0005,       # Slight premium (Coinbase)
-                'optimism': 0.9990    # Slight discount
-            }
-            
-            adjustment = l2_adjustments.get(chain, 1.0)
-            return base_eth_price * adjustment
-            
+            # NO HARDCODED PRICES! MUST GET REAL DATA FROM ALCHEMY
+            error_msg = f"❌ ALCHEMY ETH PRICE NOT IMPLEMENTED FOR {chain} - NO FAKE DATA ALLOWED!"
+            logger.error(error_msg)
+            raise Exception(error_msg)
+
         except Exception as e:
             logger.error(f"ETH price fetch error for {chain}: {e}")
-            return 2500.0
+            # NO FALLBACKS! FAIL LOUDLY
+            raise
 
     async def _get_stablecoin_prices_sdk(self, chain: str) -> Dict[str, float]:
         """Get stablecoin prices using Alchemy SDK."""

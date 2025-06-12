@@ -92,35 +92,8 @@ class SpeedOptimizedArbitrageExecutor:
             
             logger.info("✅ Speed optimization initialization complete!")
     
-    async def create_mock_opportunity(self) -> Dict[str, Any]:
-        """Create a realistic mock arbitrage opportunity for testing."""
-        import random
-        
-        opportunity = {
-            'id': f"speed_test_{int(time.time() * 1000)}",
-            'chain': 'arbitrum',
-            'flashloan_token': 'USDC',
-            'target_token': 'WETH',
-            'flashloan_amount': 10000.0,
-            'estimated_net_profit_usd': random.uniform(5.0, 25.0),
-            'arbitrage_path': {
-                'step1': {
-                    'action': 'buy',
-                    'dex': 'sushiswap',
-                    'from_token': 'USDC',
-                    'to_token': 'WETH'
-                },
-                'step2': {
-                    'action': 'sell',
-                    'dex': 'camelot', 
-                    'from_token': 'WETH',
-                    'to_token': 'USDC'
-                }
-            },
-            'mock': True
-        }
-        
-        return opportunity
+    # MOCK DATA ELIMINATED - NO MORE FAKE OPPORTUNITIES!
+    # This file is for speed testing only and should not create mock data
     
     async def execute_speed_optimized_arbitrage(self, opportunity: Dict[str, Any]) -> Dict[str, Any]:
         """Execute arbitrage with all speed optimizations."""
@@ -276,28 +249,10 @@ class SpeedOptimizedArbitrageExecutor:
             }
     
     async def run_speed_test(self, num_tests: int = 5):
-        """Run speed tests to measure optimization effectiveness."""
-        logger.info(f"🏃 RUNNING SPEED TEST ({num_tests} iterations)")
-        logger.info("=" * 40)
-        
-        results = []
-        
-        for i in range(num_tests):
-            logger.info(f"\n🔍 TEST #{i+1}/{num_tests}")
-            logger.info("-" * 25)
-            
-            # Create mock opportunity
-            opportunity = await self.create_mock_opportunity()
-            
-            # Execute with speed optimizations
-            result = await self.execute_speed_optimized_arbitrage(opportunity)
-            results.append(result)
-            
-            # Brief pause between tests
-            await asyncio.sleep(2)
-        
-        # Analyze results
-        self.analyze_speed_test_results(results)
+        """DISABLED - NO MOCK DATA ALLOWED!"""
+        logger.error("🚨 SPEED TEST DISABLED - NO MOCK DATA ALLOWED!")
+        logger.error("   Use real arbitrage opportunities for testing")
+        return
     
     def analyze_speed_test_results(self, results: list):
         """Analyze speed test results."""

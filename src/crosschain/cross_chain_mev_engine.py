@@ -154,8 +154,15 @@ class CrossChainMEVEngine:
             # Get prices across all chains
             chain_prices = await self._get_cross_chain_prices()
             
-            # Analyze arbitrage opportunities
+            # 🎯 FILTER BY TARGET TOKENS ONLY - Don't analyze unwanted tokens!
+            target_tokens = ["ETH", "WETH", "USDC", "USDC.e", "USDT", "DAI", "PEPE"]
+
+            # Analyze arbitrage opportunities for target tokens only
             for token in self.target_tokens.keys():
+                if token.upper() not in [t.upper() for t in target_tokens]:
+                    logger.debug(f"🚫 SKIPPING {token} - Not in target tokens list")
+                    continue
+
                 token_opportunities = await self._analyze_token_arbitrage(token, chain_prices.get(token, {}))
                 opportunities.extend(token_opportunities)
             

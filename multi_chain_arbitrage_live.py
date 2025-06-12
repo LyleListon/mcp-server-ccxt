@@ -143,75 +143,10 @@ class MultiChainArbitrageSystem:
 
         except Exception as e:
             logger.error(f"Error scanning {chain_name}: {e}")
-            # Return mock opportunities for testing
-            return self._create_mock_opportunities(chain_name)
+            # NO MOCK DATA! Return empty list on error
+            return []
 
-    def _create_mock_opportunities(self, chain_name: str) -> List[Dict[str, Any]]:
-        """Create mock opportunities for testing."""
-        import random
-
-        config = get_chain_config(chain_name)
-
-        # Create 1-3 mock opportunities with CORRECT arbitrage structure
-        opportunities = []
-        for i in range(random.randint(1, 3)):
-            profit = random.uniform(0.50, 5.00)  # $0.50 to $5.00 profit
-
-            # 🚨 FIXED: Proper arbitrage structure
-            # Always flashloan USDC (base token), trade for target token, then back to USDC
-            target_token = random.choice(['WETH', 'USDT', 'DAI'])
-
-            opportunity = {
-                'chain': chain_name,
-                'chain_id': config['chain_id'],
-                'source_chain': chain_name,
-
-                # 🚨 CRITICAL FIX: Arbitrage structure
-                'flashloan_token': 'USDC',  # Always borrow USDC
-                'target_token': target_token,  # Token we're arbitraging
-                'flashloan_amount': 10000.0,  # $10K flashloan
-
-                # Token addresses (will be populated by execution system)
-                'flashloan_token_address': config['tokens']['USDC'],
-                'target_token_address': config['tokens'][target_token],
-
-                'estimated_net_profit_usd': profit,
-                'viable': True,
-
-                # 🚨 FIXED: Proper trading path
-                'arbitrage_path': {
-                    'step1': {
-                        'action': 'buy',
-                        'dex': 'sushiswap',
-                        'from_token': 'USDC',
-                        'to_token': target_token,
-                        'price': 1.002  # Buy at higher price
-                    },
-                    'step2': {
-                        'action': 'sell',
-                        'dex': 'camelot',
-                        'from_token': target_token,
-                        'to_token': 'USDC',
-                        'price': 0.998  # Sell at lower price (profit from spread)
-                    }
-                },
-
-                'mock': True  # Mark as mock for testing
-            }
-            opportunities.append(opportunity)
-
-        if opportunities:
-            logger.info(f"🧪 {config['name']}: Created {len(opportunities)} FIXED mock opportunities")
-            for opp in opportunities:
-                profit = opp['estimated_net_profit_usd']
-                target = opp['target_token']
-                flashloan_amt = opp['flashloan_amount']
-                logger.info(f"   💰 ${profit:.2f} profit - Borrow ${flashloan_amt:,.0f} USDC → {target} arbitrage")
-
-            # 🚨 FIX: Update performance stats for mock opportunities
-            self.performance_stats[chain_name]['opportunities'] += len(opportunities)
-
-        return opportunities
+    # MOCK DATA ELIMINATED - NO MORE FAKE OPPORTUNITIES!
     
     async def execute_arbitrage(self, opportunity: Dict[str, Any]) -> Dict[str, Any]:
         """Execute arbitrage on the appropriate chain with comprehensive error handling."""
