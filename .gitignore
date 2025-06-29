@@ -231,3 +231,18 @@ mcp-*/logs/
 
 # Test artifacts
 test-results/
+
+# Node monitoring scripts (not part of MayArbi core)
+node_monitor.sh
+node_monitor_README.md
+install_monitor.sh
+screenshot.sh
+
+# Additional blockchain data directories
+/mnt/ethereum/
+blockchain_data/
+node_data/
+
+# Additional log patterns
+*_status_log.txt
+monitor_*.log
