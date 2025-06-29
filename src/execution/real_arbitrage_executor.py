@@ -370,6 +370,16 @@ class RealArbitrageExecutor:
     async def execute_arbitrage(self, opportunity: Dict[str, Any], private_key: str = None) -> Dict[str, Any]:
         """Execute real arbitrage trade."""
         try:
+            # 🔍 INPUT VALIDATION - Validate opportunity structure
+            required_fields = ['token', 'source_chain', 'target_chain', 'estimated_profit_usd']
+            for field in required_fields:
+                if field not in opportunity:
+                    return {'success': False, 'error': f'Missing required field: {field}'}
+
+            # Validate profit is positive
+            if opportunity.get('estimated_profit_usd', 0) <= 0:
+                return {'success': False, 'error': 'Invalid profit amount'}
+
             # 🚨 EMERGENCY STOP CHECK - First line of defense
             if check_emergency_stop():
                 logger.critical("🚨 EMERGENCY STOP ACTIVE - Aborting trade execution")
